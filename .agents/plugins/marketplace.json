@@ -1,0 +1,20 @@
+{
+  "name": "quantum-operations-marketplace",
+  "interface": {
+    "displayName": "Quantum Operations"
+  },
+  "plugins": [
+    {
+      "name": "quantum-operations",
+      "source": {
+        "source": "local",
+        "path": "./plugins/quantum-operations"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

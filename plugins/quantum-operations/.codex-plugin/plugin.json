@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "quantum-operations",
+  "version": "0.3.0",
+  "description": "Hardware-agnostic skills and tooling guidance for fault-tolerant quantum computing: logical optimization, Clifford+T synthesis, QEC, decoding, lattice surgery, magic-state factories, verification, and resource estimation.",
+  "author": {
+    "name": "Cristian Del Toro"
+  },
+  "repository": "https://github.com/Harqer/quantum-operations",
+  "license": "MIT",
+  "keywords": [
+    "quantum",
+    "ftqc",
+    "fault-tolerant-quantum-computing",
+    "qec",
+    "clifford-t",
+    "resource-estimation",
+    "lattice-surgery"
+  ]
+}
