@@ -1,23 +1,14 @@
 ---
 name: pytket-optimization
-description: Use pytket passes for circuit resynthesis, Clifford/Pauli/phase-gadget simplification, rebasing, placement, routing, and explicit compiler pipelines. Use as a measured compiler layer, not a one-click oracle.
+description: Use pytket passes for circuit resynthesis, Clifford/Pauli/phase-gadget simplification, rebasing, placement, routing, and explicit compiler pipelines. Use as a measured compiler layer with checkpoints and independent verification.
 ---
 
 # pytket Optimization
 
-Build explicit pass sequences and retain checkpoints.
+Build explicit pass sequences and preserve checkpoints between logical optimization, rebasing, architecture routing, and post-routing cleanup. Select `FullPeepholeOptimise`, `CliffordResynthesis`, `CliffordSimp`, phase-gadget or Pauli simplification, KAK-style resynthesis, and rebasing according to their documented preconditions, then measure gate counts, native two-qubit cost, depth, non-Clifford demand, and wire mappings after each stage.
 
-- Consider `FullPeepholeOptimise`, `CliffordResynthesis`, `CliffordSimp`, `OptimisePhaseGadgets`, `PauliSimp`/`GreedyPauliSimp`, KAK-style resynthesis, and rebasing where their preconditions fit.
-- Apply strong unconstrained logical optimization before hard architecture constraints unless the target problem demands co-optimization.
-- Route/map only when a physical/logical architecture is actually part of the question.
-- Re-run cleanup after routing/mapping.
-- Some Pauli simplification passes do not preserve global phase; decide whether that is acceptable before use.
-- Compare multiple pipelines under identical constraints; never accept a lower abstract gate count if FTQC cost worsens.
-
-See `references/tools.md`.
+Apply the strongest architecture-independent simplification before hard mapping when that matches the workload, and move architecture constraints earlier when co-optimization is part of the design. After placement or routing, run the appropriate cleanup and final rebase for the selected native set. Treat global-phase semantics as an explicit equivalence choice for Pauli-oriented passes, then compare multiple pipelines under identical constraints and carry the strongest Pareto candidates into independent verification and FTQC costing.
 
 ## Implementation gate
 
-Before writing a pytket pipeline, load `references/implementation.md`; use `references/tools.md` only as a link/version index. The implementation reference defines explicit `SequencePass`, `AutoRebase`, architecture routing, checkpoints, phase cautions, and independent verification.
-
-Also apply `../quantum-operations/references/implementation-contract.md`.
+Load `references/implementation.md` before writing a pytket pipeline, and use `references/tools.md` as the source/version index. The implementation reference defines explicit `SequencePass`, `AutoRebase`, architecture routing, checkpoints, phase handling, and independent verification. Apply `../quantum-operations/references/implementation-contract.md` so every pass is chosen from current API semantics and measured against the actual FTQC objective.
