@@ -56,7 +56,7 @@ Do not substitute a different approximate/phase-relaxed inverse without proving 
 ## Temporary logical AND
 
 For AND-like temporaries, load:
-reversible-arithmetic/references/examples/temporary-logical-and.md
+../../reversible-arithmetic/references/examples/temporary-logical-and.md
 
 That pattern uses 4 T forward and a measurement-assisted 0-T erase, but only under its measurement/feed-forward preconditions.
 
