@@ -1,6 +1,6 @@
 # Fire Opal adjunct: implementation reference
 
-Fire Opal is a present-day real-hardware error-suppression execution layer. It does not replace QEC or alter FTQC logical-resource requirements.
+Fire Opal is a present-day real-hardware error-suppression execution layer. Keep QEC and FTQC logical-resource requirements in their dedicated fault-tolerant models.
 
 API checked against Q-CTRL Fire Opal documentation in September 2026.
 
@@ -12,7 +12,7 @@ pip install fire-opal qiskit
 
 Pin a tested version in a production environment and record it with results.
 
-## Authenticate without embedding secrets
+## Authenticate through environment-managed credentials
 
 ~~~python
 import os
@@ -45,7 +45,7 @@ if not devices:
     raise RuntimeError("No accessible Fire Opal-supported devices")
 ~~~
 
-Select backend_name from this returned set; do not hard-code a stale device name.
+Select backend_name from the returned supported-device set at execution time.
 
 Current documented provider coverage includes cloud-accessible IBM Quantum Platform devices and IonQ systems through Amazon Braket.
 
@@ -77,7 +77,7 @@ if errors:
     )
 ~~~
 
-Validation is the non-metered compatibility gate. Do not submit a known-invalid circuit to hardware.
+Use validation as the non-metered compatibility gate and submit hardware jobs after validation succeeds.
 
 ## Execute
 
@@ -108,7 +108,7 @@ If iterate is used, ensure stop_iterate is called when the session is complete.
 
 ## FTQC boundary
 
-Never translate a Fire Opal improvement into:
+Record Fire Opal improvements as present-day hardware metrics, while the following FTQC quantities continue to come from the fault-tolerant models:
 - fewer logical qubits;
 - lower required code distance;
 - removal of magic-state factories;
