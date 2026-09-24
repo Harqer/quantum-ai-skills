@@ -10,4 +10,4 @@ Use [implementation.md](implementation.md) for executable verification workflows
 - MQT QECC: https://mqt.readthedocs.io/projects/qecc/en/latest/
   - Use when its code/gadget/logical-compilation model matches the target.
 
-Do not declare verification successful from a tool name or successful parse. Follow the invariants in implementation.md.
+Declare verification successful after the invariants in implementation.md pass under the selected tool and equivalence relation.
