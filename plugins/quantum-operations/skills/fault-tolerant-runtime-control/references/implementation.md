@@ -124,7 +124,7 @@ Do not continue applying Pauli-only update rules through a non-Clifford gate whe
 ## Measurement-assisted cleanup
 
 For temporary logical-AND cleanup, load:
-reversible-arithmetic/references/examples/temporary-logical-and.md
+../../reversible-arithmetic/references/examples/temporary-logical-and.md
 
 The controller must:
 - receive the measurement bit;
