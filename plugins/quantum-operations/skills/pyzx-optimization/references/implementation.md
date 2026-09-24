@@ -95,9 +95,9 @@ Use this path when preserving graph/circuit structure is important for later ext
 
 Circuit.verify_equality(other, up_to_swaps=False, up_to_global_phase=True):
 - returns True when PyZX can prove equality;
-- may return None when it cannot prove it.
+- may return None when the proof procedure is inconclusive.
 
-Treat None as **not proven**, never as equivalent.
+Treat None as an inconclusive result and continue with an independent equivalence check before accepting the candidate.
 
 For small critical circuits, supplement with tensor comparison:
 
