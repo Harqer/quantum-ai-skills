@@ -137,6 +137,12 @@ The plugin includes curated guidance for circuit rewriting and synthesis, QEC si
 
 Present-day error-suppression systems such as Fire Opal are kept explicitly outside the FTQC core and treated only as adjuncts when a task concerns current noisy hardware.
 
+## Implementation quality
+
+Quantum Operations uses a strict **no-guessing implementation contract**. A `SKILL.md` is the routing/decision layer; production implementation must load the corresponding `references/implementation.md` and relevant worked examples before coding. If inputs/outputs, preconditions, algorithm/circuit/API steps, verification, or failure boundaries are missing, the agent must research and extend the reference instead of inventing the missing step.
+
+See [IMPLEMENTATION_QUALITY.md](plugins/quantum-operations/IMPLEMENTATION_QUALITY.md) for the coverage matrix and acceptance test.
+
 ## Security and trust model
 
 This repository is intentionally **skills-only**.
