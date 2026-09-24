@@ -1,55 +1,16 @@
 ---
 name: qec-simulation-decoding
-description: Design and benchmark QEC simulations and offline decoder experiments using Stim/Sinter, PyMatching, Fusion Blossom, MQT QECC, or compatible tools. Use for syndrome circuits, detector error models, thresholds, logical error rates, and decoder accuracy/latency characterization; use real-time-qec-decoding for sustained execution deadlines and backlog.
+description: Design and benchmark QEC simulations and offline decoder experiments using Stim/Sinter, PyMatching, Fusion Blossom, MQT QECC, or compatible tools.
 ---
 
 # QEC Simulation and Decoding
 
-Use high-throughput stabilizer simulation for QEC studies whenever the circuit/noise model permits it.
+Use high-throughput stabilizer and detector simulation whenever the circuit and noise model support it. Define the actual syndrome circuit, detector and observable annotations, logical operations under test, and explicit noise model, then generate the corresponding detector error model and sweep physical error rate, code parameters, rounds, and decoder settings. Report logical error estimates together with confidence intervals, sample counts, decoder latency/throughput, and the exact DEM/correlation assumptions used for each point.
 
-This skill establishes decoder correctness and statistical performance. It does **not** by itself prove that a decoder can keep pace with a full fault-tolerant workload.
+Keep code-capacity, phenomenological, and circuit-level experiments as distinct datasets, and preserve correlation/decomposition choices as part of the experiment record. Verify detector and logical-observable definitions before interpreting a decoder result, exercise logical-operation traces in addition to memory experiments, and compare graphlike, correlated, or alternative decoders under the same circuit and sampling conditions when that distinction matters.
 
-## Workflow
-
-1. Define the QEC circuit, detectors/observables, logical operations under test, and explicit noise model.
-2. Generate detector error models when supported.
-3. Sweep physical error rates, code distances, rounds, and decoder settings.
-4. Estimate logical error rates with confidence intervals; do not compare tiny Monte Carlo samples as definitive.
-5. Benchmark decoder accuracy **and latency/throughput**, including tail latency when runtime matters.
-6. Separate phenomenological, code-capacity, and circuit-level noise results.
-7. Record correlation assumptions; an MWPM decoder that ignores or decomposes correlations is a different experiment from a correlated decoder.
-8. Test logical-operation traces in addition to memory experiments when the intended workload contains surgery, transversal gates, measurements, factories, or other non-memory behavior.
-
-## Detector-error-model discipline
-
-A DEM captures error mechanisms, detector symptoms, and logical-observable frame changes.
-
-- Verify detector and observable definitions before trusting a logical-error estimate.
-- Record any approximation used to produce a graphlike model.
-- Do not silently discard non-graphlike/correlated mechanisms.
-- Do not assume a DEM is static across logical operations unless the architecture guarantees it.
-
-## Tools
-
-- Stim: high-performance stabilizer/QEC simulation and detector-error-model generation; Sinter automates sampling/decoding studies.
-- PyMatching: sparse MWPM decoder for graphlike detector models.
-- Fusion Blossom: MWPM solver with parallel/partition-oriented decoding work.
-- MQT QECC: QEC code, synthesis, state-preparation, decoding, and logical-compilation workflows.
-
-See `references/tools.md`.
-
-## Handoff to real-time engineering
-
-Use `real-time-qec-decoding` when the question becomes:
-- can decoding keep up with the syndrome stream;
-- what buffer/window/commit scheme is safe;
-- how much p99/p99.9 latency fits the hardware cycle;
-- will backlog remain bounded;
-- how many decoder processes/cores/accelerators are required;
-- how decoder delays change the executed FT schedule.
+When the engineering question becomes sustained syndrome throughput, buffering, deadline misses, or decoder backlog, pass the measured latency distribution, detector rate, concurrency, and logical-operation trace into `real-time-qec-decoding`. That skill turns the offline statistical decoder result into a live execution constraint.
 
 ## Implementation gate
 
-Before coding a QEC experiment, load `references/implementation.md`; use `references/tools.md` as a source index. The implementation reference contains an executable Stim + PyMatching workflow, correlated-decoding branch, Wilson interval, sweep record, and detector/observable sanity checks.
-
-Also apply `../quantum-operations/references/implementation-contract.md`.
+Load `references/implementation.md` before coding a QEC experiment, and use `references/tools.md` as the source/version index. The implementation reference contains an executable Stim and PyMatching workflow, the correlated-decoding branch, Wilson confidence interval, sweep record, and detector/observable sanity checks. Apply `../quantum-operations/references/implementation-contract.md` so every reported result remains tied to an explicit circuit, noise model, decoder configuration, and statistical method.
