@@ -14,3 +14,9 @@ Fire Opal is useful for supported present-day hardware workflows, but it is **no
 - Prefer its validation path before metered execution when available.
 
 This skill exists because practical development may span pre-FT and FT systems; it should not activate for purely fault-tolerant resource analysis.
+
+## Implementation gate
+
+Before writing a Fire Opal integration, load `references/implementation.md`. It defines environment-based authentication, supported-device discovery, validation-before-execution, execution/result handling, and the strict boundary between error suppression and FTQC claims.
+
+Also apply `../quantum-operations/references/implementation-contract.md`; verify the current Fire Opal API/provider support immediately before use.

@@ -15,3 +15,9 @@ Build explicit pass sequences and retain checkpoints.
 - Compare multiple pipelines under identical constraints; never accept a lower abstract gate count if FTQC cost worsens.
 
 See `references/tools.md`.
+
+## Implementation gate
+
+Before writing a pytket pipeline, load `references/implementation.md`; use `references/tools.md` only as a link/version index. The implementation reference defines explicit `SequencePass`, `AutoRebase`, architecture routing, checkpoints, phase cautions, and independent verification.
+
+Also apply `../quantum-operations/references/implementation-contract.md`.

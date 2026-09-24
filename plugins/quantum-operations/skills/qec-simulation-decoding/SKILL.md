@@ -47,3 +47,9 @@ Use `real-time-qec-decoding` when the question becomes:
 - will backlog remain bounded;
 - how many decoder processes/cores/accelerators are required;
 - how decoder delays change the executed FT schedule.
+
+## Implementation gate
+
+Before coding a QEC experiment, load `references/implementation.md`; use `references/tools.md` as a source index. The implementation reference contains an executable Stim + PyMatching workflow, correlated-decoding branch, Wilson interval, sweep record, and detector/observable sanity checks.
+
+Also apply `../quantum-operations/references/implementation-contract.md`.

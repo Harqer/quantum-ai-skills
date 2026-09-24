@@ -17,3 +17,9 @@ Use layered, independent checks.
 - For FT gadgets/state prep, validate the stated fault-tolerance order/model; functional equivalence alone is insufficient.
 
 See `references/tools.md`.
+
+## Implementation gate
+
+Before declaring a candidate verified, load `references/implementation.md`; use `references/tools.md` as a source index. The implementation reference defines exact/approximate QCEC workflows, dynamic-circuit limits, clean/dirty ancilla tests, detector checks, single-fault gadget tests, and resource regressions.
+
+Also apply `../quantum-operations/references/implementation-contract.md`. Inconclusive or unsupported verification is not success.

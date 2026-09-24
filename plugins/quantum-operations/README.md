@@ -26,6 +26,12 @@ Each skill has a concise `SKILL.md`. Deeper framework/tool notes are stored unde
 
 The plugin does not encode one vendor, qubit technology, QEC code, compiler, or algorithm as the default answer. Hardware is represented through explicit capabilities and assumptions such as native logical operations, topology, physical error model, cycle time, decoder behavior, code parameters, and target failure probability.
 
+## Implementation quality
+
+Quantum Operations uses a strict **no-guessing implementation contract**. A `SKILL.md` is the routing/decision layer; production implementation must load the corresponding `references/implementation.md` and relevant worked examples before coding. If inputs/outputs, preconditions, algorithm/circuit/API steps, verification, or failure boundaries are missing, the agent must research and extend the reference instead of inventing the missing step.
+
+See [IMPLEMENTATION_QUALITY.md](IMPLEMENTATION_QUALITY.md) for the coverage matrix and acceptance test.
+
 ## Security design
 
 Static knowledge only. No MCP server, hooks, executable scripts, credentials, provider bindings, or write-capable runtime integration are bundled in this release.

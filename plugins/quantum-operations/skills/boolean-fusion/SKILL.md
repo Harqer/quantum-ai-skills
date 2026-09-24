@@ -12,3 +12,9 @@ description: Optimize XOR/AND-heavy reversible Boolean logic by sharing nonlinea
 - Exploit constants and mutually exclusive conditions before synthesis.
 - Track multiplicative complexity as an intermediate metric, then translate to Toffoli/CCZ/T-state and spacetime costs.
 - Preserve exact reversible semantics and ancilla cleanup.
+
+## Implementation gate
+
+Before coding Boolean fusion, load `references/implementation.md`. It defines ANF representation, the exact Möbius transform, reversible synthesis rules, SHA-256 `Ch`/`Maj` identities, product sharing, and verification.
+
+Also apply `../quantum-operations/references/implementation-contract.md`. Classical truth-table equality is insufficient when a phase-relaxed quantum synthesis is used.

@@ -11,3 +11,9 @@ description: Keep FTQC workflows portable across circuit frameworks and intermed
 - Do not round-trip through an IR that cannot represent detector annotations, logical observables, dynamic control, or custom operations required by the workflow.
 - Compare resource counts before and after conversion; conversion itself can decompose or normalize operations.
 - Treat tool-specific extensions as versioned boundaries and verify current support.
+
+## Implementation gate
+
+Before coding a conversion, load `references/implementation.md`. It defines the semantic checklist, OpenQASM 3.1 dynamic/reset semantics, QIR profile boundary, adaptive-control example, Stim detector sidecar rule, round-trip tests, and explicit unsupported-feature policy.
+
+Also apply `../quantum-operations/references/implementation-contract.md`. Successful parsing is not evidence of semantic preservation.

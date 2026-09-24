@@ -1,6 +1,11 @@
 # Tool references
 
-- PyZX docs: https://pyzx.readthedocs.io/en/latest/
-- Optimization API: https://pyzx.readthedocs.io/en/latest/api.html
+Use [implementation.md](implementation.md) for current load → graph → simplify → extract → verify pipelines and hard preconditions.
 
-Key caution: PyZX phase-block optimization is documented for Clifford+T inputs; architecture-unaware extraction can worsen 2Q cost.
+- PyZX docs: https://pyzx.readthedocs.io/en/latest/
+- Optimization/API reference: https://pyzx.readthedocs.io/en/latest/api.html
+
+Key implementation constraints:
+- gate-set check before `phase_block_optimize`;
+- treat an unproved equality result as not verified;
+- extraction is not architecture-aware, so retain/checkpoint pre-extraction candidates and remeasure 2Q cost.

@@ -95,3 +95,9 @@ Examples:
 Return Pareto-optimal designs over qubits, runtime, error/failure budget, and classical resources.
 
 See `references/research.md`.
+
+## Implementation gate
+
+Before implementing a scheduler, load `references/implementation.md` plus `references/research.md`. The implementation reference defines the event/resource schema, list scheduler, decoder queue, factory buffer, stall equations, fixed-point scheduling loop, and invariants.
+
+Also apply `../quantum-operations/references/implementation-contract.md`.

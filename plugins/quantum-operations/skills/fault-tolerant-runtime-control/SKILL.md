@@ -94,3 +94,9 @@ Test:
 - feed-forward timing assumptions against the runtime schedule.
 
 See `references/research.md`.
+
+## Implementation gate
+
+Before coding controller/frame logic, load `references/implementation.md` plus `references/research.md`. The implementation reference defines the Pauli-frame bit representation, H/S/CNOT update rules, general Pauli measurement reinterpretation, non-Clifford boundary, and feed-forward deadline calculation.
+
+Also apply `../quantum-operations/references/implementation-contract.md`.

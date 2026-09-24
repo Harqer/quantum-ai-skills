@@ -18,3 +18,9 @@ description: Model and optimize magic-state distillation/factory demand for FTQC
 - Use resource estimators or published factory models instead of hand-waving that magic states "dominate" or "do not dominate".
 
 A lower total T count does not automatically imply a smaller FT machine: transformations that concentrate T gates can increase peak factory demand and required parallel factory capacity.
+
+## Implementation gate
+
+Before implementing or sizing a factory, load `references/implementation.md`. It defines a common producer interface, 15-to-1 assumptions/equations, a concrete current protocol implementation, rejection-aware rate/buffer models, cultivation separation, and verification.
+
+Also apply `../quantum-operations/references/implementation-contract.md`. Never reuse one protocol's error law for a different protocol family.

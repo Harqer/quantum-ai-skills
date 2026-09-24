@@ -14,3 +14,9 @@ Non-Clifford operations usually drive FTQC cost, but do not optimize T-count in 
 - For arbitrary rotations, explicitly budget synthesis precision against the algorithm error budget.
 - Compare direct T-state, CCZ-state, catalysis, and other factory interfaces when relevant; do not assume a single magic-state primitive.
 - Translate non-Clifford structure into **factory throughput and spacetime demand**, not just abstract gate counts.
+
+## Implementation gate
+
+Before replacing gates or changing non-Clifford structure, load `references/implementation.md`. It defines the cost record, relative-phase safety conditions, paired phase cancellation, Pauli-rotation combining, synthesis-error allocation, and factory-aware acceptance checks.
+
+Also apply `../quantum-operations/references/implementation-contract.md`. A matching computational-basis truth table does not prove a relative-phase replacement is safe.

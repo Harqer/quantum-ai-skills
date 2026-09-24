@@ -51,3 +51,9 @@ Route experimental threshold/logical-error work to `qec-simulation-decoding`. Ro
 ## Tools
 
 Useful tooling includes MQT QECC for QEC synthesis/decoding/logical-compilation studies and TQEC for topological/surface-code design automation. Verify current APIs before implementation and do not infer support for a code/protocol from a neighboring module.
+
+## Implementation gate
+
+Before selecting or coding a QEC architecture, load `references/implementation.md`. It defines the machine model, candidate record, measured-data distance selection, detector-rate calculation, logical-ISA completeness check, and acceptance criteria.
+
+Also apply `../quantum-operations/references/implementation-contract.md`. Do not compare code-family labels without concrete logical operations, decoder, syndrome circuit, and error model.
