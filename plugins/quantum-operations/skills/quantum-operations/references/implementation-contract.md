@@ -46,9 +46,9 @@ Before writing production code from a skill, verify that the loaded skill/refere
    - cases requiring a different routed skill;
    - approximations or heuristics that require explicit declaration and justification.
 
-## Stop condition
+## Research-completion condition
 
-If a required item is absent for the requested implementation, do **not** fill it from intuition.
+When a required item is absent for the requested implementation, complete that item from the primary specification, paper, or current tool documentation before coding.
 
 Instead:
 1. load the skill implementation reference/examples;
