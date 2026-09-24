@@ -67,8 +67,8 @@ Never treat a message block, key, or input value as constant unless it is truly 
 
 ## Concrete examples
 
-- refs/examples/cuccaro-adder.md: exact MAJ/UMA ripple construction.
-- refs/examples/temporary-logical-and.md: 4-T temporary AND and measurement-assisted erase.
+- [examples/cuccaro-adder.md](examples/cuccaro-adder.md): exact MAJ/UMA ripple construction.
+- [examples/temporary-logical-and.md](examples/temporary-logical-and.md): 4-T temporary AND and measurement-assisted erase.
 
 ## Whole-workload rule
 
