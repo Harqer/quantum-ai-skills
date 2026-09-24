@@ -1,24 +1,14 @@
 ---
 name: pyzx-optimization
-description: Use PyZX for ZX-calculus, Clifford+T, phase-polynomial, parity-network, T-count, and fault-equivalence-oriented reasoning. Use after semantic optimization and verify extraction regressions.
+description: Use PyZX for ZX-calculus, Clifford+T, phase-polynomial, parity-network, T-count, and fault-equivalence-oriented reasoning after semantic optimization.
 ---
 
 # PyZX Optimization
 
-Use PyZX as a post-semantic optimizer and reasoning tool.
+Use PyZX after the semantic layer has already exposed algebraic structure. Choose graph-level `full_reduce`, circuit-level `basic_optimization` or `full_optimize`, phase-polynomial optimization, or phase teleportation according to the circuit gate set and the intended extraction path. Preserve the pre-optimization and pre-extraction candidates so the final selection can compare T/non-Clifford savings, Clifford overhead, logical depth, two-qubit count, and compatibility with downstream QEC compilation.
 
-- `full_reduce` can expose global ZX simplifications.
-- `basic_optimization` performs gate-level commutation/cancellation.
-- `phase_block_optimize` / `full_optimize` are useful for compatible Clifford+T phase-polynomial structure.
-- PyZX documentation warns that `phase_block_optimize` is restricted to Clifford+T-style inputs and can be wrong on unsupported smaller rotations or Toffoli-like gates.
-- Circuit extraction is not architecture-aware and can increase 2Q count; preserve pre-extraction candidates.
-- Use ZX equality verification where applicable, supplemented by independent verification for important rewrites.
-- For FTQC, evaluate T/non-Clifford savings, Clifford overhead, logical depth, and compatibility with the chosen QEC compilation path.
-
-See `references/tools.md`.
+Run a gate-set preflight before phase-block optimization and use the documented Clifford+T domain for that path. After graph extraction, measure the resulting circuit because extraction is architecture-independent and can change two-qubit cost. Establish equality with PyZX where its proof procedure succeeds, supplement important rewrites with an independent checker or small exact tensor/state comparison, and carry explicit wire permutations and phase semantics into the verification record.
 
 ## Implementation gate
 
-Before writing a PyZX pipeline, load `references/implementation.md`; use `references/tools.md` only as a link/version index. The implementation reference gives current load/reduce/extract/verify pipelines, unsupported phase-block cases, equality semantics, and acceptance tests.
-
-Also apply `../quantum-operations/references/implementation-contract.md`.
+Load `references/implementation.md` before writing a PyZX pipeline, and use `references/tools.md` as the source/version index. The implementation reference provides current load, reduce, extract, verify, and phase-teleportation flows together with the gate-set preflight and acceptance checks. Apply `../quantum-operations/references/implementation-contract.md` so every optimized circuit is accepted through an explicit semantic proof and resource comparison.
