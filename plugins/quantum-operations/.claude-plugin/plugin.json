@@ -1,7 +1,7 @@
 {
   "name": "quantum-operations",
-  "version": "0.3.0",
-  "description": "Hardware-agnostic skills and tooling guidance for fault-tolerant quantum computing: logical optimization, Clifford+T synthesis, QEC, decoding, lattice surgery, magic-state factories, verification, and resource estimation.",
+  "version": "0.4.0",
+  "description": "Hardware-agnostic skills and tooling guidance for fault-tolerant quantum computing: logical optimization, QEC, real-time decoding, runtime control, scheduling, magic-state systems, verification, and resource estimation.",
   "author": {
     "name": "Cristian Del Toro"
   }
