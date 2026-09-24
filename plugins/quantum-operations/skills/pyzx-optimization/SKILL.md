@@ -16,3 +16,9 @@ Use PyZX as a post-semantic optimizer and reasoning tool.
 - For FTQC, evaluate T/non-Clifford savings, Clifford overhead, logical depth, and compatibility with the chosen QEC compilation path.
 
 See `references/tools.md`.
+
+## Implementation gate
+
+Before writing a PyZX pipeline, load `references/implementation.md`; use `references/tools.md` only as a link/version index. The implementation reference gives current load/reduce/extract/verify pipelines, unsupported phase-block cases, equality semantics, and acceptance tests.
+
+Also apply `../quantum-operations/references/implementation-contract.md`.
