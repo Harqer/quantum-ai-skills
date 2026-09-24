@@ -16,7 +16,7 @@ Clifford_2q_count
 factory_consumption_timeline
 ~~~
 
-Do not optimize only T_count.
+Optimize the full cost record, including T count, T depth, logical width, measurement depth, Clifford two-qubit cost, and factory demand.
 
 ## Exact Toffoli versus phase-relaxed constructions
 
@@ -51,7 +51,7 @@ R^dagger
 
 the phase introduced by R cancels through the exact inverse.
 
-Do not substitute a different approximate/phase-relaxed inverse without proving cancellation.
+Use an alternative approximate or phase-relaxed inverse only after an explicit proof establishes the required phase cancellation.
 
 ## Temporary logical AND
 
@@ -88,7 +88,7 @@ epsilon_i <= epsilon_synth / m
 
 under a triangle-inequality-style bound.
 
-If a tighter composition theorem/tool is used, state it explicitly. Never silently select a synthesis precision.
+State the composition theorem or tool explicitly and derive every synthesis precision from the declared error budget.
 
 ## Factory-aware scheduling
 
