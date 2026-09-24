@@ -15,3 +15,9 @@ Treat lattice surgery as a logical/spacetime compilation problem, not merely a g
 - Use TQEC as a primary modern reference/tool for surface-code/lattice-surgery design automation; compare other lattice-surgery compilers only when their capabilities match the task.
 
 See `references/tools.md`.
+
+## Implementation gate
+
+Before implementing a lattice-surgery compiler/geometry, load `references/implementation.md`; use `references/tools.md` as a project index. The implementation reference gives the current TQEC CNOT → correlation surfaces → compilation → detector-annotated Stim → simulation flow and its verification requirements.
+
+Also apply `../quantum-operations/references/implementation-contract.md`. Pin the TQEC version/commit used by production examples.
