@@ -2,7 +2,7 @@
 
 **A hardware-agnostic fault-tolerant quantum computing knowledge layer for AI agents.**
 
-Quantum Operations packages the engineering workflows an AI model needs to move from a logical quantum algorithm toward an implementation that can be reasoned about in fault-tolerant terms: fewer logical operations, lower non-Clifford cost, tighter ancilla use, explicit QEC assumptions, practical logical compilation, and defensible physical-resource estimates.
+Quantum Operations packages the engineering workflows an AI model needs to move from a logical quantum algorithm toward an executable fault-tolerant design: fewer logical operations, lower non-Clifford cost, explicit QEC assumptions, practical logical compilation, real-time decoding and control, dependency-aware runtime scheduling, and defensible physical-resource estimates.
 
 It is intentionally **not a hardware SDK** and **not tied to one algorithm, vendor, qubit modality, or compiler**. The repository is a curated collection of static skills and references that teach the host model how to choose and combine quantum-engineering techniques while keeping the underlying workload exact.
 
@@ -104,7 +104,7 @@ You do not need to read every skill. Start with the router, follow the relevant 
 
 **Optimize before lowering.** High-level semantic structure is preserved long enough to expose reductions that disappear after decomposition.
 
-**Fault-tolerant cost is multidimensional.** Logical width, non-Clifford count/depth, ancilla pressure, logical error budget, code distance, spacetime volume, physical qubits, and runtime are kept distinct.
+**Fault-tolerant cost is multidimensional.** Logical width, non-Clifford count/depth, ancilla pressure, logical error budget, code distance, decoder/control load, tail latency, spacetime volume, physical qubits, and runtime are kept distinct.
 
 **Exactness first.** Approximation is never silently introduced. Any approximation, synthesis tolerance, or statistical assumption must be explicit.
 
