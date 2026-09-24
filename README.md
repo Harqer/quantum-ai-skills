@@ -19,9 +19,12 @@ It helps an agent reason about:
 - Clifford+T and other non-Clifford resource optimization;
 - QEC-code and logical-operation strategy;
 - syndrome simulation, decoding, and logical error analysis;
+- real-time decoding, tail-latency, buffering, and backlog engineering;
+- Pauli/Clifford frame tracking and measurement/feed-forward control;
 - lattice-surgery and topological logical compilation;
-- magic-state throughput and factory pressure;
-- logical-to-physical resource estimation;
+- magic-state throughput, buffering, routing, and factory pressure;
+- end-to-end FT runtime scheduling across quantum and classical resources;
+- logical-to-physical-and-classical resource estimation;
 - equivalence, correctness, and fault-tolerance verification;
 - interoperability between circuit and fault-tolerant intermediate representations.
 
@@ -65,15 +68,29 @@ Use [Lattice Surgery](plugins/quantum-operations/skills/lattice-surgery/SKILL.md
 
 When non-Clifford operations dominate the schedule, pair this stage with [Magic-State Factories](plugins/quantum-operations/skills/magic-state-factories/SKILL.md) to model distillation throughput and factory pressure instead of treating T gates as free logical primitives.
 
-### 5. Convert logical cost into physical resources
+### 5. Close the runtime control loop
 
-**Question:** *How many physical qubits and how much runtime does the workload require under explicit assumptions?*
+**Question:** *Can measurements, decoding, classical decisions, and logical-frame updates keep pace with the quantum schedule?*
 
-Use [FTQC Resource Estimation](plugins/quantum-operations/skills/ftqc-resource-estimation/SKILL.md). This stage separates logical cost from physical cost and makes error models, code parameters, factory assumptions, cycle time, and target failure probability explicit.
+Use [Fault-Tolerant Runtime Control](plugins/quantum-operations/skills/fault-tolerant-runtime-control/SKILL.md) for Pauli/Clifford frame tracking, logical-measurement interpretation, conditional operations, and legal measurement-assisted cleanup. Use [Real-Time QEC Decoding](plugins/quantum-operations/skills/real-time-qec-decoding/SKILL.md) when syndrome streams impose latency, buffering, throughput, or backlog constraints.
+
+These skills deliberately separate offline decoder quality from online execution feasibility.
+
+### 6. Build the complete execution schedule
+
+**Question:** *What actually determines wall-clock progress once QEC cycles, factories, routing, decoding, and feed-forward interact?*
+
+Use [FTQC Runtime Scheduling](plugins/quantum-operations/skills/ftqc-runtime-scheduling/SKILL.md) to construct a dependency-aware schedule and expose decoder stalls, delayed measurement outcomes, factory starvation, routing contention, retries, and other runtime extensions.
+
+### 7. Convert the executable design into resources
+
+**Question:** *How many physical qubits, classical resources, and how much wall-clock time does the workload require under explicit assumptions?*
+
+Use [FTQC Resource Estimation](plugins/quantum-operations/skills/ftqc-resource-estimation/SKILL.md). This stage separates logical, runtime, classical-control, and physical costs and makes error models, code parameters, factory assumptions, cycle time, decoder assumptions, and target failure probability explicit.
 
 The result should be a resource envelope or Pareto frontier, not a single unexplained number.
 
-### 6. Verify before believing the estimate
+### 8. Verify before believing the estimate
 
 **Question:** *Did optimization or compilation change the computation, violate a fault-tolerance assumption, or hide a resource regression?*
 
