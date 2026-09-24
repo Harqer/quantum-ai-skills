@@ -26,7 +26,7 @@ if len(correlation_surfaces) == 0:
     raise RuntimeError("No logical observable/correlation surface found")
 ~~~
 
-Do not silently select an arbitrary observable in production. Record which logical observable is being preserved/tested.
+Select the intended logical observable by meaning and record that mapping explicitly in production.
 
 ## Compile the block graph
 
@@ -96,7 +96,7 @@ A geometric rewrite is valid only if correlation surfaces/logical observables re
 
 A lattice-surgery compiler should lower logical operations into supported joint measurements/patch operations such as logical XX/ZZ products where the chosen architecture permits them.
 
-Do not implement CNOT as an arbitrary sequence of merges/splits from memory. Use a reviewed protocol/TQEC block graph and verify its correlation surfaces.
+Implement CNOT from a reviewed protocol or TQEC block graph and verify the resulting correlation surfaces before accepting the geometry.
 
 ## Verification
 
