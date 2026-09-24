@@ -56,7 +56,7 @@ A fresh reviewer should be able to answer these questions before coding:
 7. Which cases are unsupported or require another skill?
 8. Which external API facts must be revalidated because they can change?
 
-If any answer requires guessing, the documentation is still ambiguous and fails this standard.
+The documentation passes this standard when every answer comes directly from the loaded skill, implementation reference, worked example, primary specification, or current tool documentation.
 
 ## Scope
 
