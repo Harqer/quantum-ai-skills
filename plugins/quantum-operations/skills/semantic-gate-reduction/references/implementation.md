@@ -38,7 +38,7 @@ logical index: 0 1 2 3 4 5 6 7
 physical wire: 2 3 4 5 6 7 0 1
 ~~~
 
-Materialize the permutation only when the next operation requires a concrete physical ordering that cannot consume the view.
+Materialize the permutation when the next operation requires a concrete physical ordering instead of a virtual wire view.
 
 ### Legality
 
@@ -70,7 +70,7 @@ CCX(c1, c2=1, target)      -> CX(c1, target)
 
 For a target known constant, update the known value only if the gate controls are themselves known. Otherwise the target ceases to be a proven classical constant.
 
-Do not propagate a basis-state constant through a Hadamard, arbitrary rotation, entangling operation with unknown control, measurement-dependent branch, or any operation that invalidates the proof.
+End the basis-state constant proof at a Hadamard, arbitrary rotation, entangling operation with unknown control, measurement-dependent branch, or any other operation that changes the value's classical-state guarantee.
 
 ## 3. XOR normalization
 
@@ -126,7 +126,7 @@ XOR/CNOT networks may be rescheduled using linear GF(2) equivalence
 diagonal Z/phase operations commute with each other
 ~~~
 
-Do not infer commutation of arbitrary overlapping gates from names or matrices without proof.
+For overlapping gates, apply only an explicit algebraic commutation rule whose preconditions are satisfied.
 
 ## 6. Cross-boundary fusion
 
@@ -150,8 +150,8 @@ For each rewrite:
 
 ## Failure cases
 
-Do not apply:
-- classical constant propagation to unknown superposition states;
-- virtual permutations across fixed hardware placement boundaries unless remapping metadata is updated;
-- CSE across state-changing measurement/reset;
-- phase-insensitive Boolean equivalence inside a region where relative phase matters.
+Apply each rewrite within these validity boundaries:
+- classical constant propagation applies to values with a proven computational-basis constant;
+- virtual permutations crossing a fixed hardware-placement boundary carry the corresponding remapping metadata;
+- CSE uses the same versioned operands within a region whose state has not been changed by measurement or reset;
+- phase-sensitive regions use an equivalence relation that preserves the required relative phase.
