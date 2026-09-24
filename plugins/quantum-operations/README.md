@@ -6,13 +6,15 @@ The plugin is intentionally a knowledge layer rather than a runtime integration.
 
 ## Technical scope
 
-The router coordinates five broad domains:
+The router coordinates seven broad domains:
 
 1. **Logical reduction** — semantic simplification, reversible arithmetic, Boolean fusion, and ancilla lifetime.
 2. **Fault-tolerant synthesis** — Clifford+T / non-Clifford optimization plus supporting circuit-rewrite and compiler passes.
-3. **Quantum error correction** — code strategy, logical operation models, syndrome simulation, decoding, and logical error analysis.
-4. **Logical FT compilation** — topological/lattice-surgery scheduling and magic-state production where applicable.
-5. **Resource validation** — logical-to-physical resource estimation, equivalence checks, and independent verification.
+3. **Quantum error correction** — code strategy, syndrome simulation, detector models, decoder accuracy, and logical error analysis.
+4. **Logical FT compilation** — topological/lattice-surgery operations and magic-state production where applicable.
+5. **Runtime control and real-time decoding** — logical frames, measurement/feed-forward dependencies, decoder deadlines, tail latency, buffering, and backlog.
+6. **Whole-machine scheduling** — QEC cycles, factory supply, routing, decoding, controller dependencies, stalls, and retries.
+7. **Resource validation** — logical/physical/classical resource estimation, equivalence checks, and independent verification.
 
 Start with [`skills/quantum-operations/SKILL.md`](skills/quantum-operations/SKILL.md). It selects the minimum set of specialized skills needed for the current task.
 
