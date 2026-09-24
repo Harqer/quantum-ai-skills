@@ -62,7 +62,7 @@ rebase = AutoRebase(
 rebase.apply(circuit)
 ~~~
 
-When AutoRebase cannot derive a known decomposition, provide the reviewed exact decomposition through RebaseCustom.
+When AutoRebase lacks a known decomposition, provide the reviewed exact decomposition through RebaseCustom.
 
 Current API note: use AutoRebase and verify the installed pytket version against the current pass documentation.
 
