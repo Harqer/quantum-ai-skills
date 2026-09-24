@@ -66,13 +66,13 @@ routing/communication model
 3. Simulate/measure logical failure under the physical noise model using qec-simulation-decoding.
 4. For each code parameter/distance candidate, compute workload logical-failure contribution.
 5. Reject candidates exceeding the assigned error budget.
-6. Reject candidates whose decoder service capacity cannot keep up with detector production.
+6. Retain candidates whose decoder service capacity exceeds the required detector production rate with the selected backlog margin.
 7. Compile the workload logical operations and estimate runtime/physical footprint.
 8. Keep the Pareto frontier rather than selecting by threshold or encoding rate alone.
 
 ## Distance selection from measured data
 
-Do not hard-code a universal surface-code scaling law.
+Select distance from measured/simulated logical-error data or from an explicitly sourced scaling law whose regime matches the target.
 
 Given measured/simulated per-round logical failure estimates:
 
@@ -103,7 +103,7 @@ def choose_distance(samples, n_locations, epsilon):
     return min(valid)
 ~~~
 
-If an analytical scaling law is fitted, record the source/model, fit range, uncertainty, and physical-noise regime. Do not extrapolate across threshold without evidence.
+If an analytical scaling law is fitted, record the source/model, fit range, uncertainty, and physical-noise regime, and keep every estimate inside the validated regime of that fit.
 
 ## Detector-rate calculation
 
@@ -147,7 +147,7 @@ If no mechanism is documented for the candidate code, the candidate does not yet
 
 ## Worked comparison skeleton
 
-Do not compare:
+Use concrete candidate records such as:
 
 ~~~text
 surface code vs qLDPC
