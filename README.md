@@ -113,7 +113,7 @@ plugins/quantum-operations/
 
 A `SKILL.md` explains **how to reason about a class of quantum-engineering problems**. A skill's `references/` directory contains the more detailed framework or tool guidance needed to carry out that workflow. This keeps routing context lightweight while still allowing deep technical guidance when the task requires it.
 
-You do not need to read every skill. Start with the router, follow the relevant stage in the blueprint above, then descend into references only when implementation details matter.
+Start with the router, follow the relevant stage in the blueprint above, and load the specific references that supply the implementation details for that stage.
 
 ## Design principles
 
@@ -123,7 +123,7 @@ You do not need to read every skill. Start with the router, follow the relevant 
 
 **Fault-tolerant cost is multidimensional.** Logical width, non-Clifford count/depth, ancilla pressure, logical error budget, code distance, decoder/control load, tail latency, spacetime volume, physical qubits, and runtime are kept distinct.
 
-**Exactness first.** Approximation is never silently introduced. Any approximation, synthesis tolerance, or statistical assumption must be explicit.
+**Exactness first.** Use exact semantics by default and declare every approximation, synthesis tolerance, or statistical assumption explicitly when the workload permits it.
 
 **Independent verification.** Optimization and verification are separate concerns. A smaller circuit is not accepted merely because one compiler reports fewer gates.
 
@@ -139,7 +139,7 @@ Present-day error-suppression systems such as Fire Opal are kept explicitly outs
 
 ## Implementation quality
 
-Quantum Operations uses a strict **no-guessing implementation contract**. A `SKILL.md` is the routing/decision layer; production implementation must load the corresponding `references/implementation.md` and relevant worked examples before coding. If inputs/outputs, preconditions, algorithm/circuit/API steps, verification, or failure boundaries are missing, the agent must research and extend the reference instead of inventing the missing step.
+Quantum Operations uses an **implementation-complete contract**. A `SKILL.md` is the routing and decision layer; production implementation loads the corresponding `references/implementation.md` and relevant worked examples before coding. When inputs, outputs, preconditions, algorithm or circuit steps, API details, verification, or failure boundaries need more detail, the agent completes the reference from the primary specification, paper, or current tool documentation first.
 
 See [IMPLEMENTATION_QUALITY.md](plugins/quantum-operations/IMPLEMENTATION_QUALITY.md) for the coverage matrix and acceptance test.
 
