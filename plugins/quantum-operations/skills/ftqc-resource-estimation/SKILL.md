@@ -55,3 +55,9 @@ Prefer Pareto frontiers over a single headline number.
 A resource estimator may not model real-time decoder queues or controller deadlines at the required fidelity. Couple it to `ftqc-runtime-scheduling` and `real-time-qec-decoding` instead of inventing a constant correction factor.
 
 See `references/tools.md`.
+
+## Implementation gate
+
+Before producing a physical-resource result, load `references/implementation.md`; use `references/tools.md` as a source index. The implementation reference defines current QDK QRE and Qualtran usage, their boundaries, the canonical resource record, error-budget composition, and reproducibility requirements.
+
+Also apply `../quantum-operations/references/implementation-contract.md`.
