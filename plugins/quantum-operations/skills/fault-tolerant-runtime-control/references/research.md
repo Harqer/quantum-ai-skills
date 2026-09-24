@@ -4,12 +4,12 @@
 
 - Chamberland, Iyer, Poulin, **Fault-Tolerant Quantum Computing in the Pauli or Clifford Frame with Slow Error Diagnostics** (2017), arXiv:1704.06662.
   - Establishes why logical corrections can often be tracked in software rather than physically applied immediately.
-  - Also shows that slow diagnostics interact with logical-gate execution and cannot be ignored by the runtime design.
+  - Also shows that the runtime design must represent the interaction between slow diagnostics and logical-gate execution.
 
 ## Measurement-assisted uncomputation
 
 - Craig Gidney, **Halving the cost of quantum addition** (2017/2018), arXiv:1709.06648.
-  - Temporary logical-AND uses four T gates to compute an AND into an ancilla and can erase the ancilla later without another four T gates by measurement-assisted cleanup.
+  - Temporary logical-AND uses four T gates to compute an AND into an ancilla and erases the ancilla later with measurement-assisted cleanup and zero additional T gates.
   - This is a specific proven gadget, not permission to measure arbitrary coherent workspace.
 
 - Liu, Zhou, Meng, **Quantum Uncomputation of Clean and Dirty Ancilla Qubits** (2026), arXiv:2608.09578.
