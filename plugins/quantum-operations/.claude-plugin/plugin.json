@@ -1,7 +1,7 @@
 {
   "name": "quantum-operations",
-  "version": "0.4.0",
-  "description": "Hardware-agnostic skills and tooling guidance for fault-tolerant quantum computing: logical optimization, QEC, real-time decoding, runtime control, scheduling, magic-state systems, verification, and resource estimation.",
+  "version": "0.5.0",
+  "description": "Hardware-agnostic, implementation-grade FTQC skills with exact algorithms, worked examples, current tool/API guidance, QEC/runtime control, verification, scheduling, and resource estimation.",
   "author": {
     "name": "Cristian Del Toro"
   }
