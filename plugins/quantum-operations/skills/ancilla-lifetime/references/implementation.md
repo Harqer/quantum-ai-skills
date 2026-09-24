@@ -53,7 +53,7 @@ last_use(v) = maximum instruction index of any consumer
 
 For a coherent temporary requiring inverse cleanup, extend its interval through the uncompute operation.
 
-Two clean temporaries may share one physical/logical ancilla slot only when their required live intervals do not overlap and both cleanup contracts hold.
+Two clean temporaries may share one physical/logical ancilla slot when their live intervals are disjoint and both cleanup contracts hold.
 
 ## Linear-scan allocator
 
