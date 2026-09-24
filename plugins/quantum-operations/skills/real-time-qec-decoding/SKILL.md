@@ -85,3 +85,9 @@ Before declaring a decoder production-capable:
 7. cross-check at least one independent decoder or small exact reference where practical.
 
 See `references/research.md` for primary-source patterns and tool notes. For concrete Tanner/DEM and sliding-window constructions, load `references/examples/README.md` and only the example required for the current implementation.
+
+## Implementation gate
+
+For implementation, apply `../quantum-operations/references/implementation-contract.md`, then load `references/research.md` and the smallest relevant file under `references/examples/`.
+
+The worked examples are the executable-specification layer for DEM/Tanner conversion, Walking Cat sliding windows, and the published IonQ beam-search code path. Architecture-specific matrices or decoder settings must not be generalized beyond their proven assumptions.
