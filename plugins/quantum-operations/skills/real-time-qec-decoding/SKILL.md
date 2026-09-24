@@ -84,4 +84,4 @@ Before declaring a decoder production-capable:
 6. distinguish recoverable latency from decoder convergence failure;
 7. cross-check at least one independent decoder or small exact reference where practical.
 
-See `references/research.md` for primary-source patterns and tool notes.
+See `references/research.md` for primary-source patterns and tool notes. For concrete Tanner/DEM and sliding-window constructions, load `references/examples/README.md` and only the example required for the current implementation.
