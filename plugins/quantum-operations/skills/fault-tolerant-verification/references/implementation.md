@@ -45,7 +45,7 @@ QCEC 3.10.0 tightened dynamic-circuit preprocessing assumptions. When transform_
 - reset a measured qubit before reusing it as a gate target;
 - supported classical conditions have restrictions.
 
-Do not force a dynamic circuit through unitary equivalence when its semantics include measurement/reset/feed-forward. Verify classical branches and measurement maps separately if the checker mode does not support them.
+For dynamic circuits with measurement, reset, or feed-forward, verify the classical branches and measurement maps with a checker mode that supports those semantics, and use unitary equivalence only for the unitary subregions.
 
 ## 4. Ancilla contract testing
 
@@ -85,7 +85,7 @@ For an FT gadget claiming t-fault tolerance:
 
 For larger gadgets use structured sampling/enumeration tools, but state coverage limits.
 
-Functional circuit equivalence alone does not prove fault tolerance.
+Establish fault tolerance with the stated fault model and injected-fault tests in addition to functional circuit equivalence.
 
 ## 7. Resource regression
 
