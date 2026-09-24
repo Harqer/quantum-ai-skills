@@ -5,18 +5,10 @@ description: Optimize fault-tolerant logical circuits expressed through Clifford
 
 # Clifford+T and Non-Clifford Optimization
 
-Non-Clifford operations usually drive FTQC cost, but do not optimize T-count in isolation.
+Treat non-Clifford optimization as a multi-objective FTQC problem. Track T count, T depth, CCZ and Toffoli count, arbitrary-rotation count and precision, measurement depth, Clifford two-qubit cost, logical width, and the resulting factory-consumption timeline. Evaluate direct T-state, CCZ-state, catalysis, and other factory interfaces against the actual workload so the logical circuit and the factory system are optimized together.
 
-- Track T count, T depth, CCZ/Toffoli count, rotation count/precision, measurement depth, and logical-qubit footprint.
-- Use relative-phase Toffoli/temporary-AND constructions only when phase semantics prove them safe.
-- Prefer paired compute/uncompute structures that cancel phase artifacts by construction.
-- Optimize Pauli rotations and commuting non-Clifford layers before lowering to individual T gates.
-- For arbitrary rotations, explicitly budget synthesis precision against the algorithm error budget.
-- Compare direct T-state, CCZ-state, catalysis, and other factory interfaces when relevant; do not assume a single magic-state primitive.
-- Translate non-Clifford structure into **factory throughput and spacetime demand**, not just abstract gate counts.
+Use relative-phase Toffoli and temporary-AND constructions when their phase semantics are proven for the surrounding computation, and pair compute and cleanup structures so phase cancellation is explicit. Combine commuting Pauli rotations before primitive T synthesis, assign rotation precision from the declared algorithmic error budget, and carry the resulting non-Clifford demand into factory throughput and spacetime estimation.
 
 ## Implementation gate
 
-Before replacing gates or changing non-Clifford structure, load `references/implementation.md`. It defines the cost record, relative-phase safety conditions, paired phase cancellation, Pauli-rotation combining, synthesis-error allocation, and factory-aware acceptance checks.
-
-Also apply `../quantum-operations/references/implementation-contract.md`. A matching computational-basis truth table does not prove a relative-phase replacement is safe.
+Load `references/implementation.md` before replacing gates or changing non-Clifford structure. It defines the cost record, relative-phase safety conditions, paired phase cancellation, Pauli-rotation combining, synthesis-error allocation, and factory-aware acceptance checks. Apply `../quantum-operations/references/implementation-contract.md` so each replacement is accepted through an explicit phase/equivalence proof rather than a basis-state truth table alone.
