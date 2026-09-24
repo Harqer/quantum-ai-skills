@@ -93,11 +93,11 @@ Necessary steady-state condition:
 arrival_rate * mean_service_time < worker_count
 ~~~
 
-This is not sufficient for deadline correctness because heavy tails and bursts can still violate p99/p99.9 deadlines. Simulate/replay the measured service-time distribution.
+For deadline correctness, also simulate or replay the measured service-time distribution so heavy tails and bursts are represented in the p99/p99.9 behavior.
 
 ## Decoder-induced stall
 
-If logical event G cannot start until decoder result D:
+When logical event G depends on decoder result D:
 
 ~~~text
 stall_D = max(0, decoder_finish(D) - baseline_start(G))
@@ -105,7 +105,7 @@ stall_D = max(0, decoder_finish(D) - baseline_start(G))
 
 The schedule must shift G and all dependent events, then re-evaluate downstream resource contention.
 
-Do not add decoder delay as one global constant.
+Model decoder delay per job and propagate each completion time through the dependency graph.
 
 ## Magic-state buffer
 
@@ -177,8 +177,8 @@ If retries/postselection are stochastic, run many sampled schedules or compute a
 - DAG remains acyclic;
 - every predecessor ends before dependent start;
 - no exclusive-resource overlaps;
-- buffer never becomes negative;
-- decoder job is never consumed before finish;
+- buffer occupancy remains nonnegative at every event;
+- each decoder result is consumed at or after its completion time;
 - all retries/postselection paths are represented;
 - final wall-clock runtime is reproducible from event log;
 - compare against a no-latency/no-starvation baseline to isolate extension sources.

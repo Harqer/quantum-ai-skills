@@ -8,7 +8,7 @@ These examples turn the research notes into implementation-oriented references. 
 
 ## Scope rule
 
-Use these examples to understand the mechanics. Do not copy architecture-specific assumptions into another QEC stack unless their prerequisites hold.
+Use these examples to understand the mechanics, and carry each architecture-specific assumption into another QEC stack only when its stated prerequisites are satisfied.
 
 In particular:
 

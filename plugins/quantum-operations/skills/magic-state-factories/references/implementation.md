@@ -37,7 +37,7 @@ A leading-order acceptance approximation is:
 p_accept ~= 1 - 15*p_in + O(p_in^2)
 ~~~
 
-Do not use either approximation outside its stated regime without the exact protocol/error model.
+Use these approximations inside their stated low-error regime and switch to the exact protocol/error model when the operating point falls outside that regime.
 
 ## Current executable protocol example: CUDA-Q Logical preview
 
@@ -111,7 +111,7 @@ https://nvidia.github.io/cuda-quantum/latest/preview/logical/use-cases/examples/
 
 ## Multi-level distillation
 
-For each level, do not simply multiply 15^L without modeling rejection/retries.
+For each level, propagate accepted-output rate, rejection probability, and retry demand recursively through the factory stack.
 
 For demanded output rate R_out:
 
@@ -133,7 +133,7 @@ buffer -= consume
 stall = requested_magic_states - consume
 ~~~
 
-The scheduler must use a stochastic or conservative acceptance model, not assume every attempt succeeds.
+Use a stochastic or conservative acceptance model so the scheduler represents unsuccessful attempts and the resulting buffer demand.
 
 ## Cultivation
 
@@ -142,7 +142,7 @@ Magic-state cultivation is **not 15-to-1 distillation**. It grows/protects a sta
 When cultivation is selected:
 - use the cultivation paper/reproduction circuits for that protocol;
 - model its acceptance, expansion, and output infidelity separately;
-- do not reuse the 35*p^3 distillation law.
+- use the cultivation-specific acceptance and output-error model from the selected protocol.
 
 Primary cultivation reference:
 https://arxiv.org/abs/2409.17595

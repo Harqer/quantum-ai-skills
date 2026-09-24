@@ -1,6 +1,6 @@
 # Implementation-grade documentation contract
 
-A routed skill is **implementation-ready** only when the agent can execute the requested transformation without inventing missing semantics.
+A routed skill is **implementation-ready** when the loaded material specifies every semantic step required to execute the requested transformation.
 
 Before writing production code from a skill, verify that the loaded skill/reference set provides all applicable items below.
 
@@ -44,11 +44,11 @@ Before writing production code from a skill, verify that the loaded skill/refere
 7. **Failure boundaries**
    - cases where the technique is invalid;
    - cases requiring a different routed skill;
-   - approximations or heuristics that must not be silently introduced.
+   - approximations or heuristics that require explicit declaration and justification.
 
-## Stop condition
+## Research-completion condition
 
-If a required item is absent for the requested implementation, do **not** fill it from intuition.
+When a required item is absent for the requested implementation, complete that item from the primary specification, paper, or current tool documentation before coding.
 
 Instead:
 1. load the skill implementation reference/examples;

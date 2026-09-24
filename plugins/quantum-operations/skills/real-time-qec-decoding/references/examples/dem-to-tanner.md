@@ -130,7 +130,7 @@ This is why a decoder is not selecting a correction from detector nodes alone. I
 
 ## DEM versus code parity-check matrix
 
-Do not conflate these two objects:
+Keep these two objects distinct:
 
 1. A stabilizer/QEC-code parity-check matrix describes the code's checks on qubits.
 2. A detector-error-model matrix maps **circuit-level error mechanisms to detector events in spacetime**.

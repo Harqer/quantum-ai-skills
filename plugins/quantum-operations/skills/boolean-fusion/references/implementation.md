@@ -38,7 +38,7 @@ For a target initialized to t, implement:
 t <- t XOR f(x)
 ~~~
 
-without modifying source bits.
+while leaving the source bits unchanged.
 
 - constant term 1: X(t)
 - degree-1 monomial x_i: CX(x_i,t)
@@ -75,7 +75,7 @@ maj ^= y AND z
 uncompute tmp
 ~~~
 
-Do not automatically share every repeated product. Compare:
+For each repeated product, compare the cost of sharing with the cost of recomputation:
 
 ~~~text
 saved nonlinear recomputations
@@ -106,7 +106,7 @@ A monomial may be materialized once and shared only if its lifetime/cost passes 
 
 If a proof establishes a AND b = 0 for all reachable states, eliminate monomials containing ab.
 
-This requires a semantic invariant; do not infer exclusivity from naming or observed test cases.
+Require a semantic invariant that proves the controls are mutually exclusive for every reachable state.
 
 ## Reversible boundary
 

@@ -2,6 +2,12 @@
 
 Quantum Operations separates concise routing guidance from implementation-grade references.
 
+## Instruction style
+
+Write skill guidance as affirmative, action-oriented prose. State the representation to build, the transformation to apply, the proof or validation to run, the condition that enables a technique, and the result that establishes completion. Prefer smooth paragraphs for the routing and decision layer, while equations, code, tables, and compact procedural structures remain available in implementation references when they make the mechanics clearer.
+
+When a technique has a limited validity domain, describe the valid domain and the alternative path for other cases. This keeps constraints precise while giving the agent a concrete next action.
+
 ## Acceptance rule
 
 A skill is considered implementation-ready for a technique only when the material loaded for that technique satisfies:
@@ -56,7 +62,7 @@ A fresh reviewer should be able to answer these questions before coding:
 7. Which cases are unsupported or require another skill?
 8. Which external API facts must be revalidated because they can change?
 
-If any answer requires guessing, the documentation is still ambiguous and fails this standard.
+The documentation passes this standard when every answer comes directly from the loaded skill, implementation reference, worked example, primary specification, or current tool documentation.
 
 ## Scope
 

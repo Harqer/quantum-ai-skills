@@ -5,55 +5,10 @@ description: Select and reason about quantum error-correcting codes and logical 
 
 # QEC Code Strategy
 
-Do not select a code by popularity, asymptotic parameters alone, or vendor.
+Select a QEC architecture from a complete machine and workload model. Capture the physical noise process, leakage and bias, connectivity and locality, gate/measurement/reset/transport timing, syndrome-cycle duration, target logical failure budget, required logical operations, detector-model changes, decoder resources, feed-forward deadlines, and available physical and classical scale. Use those inputs to construct concrete candidate records that pair a code family with its syndrome circuit, decoder, state-preparation and measurement protocols, logical-operation mechanisms, factory interface, routing model, and measured or justified logical-error behavior.
 
-## Capture assumptions first
-
-- physical error model, bias, leakage, and relevant correlations;
-- connectivity, dimensionality, locality, and transport model;
-- physical gate, measurement, reset, and syndrome-extraction cycle times;
-- target total logical failure probability and workload duration;
-- logical gate set and dominant logical operations;
-- how logical measurements/gates alter checks, boundaries, detector models, or code blocks;
-- classical decoding latency/throughput budget and available decoder compute;
-- logical-measurement/feed-forward deadlines;
-- available physical-qubit scale and classical interconnect constraints.
-
-## Compare executable logical architectures
-
-Compare code families **together with their logical-operation strategy** on:
-- threshold / below-threshold behavior under the stated noise model;
-- encoding rate and distance scaling;
-- syndrome-extraction depth and detector production rate;
-- transversal/native logical gates;
-- lattice-surgery, deformation, teleportation, or code-switching overhead;
-- state-preparation and logical-measurement protocols;
-- magic-state requirements and factory interfaces;
-- decoder accuracy, tail latency, memory, communication, and parallelism;
-- whether logical operations require changing decoding graphs/models;
-- classical feed-forward critical paths;
-- physical qubits, spacetime volume, and wall-clock runtime.
-
-A high-rate code with expensive decoding or logical operations can lose to a lower-rate code at system level. Conversely, a slower physical modality may permit sophisticated software decoding without specialized hardware.
-
-## Decoder feasibility is a code-selection constraint
-
-Before accepting a QEC strategy, estimate:
-- syndrome bytes/events generated per cycle;
-- simultaneous live code blocks;
-- target p99/p99.9 decode deadline where relevant;
-- buffering/look-ahead needed by the decoder;
-- backlog stability under logical-operation bursts;
-- failure semantics when decoding does not converge.
-
-Route experimental threshold/logical-error work to `qec-simulation-decoding`. Route sustained online execution requirements to `real-time-qec-decoding`.
-
-## Tools
-
-Useful tooling includes MQT QECC for QEC synthesis/decoding/logical-compilation studies and TQEC for topological/surface-code design automation. Verify current APIs before implementation and do not infer support for a code/protocol from a neighboring module.
+Compare candidates at the system level. Encoding rate, threshold behavior, syndrome depth, logical-gate availability, code switching or lattice-surgery overhead, magic-state demand, decoder tail latency, communication, spacetime volume, and wall-clock runtime should all enter the same comparison. Derive detector throughput from the actual syndrome circuit, select code distance or parameters from measured/simulated logical-error data and the assigned workload budget, and confirm that the candidate exposes a complete logical ISA for every operation the workload needs.
 
 ## Implementation gate
 
-Before selecting or coding a QEC architecture, load `references/implementation.md`. It defines the machine model, candidate record, measured-data distance selection, detector-rate calculation, logical-ISA completeness check, and acceptance criteria.
-
-Also apply `../quantum-operations/references/implementation-contract.md`. Do not compare code-family labels without concrete logical operations, decoder, syndrome circuit, and error model.
+Load `references/implementation.md` before selecting or coding a QEC architecture. It defines the machine model, candidate record, measured-data distance selection, detector-rate calculation, logical-ISA completeness check, and acceptance criteria. Apply `../quantum-operations/references/implementation-contract.md` so each comparison uses concrete protocols, syndrome circuits, decoders, and error models rather than code-family labels alone.

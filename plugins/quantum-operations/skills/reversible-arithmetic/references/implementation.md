@@ -15,7 +15,7 @@ forward resource counts
 inverse / cleanup resource counts
 ~~~
 
-Do not call a primitive simply "adder" without stating whether it is full-width, modulo 2^n, modular by an arbitrary N, in-place, out-of-place, controlled, or produces carry-out.
+Name each arithmetic primitive together with its exact contract: full-width or modulo, modulus when applicable, in-place or out-of-place mapping, control behavior, and carry outputs.
 
 ## Candidate selection
 
@@ -50,7 +50,7 @@ x + y + z = s + 2*c
 
 with no long carry propagation inside the compressor stage.
 
-Do not immediately convert every intermediate back to ordinary binary. Chain compressors until a semantic boundary requires one binary result, then perform the final carry-propagate addition.
+Keep intermediate multi-operand values in carry-save/compressor form across compatible stages, then perform the final carry-propagate addition at the semantic boundary that requires one binary result.
 
 Verification:
 - exhaustive small-width arithmetic identity;
@@ -63,7 +63,7 @@ For addition by known constant K:
 - propagate fixed carries where provable;
 - use the actual carry recurrence instead of instantiating a full quantum register containing K unless the chosen library requires it.
 
-Never treat a message block, key, or input value as constant unless it is truly fixed for the target workload.
+Specialize a message block, key, or input value as a constant only when the target workload explicitly fixes that value.
 
 ## Concrete examples
 
@@ -72,6 +72,6 @@ Never treat a message block, key, or input value as constant unless it is truly 
 
 ## Whole-workload rule
 
-Do not select an adder by isolated gate count. A lower-depth adder with many ancillas can increase physical footprint; a one-ancilla ripple adder can increase runtime and accumulated logical failure.
+Select the adder from the joint logical-width, depth, ancilla, factory, runtime, and logical-failure cost; preserve multiple Pareto candidates when these objectives trade off.
 
 Push candidate costs into ftqc-resource-estimation and ftqc-runtime-scheduling before selecting the production implementation.

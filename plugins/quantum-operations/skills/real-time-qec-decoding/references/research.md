@@ -9,7 +9,7 @@ These references are examples and design evidence, not universal architecture pr
   - Separates continuous error decoding from lower-latency logical-measurement outcome decoding.
   - Measures execution stretch caused by decoder backlog and delayed outcomes.
   - Uses on-the-fly DEM prior updates with a static Tanner graph because of a WCA-specific detector-signature property.
-  - Do not generalize the static-graph result to unrelated QEC protocols.
+  - Carry the static-graph result only into QEC protocols that prove the same detector-signature condition.
 
 - Ye, Wecker, Delfosse, **Beam search decoder for quantum low-density parity-check codes** (2025/2026), arXiv:2512.07057.
   - Demonstrates explicit speed/accuracy tradeoffs and reports p99.9 latency.
@@ -24,7 +24,7 @@ These references are examples and design evidence, not universal architecture pr
 
 - Barber et al., **A real-time, scalable, fast and highly resource efficient decoder for a quantum computer** (Nature Electronics 2025; arXiv:2309.05558).
   - Shows the opposite timing regime: superconducting-style microsecond/MHz requirements can motivate FPGA/ASIC implementations.
-  - Do not infer commodity-CPU adequacy across modalities.
+  - Evaluate decoder hardware against the syndrome-cycle timing and workload scale of each modality.
 
 ## Tool semantics
 
@@ -50,7 +50,7 @@ https://pymatching.readthedocs.io/en/stable/
 
 When converting a general DEM to matching:
 - document decomposition assumptions;
-- record ignored/non-graphlike mechanisms if the interface cannot represent them;
+- record every non-graphlike mechanism and the representation chosen for it when the interface has limited correlation support;
 - compare correlated and uncorrelated decoding experiments separately.
 
 ### MQT QECC

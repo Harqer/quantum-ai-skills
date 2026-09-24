@@ -45,7 +45,7 @@ after_gate_count = circuit.n_gates
 after_depth = circuit.depth()
 ~~~
 
-Do not interpret apply() returning True as proof that the chosen resource objective improved.
+Treat apply() returning True as a pass-execution result, then measure the selected resource objective explicitly.
 
 ## Rebase explicitly
 
@@ -62,9 +62,9 @@ rebase = AutoRebase(
 rebase.apply(circuit)
 ~~~
 
-AutoRebase raises when pytket cannot derive a known decomposition. In that case use RebaseCustom with a reviewed exact decomposition.
+When AutoRebase lacks a known decomposition, provide the reviewed exact decomposition through RebaseCustom.
 
-Current API note: use AutoRebase. Do not use old removed helper names from historical pytket versions.
+Current API note: use AutoRebase and verify the installed pytket version against the current pass documentation.
 
 ## Architecture routing
 
@@ -94,7 +94,7 @@ Record logical-to-physical mapping and re-run cleanup/rebase afterward as needed
 
 For PauliSimp / GreedyPauliSimp, explicitly decide whether global phase preservation is required.
 
-If a pass does not preserve global phase under the configured mode, do not use it in a workflow whose equivalence relation requires exact global phase.
+When the equivalence relation requires exact global phase, select a pass/configuration whose documented semantics preserve that phase relation.
 
 ## Recommended comparison workflow
 

@@ -1,6 +1,6 @@
 # IR interoperability: implementation reference
 
-Interchange is a semantic translation problem. Never assume that successful parsing means semantic preservation.
+Interchange is a semantic translation problem. Establish semantic preservation through the explicit round-trip and feature checks below.
 
 ## Canonical semantic checklist
 
@@ -27,7 +27,7 @@ After conversion, every required item must either:
 2. be carried in a documented sidecar/extension; or
 3. cause the conversion to fail.
 
-Never silently drop an unsupported semantic.
+Report every unsupported semantic explicitly and preserve it through a documented extension or sidecar when the workflow requires it.
 
 ## OpenQASM 3.1 dynamic example
 
@@ -104,7 +104,7 @@ qir = backend.qir(
 )
 ~~~
 
-Attempting to target Base should be allowed to fail with profile diagnostics when the program uses unsupported adaptive behavior. Do not rewrite away dynamic semantics simply to satisfy Base.
+When a program uses adaptive behavior outside the Base profile, preserve the adaptive semantics and surface the profile diagnostic so the caller can select an appropriate target profile.
 
 ## QIR resource-estimator boundary
 
@@ -114,7 +114,7 @@ Therefore an adaptive runtime-control program may require:
 - a separate logical/resource-count application model; or
 - a semantics-preserving static abstraction for estimation.
 
-Do not feed Adaptive_RI QIR into a Base-only interface and assume compatibility.
+Route Adaptive_RI QIR through an interface that advertises support for that profile, and use a Base-profile representation only after an explicit semantics-preserving transformation.
 
 ## Stim boundary
 
@@ -124,7 +124,7 @@ Stim circuit/DEM representations include QEC-specific semantics such as:
 - detector coordinates;
 - noise instructions.
 
-These annotations do not have direct standard OpenQASM equivalents.
+Carry these annotations through the documented QEC sidecar because standard OpenQASM lacks direct equivalents.
 
 If converting a Stim QEC circuit through OpenQASM/QIR:
 - preserve detector/observable metadata in a sidecar or tool-specific representation;
@@ -148,7 +148,7 @@ For every conversion path A -> B -> A or A -> B -> executable target:
 
 ## Unsupported conversion rule
 
-If target IR cannot represent a required feature, raise/report an explicit unsupported-feature error.
+When the target IR lacks a required feature, raise or report an explicit unsupported-feature result and identify the semantic that needs another representation.
 
 Examples:
 - detector annotations lost through ordinary QASM;

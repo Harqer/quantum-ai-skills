@@ -43,7 +43,7 @@ results = estimate(
 frame = results.as_frame()
 ~~~
 
-Do not replace target hardware timings/error rates with these example values in a production estimate.
+Replace the example timings and error rates with the measured or specified parameters of the target hardware before producing a production estimate.
 
 ### Other supported application types
 
@@ -140,7 +140,7 @@ physical:
   total peak qubits
 ~~~
 
-A QRE output does not automatically include the custom decoder queue and control-plane model from this repository. Attach those costs explicitly.
+Attach this repository's decoder queue and control-plane costs explicitly alongside the QRE output so the complete runtime model remains visible.
 
 ## Error budget
 

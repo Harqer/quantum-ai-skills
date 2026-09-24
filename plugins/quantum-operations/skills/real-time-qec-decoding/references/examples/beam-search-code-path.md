@@ -113,7 +113,7 @@ columns with Tanner degree <= 2 are skipped when choosing the initial branch var
 
 in the current beam-search implementation.
 
-Do not turn that implementation choice into a general QEC rule without validating it for another decoder/code.
+Treat that branch-selection rule as an implementation-specific choice and validate its effect explicitly before using it with another decoder or code family.
 
 ## 6. Published configurations
 

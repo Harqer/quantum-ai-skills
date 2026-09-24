@@ -280,7 +280,7 @@ Its first detector is
 d'_3 = d_3 \oplus H_2 \hat e_5.
 ```
 
-Because `H0''` is the actual terminal block from the original global matrix, the paper's example does not apply the artificial-window `H1` merge here. The final window commits all remaining error blocks.
+Because `H0''` is the actual terminal block from the original global matrix, the final window uses that terminal structure directly and commits all remaining error blocks.
 
 ## 9. Implementation skeleton
 

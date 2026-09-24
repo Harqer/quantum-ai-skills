@@ -5,16 +5,10 @@ description: Optimize XOR/AND-heavy reversible Boolean logic by sharing nonlinea
 
 # Boolean Fusion
 
-- Convert suitable regions to ANF/XOR-AND or another explicit Boolean IR.
-- Cancel duplicate XOR terms modulo 2.
-- Share repeated product terms only when reuse beats storage/uncomputation cost.
-- Fuse adjacent Boolean functions that consume the same source bits.
-- Exploit constants and mutually exclusive conditions before synthesis.
-- Track multiplicative complexity as an intermediate metric, then translate to Toffoli/CCZ/T-state and spacetime costs.
-- Preserve exact reversible semantics and ancilla cleanup.
+Represent suitable Boolean regions in ANF/XOR-AND form or another explicit exact Boolean IR, then normalize XOR terms modulo 2 and expose repeated nonlinear products. Share a product when the saved nonlinear work outweighs its temporary storage, routing, and cleanup cost, and fuse neighboring Boolean functions when they consume the same versioned source bits. Propagate proven constants and semantic invariants before synthesis so unreachable products and redundant controls disappear at the Boolean level.
+
+Use multiplicative complexity as an intermediate metric and translate the surviving nonlinear structure into Toffoli, CCZ, T-state, ancilla-lifetime, and spacetime costs before selecting a candidate. Preserve the exact reversible map, restore every temporary according to its contract, and verify phase-sensitive quantum implementations independently whenever relative-phase synthesis enters the lowering path.
 
 ## Implementation gate
 
-Before coding Boolean fusion, load `references/implementation.md`. It defines ANF representation, the exact Möbius transform, reversible synthesis rules, SHA-256 `Ch`/`Maj` identities, product sharing, and verification.
-
-Also apply `../quantum-operations/references/implementation-contract.md`. Classical truth-table equality is insufficient when a phase-relaxed quantum synthesis is used.
+Load `references/implementation.md` before coding Boolean fusion. It defines ANF representation, the exact Möbius transform, reversible synthesis rules, SHA-256 `Ch` and `Maj` identities, product sharing, and verification. Apply `../quantum-operations/references/implementation-contract.md` so the Boolean proof and the quantum-phase proof are both explicit where required.

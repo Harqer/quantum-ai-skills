@@ -5,21 +5,10 @@ description: Verify optimized and fault-tolerant quantum designs with equivalenc
 
 # Fault-Tolerant Verification
 
-Use layered, independent checks.
+Verify every transformation in layers. Use exact circuit equivalence for exact rewrites and an explicitly configured approximate-equivalence relation only when the algorithm specification includes an approximation budget. Use MQT QCEC where its supported circuit semantics match the candidate, Stim for detector and logical-observable validation on stabilizer/QEC circuits, and direct algebraic or state-based checks for small phase-sensitive gadgets and ancilla contracts.
 
-- Verify logical pre/post-optimization circuits for exact or explicitly allowed approximate equivalence.
-- Use MQT QCEC for circuit/compilation equivalence where compatible; choose exact vs approximate checks deliberately.
-- Use Stim detector/observable checks for stabilizer/QEC circuits.
-- Check logical operators and fault propagation, not only noiseless functional truth tables.
-- Assert ancilla reset/uncompute/disentanglement contracts.
-- Maintain known-answer/property tests for reversible primitives and complete algorithms.
-- Add resource-regression tests for logical width, non-Clifford counts/depth, cycles, and physical estimates.
-- For FT gadgets/state prep, validate the stated fault-tolerance order/model; functional equivalence alone is insufficient.
-
-See `references/tools.md`.
+Extend functional verification to the fault-tolerant claims themselves. Check logical operators, detector definitions, fault propagation, state-preparation conditions, clean and dirty ancilla restoration, and the stated fault-tolerance order or noise model. Maintain known-answer and property tests for primitives and complete algorithms, then add resource regressions for logical width, non-Clifford count and depth, QEC cycles, classical decoding load, and physical estimates so a semantically correct optimization also satisfies the intended engineering envelope.
 
 ## Implementation gate
 
-Before declaring a candidate verified, load `references/implementation.md`; use `references/tools.md` as a source index. The implementation reference defines exact/approximate QCEC workflows, dynamic-circuit limits, clean/dirty ancilla tests, detector checks, single-fault gadget tests, and resource regressions.
-
-Also apply `../quantum-operations/references/implementation-contract.md`. Inconclusive or unsupported verification is not success.
+Load `references/implementation.md` before declaring a candidate verified, and use `references/tools.md` as the source/version index. The implementation reference defines exact and approximate QCEC workflows, dynamic-circuit handling, clean and dirty ancilla tests, detector checks, single-fault gadget tests, and resource regressions. Apply `../quantum-operations/references/implementation-contract.md` and treat a verification result as complete when the selected checker establishes the requested equivalence relation and every required invariant passes.

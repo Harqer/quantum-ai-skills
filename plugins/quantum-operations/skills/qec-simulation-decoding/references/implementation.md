@@ -15,7 +15,7 @@ circuit = stim.Circuit.generated(
 )
 ~~~
 
-Stim generated circuits are starter/reference circuits, not automatically research-valid hardware models. Replace them with the actual syndrome circuit when evaluating a production architecture.
+Use Stim generated circuits as starter/reference circuits, and substitute the actual syndrome-extraction circuit when evaluating a production architecture.
 
 ## 2. Build the detector error model
 
@@ -29,7 +29,7 @@ model = circuit.detector_error_model(
 
 decompose_errors=True asks Stim to decompose suitable mechanisms so they can be represented as graphlike matching edges.
 
-Record this as an experimental assumption. Do not claim the result is the same experiment as decoding the undecomposed correlated model.
+Record this as an experimental assumption and label the graphlike-decomposed experiment separately from an undecomposed correlated-model experiment.
 
 ## 3. Construct the decoder
 
@@ -80,7 +80,7 @@ pred_corr = matching_corr.decode_batch(
 
 ## 5. Confidence interval
 
-Do not report a Monte Carlo proportion without uncertainty.
+Report every Monte Carlo proportion together with an uncertainty interval and the corresponding sample counts.
 
 For k failures in n independent shots, use a binomial confidence interval such as Wilson.
 
@@ -116,7 +116,7 @@ store:
 - DEM generation settings;
 - git/package versions.
 
-Never combine code-capacity, phenomenological, and circuit-level noise points on one fitted threshold curve without labeling the models separately.
+Maintain separate labeled threshold datasets for code-capacity, phenomenological, and circuit-level noise models.
 
 ## 7. Detector/observable sanity
 
@@ -129,7 +129,7 @@ Before decoding:
 
 ## 8. Handoff to real-time decoding
 
-This experiment is **offline**. It does not prove that decoding keeps up with a live syndrome stream.
+This experiment establishes offline decoder correctness and statistical performance; pass its measured latency distribution and detector rate to the real-time decoding skill for live-throughput validation.
 
 For online execution, pass the measured latency distribution, detector rate, code-block concurrency, and logical-operation traces to real-time-qec-decoding.
 

@@ -26,19 +26,19 @@ Precondition: arbitrary unknown state |psi>, possibly entangled with an external
 
 Postcondition: **the exact same state** |psi> and the same external correlations must be restored.
 
-Never assume a dirty ancilla is a classical unknown bit.
+Model a dirty ancilla as an arbitrary quantum state whose original state and external correlations must be restored exactly.
 
 ### Measured temporary
 
 May be measured only when a proven protocol allows its quantum information to leave the coherent state.
 
-After measurement, the pre-measurement quantum state is destroyed. The qubit cannot be treated as coherently borrowed.
+After measurement, classify the qubit as a measured temporary and follow the protocol's reset/reuse path.
 
 ### Resettable temporary
 
 Reset is permitted only after measurement/discard is semantically legal.
 
-Reset establishes |0> but is non-unitary and therefore cannot replace coherent uncomputation in an oracle merely to save width.
+Use coherent uncomputation whenever the algorithm requires reversible cleanup; use reset after the protocol has made measurement or discard semantically valid.
 
 ## SSA liveness analysis
 
@@ -53,7 +53,7 @@ last_use(v) = maximum instruction index of any consumer
 
 For a coherent temporary requiring inverse cleanup, extend its interval through the uncompute operation.
 
-Two clean temporaries may share one physical/logical ancilla slot only when their required live intervals do not overlap and both cleanup contracts hold.
+Two clean temporaries may share one physical/logical ancilla slot when their live intervals are disjoint and both cleanup contracts hold.
 
 ## Linear-scan allocator
 
@@ -73,7 +73,7 @@ for temp in temps_by_birth:
     active.add(temp)
 ~~~
 
-Compatibility is contract-sensitive: do not reuse a dirty slot as a clean |0> slot unless a protocol has restored it to clean zero.
+Treat compatibility as contract-sensitive and reuse a dirty slot as a clean |0> slot only after the protocol has restored it to clean zero.
 
 ## Compute -> consume -> uncompute
 
@@ -147,7 +147,7 @@ recompute:
   + added schedule depth/factory demand
 ~~~
 
-Do not choose based on qubit count alone.
+Choose between storage and recomputation from the joint width, cycle, routing, factory, and error-budget cost.
 
 ## Tests
 

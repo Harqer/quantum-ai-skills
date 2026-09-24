@@ -28,7 +28,7 @@ The plugin does not encode one vendor, qubit technology, QEC code, compiler, or 
 
 ## Implementation quality
 
-Quantum Operations uses a strict **no-guessing implementation contract**. A `SKILL.md` is the routing/decision layer; production implementation must load the corresponding `references/implementation.md` and relevant worked examples before coding. If inputs/outputs, preconditions, algorithm/circuit/API steps, verification, or failure boundaries are missing, the agent must research and extend the reference instead of inventing the missing step.
+Quantum Operations uses an **implementation-complete contract**. A `SKILL.md` is the routing and decision layer; production implementation loads the corresponding `references/implementation.md` and relevant worked examples before coding. When inputs, outputs, preconditions, algorithm or circuit steps, API details, verification, or failure boundaries need more detail, the agent completes the reference from the primary specification, paper, or current tool documentation first.
 
 See [IMPLEMENTATION_QUALITY.md](IMPLEMENTATION_QUALITY.md) for the coverage matrix and acceptance test.
 

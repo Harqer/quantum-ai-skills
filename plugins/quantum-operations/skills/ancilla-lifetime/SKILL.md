@@ -5,19 +5,10 @@ description: Minimize peak logical width and garbage through liveness analysis, 
 
 # Ancilla and Lifetime Optimization
 
-Treat qubits as a liveness/scheduling problem.
+Treat qubits as a liveness and scheduling problem. Build versioned def-use intervals for every temporary, move each inverse cleanup directly after the last dependent use when the dependency graph permits it, and pool ancilla slots whose live intervals are disjoint and whose contracts are compatible. Track clean, dirty, borrowed, measured, and resettable ancillas as distinct state contracts so allocation and release preserve the required quantum state and correlations.
 
-- Draw def-use intervals for every temporary.
-- Apply compute -> consume -> uncompute as soon as dependencies allow.
-- Pool temporaries whose live intervals do not overlap.
-- Distinguish clean, dirty, borrowed, measured, and resettable ancilla contracts.
-- Compare storage against recomputation when width is the limiting resource.
-- Use reversible pebbling on dependency graphs, but do not claim it removes mandatory simultaneous dependencies.
-- Include QEC implications: extra logical qubits can dominate physical-qubit footprint, while recomputation can increase logical cycles and error budget.
-- Verify every released ancilla is restored/disentangled as required.
+Evaluate storage and recomputation together. Reversible pebbling provides the space-time model for deciding which intermediates stay live and which are recomputed, while mandatory simultaneous dependencies remain explicit in the schedule. Feed peak logical width, added recomputation, logical cycles, routing pressure, and error-budget impact into the downstream FTQC cost model, then verify that every released ancilla satisfies its restoration and disentanglement contract.
 
 ## Implementation gate
 
-Before changing ancilla allocation or lifetime, load `references/implementation.md`. It defines clean/dirty/measured/resettable contracts, SSA liveness, linear-scan allocation, legal reversible-pebbling moves, storage-vs-recomputation costing, and release tests.
-
-Also apply `../quantum-operations/references/implementation-contract.md`. Never infer that a dirty ancilla is a classical unknown bit or that reset can replace coherent uncomputation.
+Load `references/implementation.md` before changing ancilla allocation or lifetime. That reference defines the clean, dirty, measured, and resettable contracts; SSA liveness; linear-scan allocation; legal reversible-pebbling moves; storage-versus-recomputation costing; and release tests. Apply `../quantum-operations/references/implementation-contract.md` so every implementation follows an explicit state contract and a proven cleanup path.
