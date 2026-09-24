@@ -97,7 +97,7 @@ For deadline correctness, also simulate or replay the measured service-time dist
 
 ## Decoder-induced stall
 
-If logical event G cannot start until decoder result D:
+When logical event G depends on decoder result D:
 
 ~~~text
 stall_D = max(0, decoder_finish(D) - baseline_start(G))
