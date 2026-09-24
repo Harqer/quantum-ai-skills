@@ -5,15 +5,10 @@ description: Keep FTQC workflows portable across circuit frameworks and intermed
 
 # IR and Framework Interoperability
 
-- Prefer explicit, documented interchange formats over lossy ad-hoc conversion.
-- Preserve measurement, reset, classical control, qubit ordering, global/relative phase requirements, and custom logical/QEC metadata.
-- Use OpenQASM 3 or QIR when they preserve the semantics required by the next tool.
-- Do not round-trip through an IR that cannot represent detector annotations, logical observables, dynamic control, or custom operations required by the workflow.
-- Compare resource counts before and after conversion; conversion itself can decompose or normalize operations.
-- Treat tool-specific extensions as versioned boundaries and verify current support.
+Treat every conversion as a semantic translation. Inventory qubit ordering, initialization, gates and parameters, measurement destinations, reset, classical conditions and control flow, timing semantics, physical identifiers, phase requirements, detector annotations, logical observables, and custom QEC operations before conversion. Map every required semantic either into a native target construct or into an explicit sidecar/extension whose reconstruction path is defined.
+
+Choose OpenQASM 3 or QIR when the next tool can represent the required semantics, and select the QIR target profile that matches the program's dynamic-control requirements. Preserve detector and logical-observable metadata through a QEC-aware sidecar whenever the target IR lacks native equivalents. After conversion, compare resource counts, register mappings, measurement/reset placement, branch predicates, parameter units, phase semantics, and QEC metadata so hidden decomposition or normalization remains visible.
 
 ## Implementation gate
 
-Before coding a conversion, load `references/implementation.md`. It defines the semantic checklist, OpenQASM 3.1 dynamic/reset semantics, QIR profile boundary, adaptive-control example, Stim detector sidecar rule, round-trip tests, and explicit unsupported-feature policy.
-
-Also apply `../quantum-operations/references/implementation-contract.md`. Successful parsing is not evidence of semantic preservation.
+Load `references/implementation.md` before coding a conversion. It defines the semantic checklist, OpenQASM 3.1 dynamic and reset semantics, QIR profile boundaries, an adaptive-control example, the Stim detector-sidecar rule, round-trip tests, and explicit unsupported-feature reporting. Apply `../quantum-operations/references/implementation-contract.md` so successful interchange means semantic preservation rather than parser acceptance alone.
