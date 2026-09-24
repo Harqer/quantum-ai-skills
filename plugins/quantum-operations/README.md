@@ -6,7 +6,7 @@ The plugin is intentionally a knowledge layer rather than a runtime integration.
 
 ## Technical scope
 
-The router coordinates five broad domains:
+The router coordinates seven broad domains:
 
 1. **Logical reduction** — semantic simplification, reversible arithmetic, Boolean fusion, and ancilla lifetime.
 2. **Fault-tolerant synthesis** — Clifford+T / non-Clifford optimization plus supporting circuit-rewrite and compiler passes.
