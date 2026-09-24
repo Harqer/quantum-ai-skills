@@ -119,7 +119,7 @@ A non-Clifford operation such as T can map an existing Pauli correction into a n
 2. extend the software frame to a Clifford frame;
 3. use a teleportation/injection protocol whose byproduct rules are explicitly tracked.
 
-Do not continue applying Pauli-only update rules through a non-Clifford gate when the frame is no longer Pauli.
+At a non-Clifford boundary, switch to the selected explicit correction, Clifford-frame extension, or teleportation/byproduct protocol before continuing frame propagation.
 
 ## Measurement-assisted cleanup
 
