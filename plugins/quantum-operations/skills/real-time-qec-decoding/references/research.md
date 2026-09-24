@@ -59,3 +59,14 @@ MQT QECC includes QEC representations, decoding, synthesis, state preparation, a
 https://mqt.readthedocs.io/projects/qecc/en/latest/
 
 Use current documentation before writing tool-specific calls.
+
+
+## Worked examples
+
+Implementation-oriented examples live under [examples/](examples/README.md):
+
+- [DEM to Tanner graph](examples/dem-to-tanner.md) — explicit `H e = d (mod 2)` construction from a minimal Stim-style detector error model.
+- [Walking Cat sliding window](examples/walking-cat-sliding-window.md) — exact six-SEC `(w,c)=(3,1)` block-matrix example, duplicate-column merge rule, commit semantics, and detector offset updates from Sec. XVII.C of arXiv:2604.19481.
+- [BeamSearchDecoder code path](examples/beam-search-code-path.md) — published Stim DEM → check matrix/priors → C++ beam-search decoder → logical-observable prediction flow.
+
+Use these files when implementing or auditing a decoder. Keep architecture-specific details in the examples/references layer rather than promoting them to universal skill rules.
