@@ -60,3 +60,16 @@ Examples:
 - a CPU decoder adequate for millisecond trapped-ion cycles does not imply CPU adequacy for microsecond syndrome cycles;
 - measurement-assisted ancilla cleanup does not permit arbitrary measurement of coherent workspace;
 - lattice-surgery scheduling assumptions do not automatically apply to transversal or code-switching architectures.
+
+## Implementation gate
+
+For any request that produces or modifies production quantum code, first load [the implementation-grade documentation contract](references/implementation-contract.md).
+
+A routed skill is not sufficient by name alone. Before coding:
+1. load that skill's `references/implementation.md` when present;
+2. load the smallest relevant file under `references/examples/` when an exact worked construction exists;
+3. verify current external APIs when the implementation reference marks them version-sensitive;
+4. refuse to invent an algorithmic step, circuit identity, QEC protocol, or hardware parameter that the loaded sources do not specify;
+5. satisfy the contract's input/output, precondition, algorithm, example, verification, and failure-boundary requirements.
+
+If the routed documentation does not satisfy the contract for the requested technique, research the primary specification/paper and add the missing implementation reference before treating the technique as production-ready.
