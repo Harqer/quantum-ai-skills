@@ -5,19 +5,10 @@ description: Compile and optimize fault-tolerant logical operations using lattic
 
 # Lattice Surgery and Topological Compilation
 
-Treat lattice surgery as a logical/spacetime compilation problem, not merely a gate translation.
+Treat lattice surgery as a logical and spacetime compilation problem. Lower logical operations into the reviewed Pauli-product measurements and patch operations supported by the selected code architecture, then optimize patch placement, movement, routing, merge/split timing, dependency depth, factory interfaces, and congestion while keeping code distance and factory placement parameterized. Track patch identity, logical basis and orientation, space/time coordinates, required ancilla regions, and logical correlation surfaces throughout the transformation.
 
-- Convert logical operations into Pauli-product measurements / patch operations when appropriate.
-- Optimize patch placement, movement, routing, merge/split schedule, and dependency depth.
-- Track logical patches, code cycles, spacetime volume, routing congestion, and factory interfaces.
-- Keep code distance and factory placement parameterized rather than baked into the logical schedule.
-- Verify logical equivalence independently of geometric optimization.
-- Use TQEC as a primary modern reference/tool for surface-code/lattice-surgery design automation; compare other lattice-surgery compilers only when their capabilities match the task.
-
-See `references/tools.md`.
+Use TQEC as the primary modern reference for surface-code and lattice-surgery design automation when its model matches the task, and evaluate alternative compilers against the same logical semantics and resource model. Verify each geometric rewrite by recompiling the baseline and candidate, preserving the intended logical observables/correlation surfaces, generating detector-annotated circuits, and comparing logical error behavior, physical footprint, and spacetime volume under the same assumptions.
 
 ## Implementation gate
 
-Before implementing a lattice-surgery compiler/geometry, load `references/implementation.md`; use `references/tools.md` as a project index. The implementation reference gives the current TQEC CNOT → correlation surfaces → compilation → detector-annotated Stim → simulation flow and its verification requirements.
-
-Also apply `../quantum-operations/references/implementation-contract.md`. Pin the TQEC version/commit used by production examples.
+Load `references/implementation.md` before implementing a lattice-surgery compiler or geometry, and use `references/tools.md` as the project/version index. The implementation reference gives the current TQEC CNOT-to-correlation-surfaces-to-compilation-to-Stim-to-simulation flow and its verification requirements. Apply `../quantum-operations/references/implementation-contract.md` and pin the TQEC version or commit used by production examples.
