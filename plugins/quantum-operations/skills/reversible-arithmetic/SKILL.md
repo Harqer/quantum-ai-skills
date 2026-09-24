@@ -13,3 +13,11 @@ description: Optimize exact reversible arithmetic for FTQC, including adders, co
 - Account for both forward and inverse/uncompute cost.
 - Optimize ancilla lifetime jointly with gate count and depth.
 - Report at least logical qubits, Toffoli/CCZ/T-related cost, Clifford depth, and downstream physical estimate impact.
+
+## Implementation gate
+
+Before coding an arithmetic primitive, load `references/implementation.md` and the relevant worked example:
+- `references/examples/cuccaro-adder.md` for an exact ripple-carry MAJ/UMA construction;
+- `references/examples/temporary-logical-and.md` for measurement-assisted 4-T temporary-AND compute/erase.
+
+Also apply `../quantum-operations/references/implementation-contract.md`. Every arithmetic implementation must state endianness, overflow/modulus semantics, ancilla contracts, and forward/cleanup cost.
