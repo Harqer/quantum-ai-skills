@@ -153,13 +153,53 @@ See [SECURITY.md](SECURITY.md) for the trust model and release guidance.
 
 ## Installation
 
-The repository is structured as a ChatGPT/Codex plugin marketplace. The marketplace manifest lives at:
+This repository is a Git-backed ChatGPT/Codex plugin marketplace. Its marketplace manifest is:
 
 ```text
 .agents/plugins/marketplace.json
 ```
 
-For a controlled installation, pin a release tag or commit so the loaded skill set is immutable until you deliberately upgrade it.
+### Codex CLI
+
+Register the marketplace directly from GitHub, keeping only the marketplace and plugin payload in the sparse checkout:
+
+```bash
+codex plugin marketplace add Harqer/quantum-ai-skills \
+  --ref main \
+  --sparse .agents/plugins \
+  --sparse plugins
+```
+
+Install Quantum Operations from that marketplace:
+
+```bash
+codex plugin add quantum-operations@quantum-operations-marketplace
+```
+
+Confirm the marketplace and plugin are visible:
+
+```bash
+codex plugin marketplace list
+codex plugin list
+```
+
+After installing or upgrading the plugin, start a new Codex thread so the skill catalog is loaded into the new session.
+
+### ChatGPT desktop / Work
+
+In the ChatGPT desktop app, add a plugin marketplace with:
+
+- Source: `Harqer/quantum-ai-skills`
+- Git ref: `main`
+- Sparse paths: `.agents/plugins` and `plugins`
+
+Then open the Plugins Directory, choose **Quantum Operations**, install it, and start a new Work chat. Repo marketplaces are intended for local/team testing and distribution; publishing to the universal Plugins Directory is a separate review flow.
+
+### ChatGPT web / universal directory
+
+Quantum Operations is a skills-only plugin, so it can be submitted through OpenAI's **Skills only** plugin submission flow. Once approved and published, the same plugin listing becomes available from supported ChatGPT and Codex surfaces through the universal Plugins Directory.
+
+For controlled development installs, pin a release tag or commit instead of `main` so the loaded skill set stays immutable until you deliberately upgrade it.
 
 ## Scope
 

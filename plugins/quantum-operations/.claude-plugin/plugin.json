@@ -1,6 +1,6 @@
 {
   "name": "quantum-operations",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Hardware-agnostic, implementation-grade FTQC skills with affirmative guidance, exact algorithms, worked examples, current tool/API references, verification, scheduling, and resource estimation.",
   "author": {
     "name": "Cristian Del Toro"

@@ -1,23 +1,30 @@
 {
-  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "quantum-operations",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Hardware-agnostic, implementation-grade FTQC skills with affirmative guidance, exact algorithms, worked examples, current tool/API references, verification, scheduling, and resource estimation.",
   "author": {
     "name": "Cristian Del Toro"
   },
-  "repository": "https://github.com/Harqer/quantum-ai-skills",
-  "license": "MIT",
-  "keywords": [
-    "quantum",
-    "ftqc",
-    "fault-tolerant-quantum-computing",
-    "qec",
-    "real-time-decoding",
-    "runtime-control",
-    "quantum-scheduling",
-    "clifford-t",
-    "resource-estimation",
-    "lattice-surgery"
-  ]
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Quantum Operations",
+    "shortDescription": "FTQC engineering workflows",
+    "longDescription": "Skills for designing, optimizing, verifying, scheduling, and estimating fault-tolerant quantum computations, including reversible arithmetic, Boolean fusion, Clifford+T optimization, QEC, lattice surgery, real-time decoding, runtime control, resource estimation, and hardware-aware validation.",
+    "developerName": "Cristian Del Toro",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Quantum circuit optimization",
+      "Fault-tolerant compilation",
+      "QEC analysis",
+      "Runtime scheduling",
+      "Resource estimation",
+      "Verification"
+    ],
+    "websiteURL": "https://github.com/Harqer/quantum-ai-skills",
+    "defaultPrompt": [
+      "Use Quantum Operations to audit this quantum implementation for logical-width, non-Clifford, QEC, runtime, and resource bottlenecks.",
+      "Use Quantum Operations to design an exact fault-tolerant implementation of this algorithm and verify each lowering stage.",
+      "Use Quantum Operations to compare circuit optimizations and report logical width, non-Clifford cost, depth, scheduling constraints, and physical-resource assumptions."
+    ]
+  }
 }
