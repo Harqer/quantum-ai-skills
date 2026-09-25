@@ -30,24 +30,24 @@ If one of these elements is missing for the requested technique, the agent resea
 | Skill | Implementation layer |
 | --- | --- |
 | quantum-operations | router + `references/implementation-contract.md` |
-| semantic-gate-reduction | `references/workflows/semantic-gate-reduction/workflow.md` + `workflow references/implementation.md` |
-| boolean-fusion | `references/workflows/boolean-fusion/workflow.md` + `workflow references/implementation.md` |
-| ancilla-lifetime | `references/workflows/ancilla-lifetime/workflow.md` + `workflow references/implementation.md` |
-| reversible-arithmetic | `references/workflows/reversible-arithmetic/workflow.md` + `workflow references/implementation.md` + exact Cuccaro/temp-AND examples |
-| clifford-t-optimization | `references/workflows/clifford-t-optimization/workflow.md` + `workflow references/implementation.md` |
-| pyzx-optimization | `references/workflows/pyzx-optimization/workflow.md` + `workflow references/implementation.md` + tools index |
-| pytket-optimization | `references/workflows/pytket-optimization/workflow.md` + `workflow references/implementation.md` + tools index |
-| qec-code-strategy | `references/workflows/qec-code-strategy/workflow.md` + `workflow references/implementation.md` |
-| qec-simulation-decoding | `references/workflows/qec-simulation-decoding/workflow.md` + `workflow references/implementation.md` + tools index |
+| semantic-gate-reduction | `references/workflows/semantic-gate-reduction/workflow.md` + `references/implementation.md` |
+| boolean-fusion | `references/workflows/boolean-fusion/workflow.md` + `references/implementation.md` |
+| ancilla-lifetime | `references/workflows/ancilla-lifetime/workflow.md` + `references/implementation.md` |
+| reversible-arithmetic | `references/workflows/reversible-arithmetic/workflow.md` + `references/implementation.md` + exact Cuccaro/temp-AND examples |
+| clifford-t-optimization | `references/workflows/clifford-t-optimization/workflow.md` + `references/implementation.md` |
+| pyzx-optimization | `references/workflows/pyzx-optimization/workflow.md` + `references/implementation.md` + tools index |
+| pytket-optimization | `references/workflows/pytket-optimization/workflow.md` + `references/implementation.md` + tools index |
+| qec-code-strategy | `references/workflows/qec-code-strategy/workflow.md` + `references/implementation.md` |
+| qec-simulation-decoding | `references/workflows/qec-simulation-decoding/workflow.md` + `references/implementation.md` + tools index |
 | real-time-qec-decoding | `references/workflows/real-time-qec-decoding/workflow.md` + research + exact DEM/Tanner, Walking Cat, BeamSearch examples |
-| lattice-surgery | `references/workflows/lattice-surgery/workflow.md` + `workflow references/implementation.md` + tools index |
-| magic-state-factories | `references/workflows/magic-state-factories/workflow.md` + `workflow references/implementation.md` |
-| fault-tolerant-runtime-control | `references/workflows/fault-tolerant-runtime-control/workflow.md` + `workflow references/implementation.md` + research |
-| ftqc-runtime-scheduling | `references/workflows/ftqc-runtime-scheduling/workflow.md` + `workflow references/implementation.md` + research |
-| ftqc-resource-estimation | `references/workflows/ftqc-resource-estimation/workflow.md` + `workflow references/implementation.md` + tools index |
-| fault-tolerant-verification | `references/workflows/fault-tolerant-verification/workflow.md` + `workflow references/implementation.md` + tools index |
-| ir-interoperability | `references/workflows/ir-interoperability/workflow.md` + `workflow references/implementation.md` |
-| fire-opal-adjunct | `references/workflows/fire-opal-adjunct/workflow.md` + `workflow references/implementation.md` |
+| lattice-surgery | `references/workflows/lattice-surgery/workflow.md` + `references/implementation.md` + tools index |
+| magic-state-factories | `references/workflows/magic-state-factories/workflow.md` + `references/implementation.md` |
+| fault-tolerant-runtime-control | `references/workflows/fault-tolerant-runtime-control/workflow.md` + `references/implementation.md` + research |
+| ftqc-runtime-scheduling | `references/workflows/ftqc-runtime-scheduling/workflow.md` + `references/implementation.md` + research |
+| ftqc-resource-estimation | `references/workflows/ftqc-resource-estimation/workflow.md` + `references/implementation.md` + tools index |
+| fault-tolerant-verification | `references/workflows/fault-tolerant-verification/workflow.md` + `references/implementation.md` + tools index |
+| ir-interoperability | `references/workflows/ir-interoperability/workflow.md` + `references/implementation.md` |
+| fire-opal-adjunct | `references/workflows/fire-opal-adjunct/workflow.md` + `references/implementation.md` |
 
 ## Review test
 
