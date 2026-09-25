@@ -161,9 +161,9 @@ This repository is a Git-backed ChatGPT/Codex plugin marketplace. Its marketplac
 .agents/plugins/marketplace.json
 ```
 
-### Codex CLI
+### 1. Add or refresh the marketplace
 
-Register the marketplace directly from GitHub, keeping only the marketplace and plugin payload in the sparse checkout:
+From a terminal with Codex installed:
 
 ```bash
 codex plugin marketplace add Harqer/quantum-ai-skills \
@@ -172,36 +172,42 @@ codex plugin marketplace add Harqer/quantum-ai-skills \
   --sparse plugins
 ```
 
-Install Quantum Operations from that marketplace:
+If the marketplace is already configured, refresh its Git snapshot instead:
 
 ```bash
-codex plugin add quantum-operations@quantum-operations-marketplace
+codex plugin marketplace upgrade quantum-operations-marketplace
 ```
 
-Confirm the marketplace and plugin are visible:
+Confirm Codex sees the source:
 
 ```bash
 codex plugin marketplace list
-codex plugin list
 ```
 
-After installing or upgrading the plugin, start a new Codex thread so the skill catalog is loaded into the new session.
+### 2. Install the plugin in ChatGPT desktop
 
-### ChatGPT desktop / Work
+Restart the ChatGPT desktop app after adding or refreshing the marketplace. Open the **Plugins Directory**, select the **Quantum Operations** marketplace source, choose **Quantum Operations**, and install it there.
 
-In the ChatGPT desktop app, add a plugin marketplace with:
+Local/repo marketplace installation is performed through the ChatGPT desktop Plugins Directory. The marketplace CLI manages marketplace sources; it is not the documented plugin-install surface.
 
-- Source: `Harqer/quantum-ai-skills`
-- Git ref: `main`
-- Sparse paths: `.agents/plugins` and `plugins`
+After installation, start a **new Work or Codex chat** so the new skill catalog is loaded into the session.
 
-Then open the Plugins Directory, choose **Quantum Operations**, install it, and start a new Work chat. Repo marketplaces are intended for local/team testing and distribution; publishing to the universal Plugins Directory is a separate review flow.
+### 3. Refresh after plugin updates
 
-### ChatGPT web / universal directory
+ChatGPT installs local-marketplace plugins into its plugin cache rather than loading directly from the Git working tree. When Quantum Operations changes:
 
-Quantum Operations is a skills-only plugin, so it can be submitted through OpenAI's **Skills only** plugin submission flow. Once approved and published, the same plugin listing becomes available from supported ChatGPT and Codex surfaces through the universal Plugins Directory.
+1. Run `codex plugin marketplace upgrade quantum-operations-marketplace`.
+2. Restart the ChatGPT desktop app.
+3. Reopen the Plugins Directory and confirm Quantum Operations is installed/enabled.
+4. Start a new chat.
 
-For controlled development installs, pin a release tag or commit instead of `main` so the loaded skill set stays immutable until you deliberately upgrade it.
+Quantum Operations v0.6.0 exposes one cataloged router skill and loads specialist FTQC workflows from that skill's references on demand. This keeps the skill metadata footprint small while preserving all specialist implementation guidance.
+
+### Public ChatGPT web directory
+
+The repository marketplace is for local/team authoring and testing. To make Quantum Operations available by name from the universal public Plugins Directory shared by ChatGPT and Codex, submit the skills-only package through OpenAI's plugin submission flow and publish it after approval.
+
+For controlled development installs, pin a release tag or commit instead of `main` when you want the loaded skill set to remain immutable until an explicit upgrade.
 
 ## Scope
 
