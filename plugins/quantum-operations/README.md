@@ -16,11 +16,11 @@ The router coordinates seven broad domains:
 6. **Whole-machine scheduling** — QEC cycles, factory supply, routing, decoding, controller dependencies, stalls, and retries.
 7. **Resource validation** — logical/physical/classical resource estimation, equivalence checks, and independent verification.
 
-Start with [`skills/quantum-operations/SKILL.md`](skills/quantum-operations/SKILL.md). It selects the minimum set of specialized skills needed for the current task.
+Start with [`skills/quantum-operations/SKILL.md`](skills/quantum-operations/SKILL.md). It is the plugin's single cataloged skill and routes each request to the smallest required set of specialist workflow documents.
 
 ## Context architecture
 
-Each skill has a concise `SKILL.md`. Deeper framework/tool notes are stored under `references/` and are loaded only when implementation detail is relevant. This progressive-disclosure structure is designed to preserve model context rather than inject the entire knowledge base into every quantum task.
+The plugin exposes one concise router `SKILL.md`. Specialist workflows, framework/tool notes, research, and worked examples live under `skills/quantum-operations/references/workflows/` and are loaded only when the router selects them. This progressive-disclosure structure preserves the skills metadata budget and avoids injecting the entire quantum catalog into every session.
 
 ## Hardware neutrality
 
@@ -28,7 +28,7 @@ The plugin does not encode one vendor, qubit technology, QEC code, compiler, or 
 
 ## Implementation quality
 
-Quantum Operations uses an **implementation-complete contract**. A `SKILL.md` is the routing and decision layer; production implementation loads the corresponding `references/implementation.md` and relevant worked examples before coding. When inputs, outputs, preconditions, algorithm or circuit steps, API details, verification, or failure boundaries need more detail, the agent completes the reference from the primary specification, paper, or current tool documentation first.
+Quantum Operations uses an **implementation-complete contract**. The router `SKILL.md` is the routing and decision layer; production implementation loads the selected workflow's `workflow.md`, its `references/implementation.md`, and relevant worked examples before coding. When inputs, outputs, preconditions, algorithm or circuit steps, API details, verification, or failure boundaries need more detail, the agent completes the reference from the primary specification, paper, or current tool documentation first.
 
 See [IMPLEMENTATION_QUALITY.md](IMPLEMENTATION_QUALITY.md) for the coverage matrix and acceptance test.
 

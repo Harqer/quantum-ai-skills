@@ -40,7 +40,7 @@ The repository is organized as a pipeline rather than a flat catalog:
 
 **Question:** *Can the computation itself be made smaller before fault-tolerant compilation begins?*
 
-Begin with [Semantic Gate Reduction](plugins/quantum-operations/skills/semantic-gate-reduction/SKILL.md). This layer looks for algebraic simplification, virtual permutations, constant propagation, cross-boundary fusion, and other reductions that generic gate optimizers often miss after decomposition.
+Begin with [Semantic Gate Reduction](plugins/quantum-operations/skills/quantum-operations/references/workflows/semantic-gate-reduction/workflow.md). This layer looks for algebraic simplification, virtual permutations, constant propagation, cross-boundary fusion, and other reductions that generic gate optimizers often miss after decomposition.
 
 Related skills handle reversible arithmetic, Boolean networks, and ancilla lifetime when those become the dominant cost.
 
@@ -48,7 +48,7 @@ Related skills handle reversible arithmetic, Boolean networks, and ancilla lifet
 
 **Question:** *What is the cheapest exact logical implementation once the algorithm has been structurally simplified?*
 
-Use [Clifford+T Optimization](plugins/quantum-operations/skills/clifford-t-optimization/SKILL.md) for non-Clifford synthesis, Toffoli/T reduction, rotation synthesis tradeoffs, and the distinction between raw logical gate count and fault-tolerant cost.
+Use [Clifford+T Optimization](plugins/quantum-operations/skills/quantum-operations/references/workflows/clifford-t-optimization/workflow.md) for non-Clifford synthesis, Toffoli/T reduction, rotation synthesis tradeoffs, and the distinction between raw logical gate count and fault-tolerant cost.
 
 Circuit-rewriting systems such as PyZX and compiler-pass systems such as pytket are treated as supporting optimization layers, not as substitutes for semantic reasoning.
 
@@ -56,7 +56,7 @@ Circuit-rewriting systems such as PyZX and compiler-pass systems such as pytket 
 
 **Question:** *Under what QEC assumptions can the logical circuit actually run?*
 
-Use [QEC Code Strategy](plugins/quantum-operations/skills/qec-code-strategy/SKILL.md) to reason about code families, logical operations, code distance, error budgets, and the assumptions that must be fixed before physical-resource estimates mean anything.
+Use [QEC Code Strategy](plugins/quantum-operations/skills/quantum-operations/references/workflows/qec-code-strategy/workflow.md) to reason about code families, logical operations, code distance, error budgets, and the assumptions that must be fixed before physical-resource estimates mean anything.
 
 For threshold studies, syndrome generation, decoder evaluation, and logical-error experiments, continue into the QEC simulation/decoding branch selected by the router.
 
@@ -64,15 +64,15 @@ For threshold studies, syndrome generation, decoder evaluation, and logical-erro
 
 **Question:** *How are logical operations realized in space and time?*
 
-Use [Lattice Surgery](plugins/quantum-operations/skills/lattice-surgery/SKILL.md) when a topological/lattice-surgery model is appropriate. The skill focuses on logical scheduling, patch movement, merges/splits, spacetime tradeoffs, and compilation boundaries rather than a specific hardware vendor.
+Use [Lattice Surgery](plugins/quantum-operations/skills/quantum-operations/references/workflows/lattice-surgery/workflow.md) when a topological/lattice-surgery model is appropriate. The skill focuses on logical scheduling, patch movement, merges/splits, spacetime tradeoffs, and compilation boundaries rather than a specific hardware vendor.
 
-When non-Clifford operations dominate the schedule, pair this stage with [Magic-State Factories](plugins/quantum-operations/skills/magic-state-factories/SKILL.md) to model distillation throughput and factory pressure instead of treating T gates as free logical primitives.
+When non-Clifford operations dominate the schedule, pair this stage with [Magic-State Factories](plugins/quantum-operations/skills/quantum-operations/references/workflows/magic-state-factories/workflow.md) to model distillation throughput and factory pressure instead of treating T gates as free logical primitives.
 
 ### 5. Close the runtime control loop
 
 **Question:** *Can measurements, decoding, classical decisions, and logical-frame updates keep pace with the quantum schedule?*
 
-Use [Fault-Tolerant Runtime Control](plugins/quantum-operations/skills/fault-tolerant-runtime-control/SKILL.md) for Pauli/Clifford frame tracking, logical-measurement interpretation, conditional operations, and legal measurement-assisted cleanup. Use [Real-Time QEC Decoding](plugins/quantum-operations/skills/real-time-qec-decoding/SKILL.md) when syndrome streams impose latency, buffering, throughput, or backlog constraints.
+Use [Fault-Tolerant Runtime Control](plugins/quantum-operations/skills/quantum-operations/references/workflows/fault-tolerant-runtime-control/workflow.md) for Pauli/Clifford frame tracking, logical-measurement interpretation, conditional operations, and legal measurement-assisted cleanup. Use [Real-Time QEC Decoding](plugins/quantum-operations/skills/quantum-operations/references/workflows/real-time-qec-decoding/workflow.md) when syndrome streams impose latency, buffering, throughput, or backlog constraints.
 
 These skills deliberately separate offline decoder quality from online execution feasibility.
 
@@ -80,13 +80,13 @@ These skills deliberately separate offline decoder quality from online execution
 
 **Question:** *What actually determines wall-clock progress once QEC cycles, factories, routing, decoding, and feed-forward interact?*
 
-Use [FTQC Runtime Scheduling](plugins/quantum-operations/skills/ftqc-runtime-scheduling/SKILL.md) to construct a dependency-aware schedule and expose decoder stalls, delayed measurement outcomes, factory starvation, routing contention, retries, and other runtime extensions.
+Use [FTQC Runtime Scheduling](plugins/quantum-operations/skills/quantum-operations/references/workflows/ftqc-runtime-scheduling/workflow.md) to construct a dependency-aware schedule and expose decoder stalls, delayed measurement outcomes, factory starvation, routing contention, retries, and other runtime extensions.
 
 ### 7. Convert the executable design into resources
 
 **Question:** *How many physical qubits, classical resources, and how much wall-clock time does the workload require under explicit assumptions?*
 
-Use [FTQC Resource Estimation](plugins/quantum-operations/skills/ftqc-resource-estimation/SKILL.md). This stage separates logical, runtime, classical-control, and physical costs and makes error models, code parameters, factory assumptions, cycle time, decoder assumptions, and target failure probability explicit.
+Use [FTQC Resource Estimation](plugins/quantum-operations/skills/quantum-operations/references/workflows/ftqc-resource-estimation/workflow.md). This stage separates logical, runtime, classical-control, and physical costs and makes error models, code parameters, factory assumptions, cycle time, decoder assumptions, and target failure probability explicit.
 
 The result should be a resource envelope or Pareto frontier, not a single unexplained number.
 
@@ -94,7 +94,7 @@ The result should be a resource envelope or Pareto frontier, not a single unexpl
 
 **Question:** *Did optimization or compilation change the computation, violate a fault-tolerance assumption, or hide a resource regression?*
 
-Use [Fault-Tolerant Verification](plugins/quantum-operations/skills/fault-tolerant-verification/SKILL.md) for equivalence checking, simulation strategy, ancilla/phase correctness, logical validation, and independent cross-checking of resource claims.
+Use [Fault-Tolerant Verification](plugins/quantum-operations/skills/quantum-operations/references/workflows/fault-tolerant-verification/workflow.md) for equivalence checking, simulation strategy, ancilla/phase correctness, logical validation, and independent cross-checking of resource claims.
 
 This stage is deliberately separate from optimization: the system should be able to challenge its own candidate implementation.
 
@@ -106,14 +106,16 @@ plugins/quantum-operations/
 ├── .codex-plugin/              # OpenAI/Codex compatibility
 ├── .claude-plugin/             # Claude Code compatibility
 └── skills/
-    ├── quantum-operations/     # start here: task router + shared contract
-    ├── .../SKILL.md            # focused workflow for one engineering domain
-    └── .../references/         # deeper tool/API/technical context loaded only when needed
+    └── quantum-operations/
+        ├── SKILL.md            # one cataloged router skill
+        └── references/
+            ├── implementation-contract.md
+            └── workflows/     # specialist workflow guides, examples, and tool references
 ```
 
-A `SKILL.md` explains **how to reason about a class of quantum-engineering problems**. A skill's `references/` directory contains the more detailed framework or tool guidance needed to carry out that workflow. This keeps routing context lightweight while still allowing deep technical guidance when the task requires it.
+The plugin exposes one cataloged `SKILL.md`: the Quantum Operations router. Specialist workflows live under that skill's `references/workflows/` tree and are loaded only after routing. This keeps the session-visible skill catalog small while preserving implementation-grade guidance, examples, research notes, and tool references.
 
-Start with the router, follow the relevant stage in the blueprint above, and load the specific references that supply the implementation details for that stage.
+Start with the router, follow the relevant stage in the blueprint above, and load only the specialist workflow documents and references required for that stage.
 
 ## Design principles
 

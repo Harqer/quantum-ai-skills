@@ -1,6 +1,6 @@
 # Implementation Quality Standard
 
-Quantum Operations separates concise routing guidance from implementation-grade references.
+Quantum Operations exposes one concise cataloged router and keeps implementation-grade specialist workflows under its references tree.
 
 ## Instruction style
 
@@ -10,7 +10,7 @@ When a technique has a limited validity domain, describe the valid domain and th
 
 ## Acceptance rule
 
-A skill is considered implementation-ready for a technique only when the material loaded for that technique satisfies:
+A routed workflow is considered implementation-ready for a technique only when the material loaded for that technique satisfies:
 
 - explicit inputs and outputs;
 - semantic and hardware/QEC preconditions;
@@ -23,31 +23,31 @@ A skill is considered implementation-ready for a technique only when the materia
 The authoritative checklist is:
 [skills/quantum-operations/references/implementation-contract.md](skills/quantum-operations/references/implementation-contract.md).
 
-If one of these elements is missing for the requested technique, the agent must research the primary source/current API and extend the reference before treating the implementation as production-ready.
+If one of these elements is missing for the requested technique, the agent researches the primary source/current API and extends the workflow reference before treating the implementation as production-ready.
 
 ## Coverage
 
 | Skill | Implementation layer |
 | --- | --- |
 | quantum-operations | router + `references/implementation-contract.md` |
-| semantic-gate-reduction | `references/implementation.md` |
-| boolean-fusion | `references/implementation.md` |
-| ancilla-lifetime | `references/implementation.md` |
-| reversible-arithmetic | `references/implementation.md` + exact Cuccaro/temp-AND examples |
-| clifford-t-optimization | `references/implementation.md` |
-| pyzx-optimization | `references/implementation.md` + tools index |
-| pytket-optimization | `references/implementation.md` + tools index |
-| qec-code-strategy | `references/implementation.md` |
-| qec-simulation-decoding | `references/implementation.md` + tools index |
-| real-time-qec-decoding | research + exact DEM/Tanner, Walking Cat, BeamSearch examples |
-| lattice-surgery | `references/implementation.md` + tools index |
-| magic-state-factories | `references/implementation.md` |
-| fault-tolerant-runtime-control | `references/implementation.md` + research |
-| ftqc-runtime-scheduling | `references/implementation.md` + research |
-| ftqc-resource-estimation | `references/implementation.md` + tools index |
-| fault-tolerant-verification | `references/implementation.md` + tools index |
-| ir-interoperability | `references/implementation.md` |
-| fire-opal-adjunct | `references/implementation.md` |
+| semantic-gate-reduction | `references/workflows/semantic-gate-reduction/workflow.md` + `workflow references/implementation.md` |
+| boolean-fusion | `references/workflows/boolean-fusion/workflow.md` + `workflow references/implementation.md` |
+| ancilla-lifetime | `references/workflows/ancilla-lifetime/workflow.md` + `workflow references/implementation.md` |
+| reversible-arithmetic | `references/workflows/reversible-arithmetic/workflow.md` + `workflow references/implementation.md` + exact Cuccaro/temp-AND examples |
+| clifford-t-optimization | `references/workflows/clifford-t-optimization/workflow.md` + `workflow references/implementation.md` |
+| pyzx-optimization | `references/workflows/pyzx-optimization/workflow.md` + `workflow references/implementation.md` + tools index |
+| pytket-optimization | `references/workflows/pytket-optimization/workflow.md` + `workflow references/implementation.md` + tools index |
+| qec-code-strategy | `references/workflows/qec-code-strategy/workflow.md` + `workflow references/implementation.md` |
+| qec-simulation-decoding | `references/workflows/qec-simulation-decoding/workflow.md` + `workflow references/implementation.md` + tools index |
+| real-time-qec-decoding | `references/workflows/real-time-qec-decoding/workflow.md` + research + exact DEM/Tanner, Walking Cat, BeamSearch examples |
+| lattice-surgery | `references/workflows/lattice-surgery/workflow.md` + `workflow references/implementation.md` + tools index |
+| magic-state-factories | `references/workflows/magic-state-factories/workflow.md` + `workflow references/implementation.md` |
+| fault-tolerant-runtime-control | `references/workflows/fault-tolerant-runtime-control/workflow.md` + `workflow references/implementation.md` + research |
+| ftqc-runtime-scheduling | `references/workflows/ftqc-runtime-scheduling/workflow.md` + `workflow references/implementation.md` + research |
+| ftqc-resource-estimation | `references/workflows/ftqc-resource-estimation/workflow.md` + `workflow references/implementation.md` + tools index |
+| fault-tolerant-verification | `references/workflows/fault-tolerant-verification/workflow.md` + `workflow references/implementation.md` + tools index |
+| ir-interoperability | `references/workflows/ir-interoperability/workflow.md` + `workflow references/implementation.md` |
+| fire-opal-adjunct | `references/workflows/fire-opal-adjunct/workflow.md` + `workflow references/implementation.md` |
 
 ## Review test
 
@@ -66,4 +66,4 @@ The documentation passes this standard when every answer comes directly from the
 
 ## Scope
 
-This standard does not require every `SKILL.md` to become a textbook. `SKILL.md` remains the routing/decision layer; deep equations, circuits, APIs, and examples live under `references/` so context is loaded progressively.
+This standard keeps the single router `SKILL.md` concise. Deep equations, circuits, APIs, and examples live under `references/workflows/` so context is loaded progressively.

@@ -1,18 +1,48 @@
 ---
 name: quantum-operations
-description: Route fault-tolerant quantum computing work across specialized skills. Use for hardware-agnostic FTQC design, optimization, error correction, logical compilation, runtime control, real-time decoding, verification, scheduling, or resource estimation.
+description: Route FTQC design and implementation across logical optimization, QEC, decoding, scheduling, resource estimation, and verification.
 ---
 
 # Quantum Operations Router
 
-Use this skill as the entry point for fault-tolerant quantum-computing work. Preserve the requested algorithm exactly unless the task explicitly includes approximation, and keep logical algorithm cost, fault-tolerant logical cost, execution/runtime cost, and physical-resource cost as separate layers. Optimize across logical width, non-Clifford demand, logical depth, spacetime volume, decoder load, classical feed-forward, physical qubits, and wall-clock runtime while treating hardware as an explicit capability/error/timing model.
+Use this skill as the single entry point for fault-tolerant quantum-computing work. Preserve the requested algorithm exactly unless the task explicitly includes approximation. Keep logical algorithm cost, fault-tolerant logical cost, execution/runtime cost, and physical-resource cost as separate layers. Optimize across logical width, non-Clifford demand, logical depth, spacetime volume, decoder load, classical feed-forward, physical qubits, and wall-clock runtime while representing hardware through explicit capabilities, error models, timing, topology, and QEC assumptions.
 
-Route high-level semantic work to `semantic-gate-reduction`; reversible cryptographic arithmetic to `reversible-arithmetic`, `boolean-fusion`, and `ancilla-lifetime`; non-Clifford synthesis to `clifford-t-optimization`; ZX reasoning to `pyzx-optimization`; compiler passes and mapping to `pytket-optimization`; code selection to `qec-code-strategy`; offline decoder studies to `qec-simulation-decoding`; streaming decoder engineering to `real-time-qec-decoding`; logical frames and feed-forward to `fault-tolerant-runtime-control`; topological compilation to `lattice-surgery`; magic-state systems to `magic-state-factories`; whole-machine timing to `ftqc-runtime-scheduling`; physical and classical costing to `ftqc-resource-estimation`; verification to `fault-tolerant-verification`; interchange to `ir-interoperability`; and present-day Fire Opal execution to `fire-opal-adjunct`.
+## Route the work
 
-The default FTQC flow freezes the exact workload and resource baseline, performs semantic and reversible reduction, optimizes the surviving non-Clifford structure and ancilla lifetimes, selects a QEC/logical ISA from the physical model, compiles logical operations, sizes magic-state production, defines frame and measurement-control semantics, provisions real-time decoding, builds the dependency-aware runtime schedule, estimates logical/classical/physical resources, and verifies the resulting design independently. Keep the Pareto frontier when several candidates trade width, runtime, factories, decoder resources, or error budget differently.
+Select the smallest workflow set that covers the request, then load each selected workflow's `workflow.md` from `references/workflows/<workflow>/`.
 
-Architecture-specific examples stay attached to the assumptions that make them valid. A fixed Tanner graph with changing priors belongs to architectures whose detector signatures preserve that topology; CPU decoder conclusions inherit the syndrome-cycle timing and workload scale of the benchmark; measurement-assisted cleanup inherits the gadget's measurement and byproduct semantics; and lattice-surgery scheduling rules inherit the selected topological architecture.
+| Need | Workflow |
+| --- | --- |
+| Algebraic simplification, virtual permutations, constant propagation, cross-boundary fusion | `semantic-gate-reduction` |
+| Exact adders, compressors, modular arithmetic, carry-save forms | `reversible-arithmetic` |
+| XOR/AND structure, shared nonlinear products, multiplicative complexity | `boolean-fusion` |
+| Peak logical width, temporary lifetime, compute-use-uncompute, pebbling | `ancilla-lifetime` |
+| T/Toffoli/CCZ cost, non-Clifford synthesis, factory demand | `clifford-t-optimization` |
+| ZX-calculus and phase-polynomial rewriting | `pyzx-optimization` |
+| Compiler passes, rebasing, placement, routing, mapping | `pytket-optimization` |
+| QEC code selection and logical-operation strategy | `qec-code-strategy` |
+| Offline detector simulation and decoder benchmarking | `qec-simulation-decoding` |
+| Streaming decoder deadlines, backlog, tail latency | `real-time-qec-decoding` |
+| Pauli/Clifford frames, decoded measurements, feed-forward | `fault-tolerant-runtime-control` |
+| Lattice surgery, patches, routing, topological schedules | `lattice-surgery` |
+| Distillation, cultivation, catalysis, factory throughput | `magic-state-factories` |
+| Whole-machine event/dependency scheduling | `ftqc-runtime-scheduling` |
+| Logical, classical, and physical resource estimation | `ftqc-resource-estimation` |
+| Equivalence, detector/logical validation, regression tests | `fault-tolerant-verification` |
+| OpenQASM/QIR/framework interchange | `ir-interoperability` |
+| Present-day Fire Opal execution/error-suppression adjunct | `fire-opal-adjunct` |
+
+For multi-stage production work, use the default flow: freeze the exact workload and baseline; perform semantic and reversible reduction; optimize surviving non-Clifford structure and ancilla lifetimes; select the QEC/logical ISA; compile logical operations; size magic-state production; define frame and measurement-control semantics; provision real-time decoding; build the dependency-aware runtime schedule; estimate resources; then verify the candidate independently. Preserve the Pareto frontier when candidates trade width, runtime, factory demand, decoder resources, or error budget differently.
+
+Architecture-specific examples inherit the assumptions that make them valid. Carry fixed topology assumptions only into workloads that preserve that topology. Carry decoder throughput conclusions only into comparable syndrome-cycle timing and workload scale. Carry measurement-assisted cleanup only into gadgets with matching measurement and byproduct semantics. Carry lattice-surgery rules only into the selected topological architecture.
 
 ## Implementation gate
 
-For every request that produces or modifies production quantum code, load `references/implementation-contract.md` first, then load the routed skill's `references/implementation.md` when present and the smallest relevant worked example under `references/examples/`. Verify current external APIs when the reference marks them as version-sensitive, and complete any missing algorithmic detail from the primary specification or paper before implementation. The production path is ready when the loaded documentation supplies explicit inputs, outputs, preconditions, algorithm/circuit/API steps, examples, verification, and failure boundaries for the requested technique.
+For every request that produces or modifies production quantum code, load `references/implementation-contract.md` first. Then load:
+
+1. `references/workflows/<workflow>/workflow.md` for each routed workflow.
+2. `references/workflows/<workflow>/references/implementation.md` when present.
+3. The smallest relevant worked example under that workflow's `references/examples/`.
+4. The workflow's tool or research reference when the implementation depends on version-sensitive APIs, empirical results, or architecture-specific assumptions.
+
+Verify current external APIs when a reference marks them as version-sensitive. Complete missing algorithmic detail from the primary specification, paper, or current tool documentation before implementation. The production path is ready when the loaded material supplies explicit inputs, outputs, preconditions, algorithm/circuit/API steps, examples for nontrivial mechanics, verification, and failure boundaries.
