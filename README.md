@@ -20,6 +20,7 @@ It helps an agent reason about:
 - QEC-code and logical-operation strategy;
 - executable qLDPC architecture design across BB/HGP/lifted/Tanner constructions, decoders, routing, and logical gates;
 - toric-code architecture from square-lattice homology through MWPM/union-find, biased noise, repeated syndrome extraction, and 3D/4D variants;
+- experimentally demonstrated qutrit/qudit architectures spanning native trapped-ion qudits, transient transmon levels, virtual-qubit packing, and bosonic GKP qudits;
 - syndrome simulation, decoding, and logical error analysis;
 - real-time decoding, tail-latency, buffering, and backlog engineering;
 - Pauli/Clifford frame tracking and measurement/feed-forward control;
@@ -58,7 +59,7 @@ Circuit-rewriting systems such as PyZX and compiler-pass systems such as pytket 
 
 **Question:** *Under what QEC assumptions can the logical circuit actually run?*
 
-Use [QEC Code Strategy](plugins/quantum-operations/skills/quantum-operations/references/workflows/qec-code-strategy/workflow.md) to reason about code families, logical operations, code distance, error budgets, and the assumptions that must be fixed before physical-resource estimates mean anything. When a qLDPC candidate is in scope, continue into [Quantum LDPC Architecture](plugins/quantum-operations/skills/quantum-operations/references/workflows/qldpc-architecture/workflow.md) for exact finite construction, syndrome extraction, decoder selection, Tanner-edge hardware routing, logical-gate coverage, and fair surface-code comparison. When a toric-code candidate is in scope, use [Toric-Code Architecture](plugins/quantum-operations/skills/quantum-operations/references/workflows/toric-code-architecture/workflow.md) for periodic lattice construction, homological logical operators, syndrome circuits, code-capacity/phenomenological/circuit-level decoding, biased-noise variants, higher-dimensional toric codes, and hardware seam costs.
+Use [QEC Code Strategy](plugins/quantum-operations/skills/quantum-operations/references/workflows/qec-code-strategy/workflow.md) to reason about code families, logical operations, code distance, error budgets, and the assumptions that must be fixed before physical-resource estimates mean anything. When a qLDPC candidate is in scope, continue into [Quantum LDPC Architecture](plugins/quantum-operations/skills/quantum-operations/references/workflows/qldpc-architecture/workflow.md) for exact finite construction, syndrome extraction, decoder selection, Tanner-edge hardware routing, logical-gate coverage, and fair surface-code comparison. When a toric-code candidate is in scope, use [Toric-Code Architecture](plugins/quantum-operations/skills/quantum-operations/references/workflows/toric-code-architecture/workflow.md) for periodic lattice construction, homological logical operators, syndrome circuits, code-capacity/phenomenological/circuit-level decoding, biased-noise variants, higher-dimensional toric codes, and hardware seam costs. When a physical platform exposes experimentally demonstrated higher levels, use [Qudit and Qutrit Architecture](plugins/quantum-operations/skills/quantum-operations/references/workflows/qudit-architecture/workflow.md) to distinguish native carrier compression, transient auxiliary levels, bosonic logical qudits, and qubit-encoded qudits, then cost pulse depth, leakage, SPAM, entangling fidelity, and actual provider access.
 
 For threshold studies, syndrome generation, decoder evaluation, and logical-error experiments, continue into the QEC simulation/decoding branch selected by the router.
 
@@ -203,7 +204,7 @@ ChatGPT installs local-marketplace plugins into its plugin cache rather than loa
 3. Reopen the Plugins Directory and confirm Quantum Operations is installed/enabled.
 4. Start a new chat.
 
-Quantum Operations v0.8.0 exposes one cataloged router skill and loads specialist FTQC workflows from that skill's references on demand. This keeps the skill metadata footprint small while preserving all specialist implementation guidance.
+Quantum Operations v0.9.0 exposes one cataloged router skill and loads specialist FTQC workflows from that skill's references on demand. This keeps the skill metadata footprint small while preserving all specialist implementation guidance.
 
 ### Public ChatGPT web directory
 
