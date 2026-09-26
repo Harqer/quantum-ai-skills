@@ -183,7 +183,7 @@ bp_lsd = BpLsdDecoder(
 )
 ~~~
 
-Confirm the exact constructor names/arguments against the installed `ldpc` version before execution; current documentation is version 2.1.0.
+Confirm the exact constructor names/arguments against the installed `ldpc` version before execution; current upstream package metadata is version 2.4.1.
 
 For each physical error point report shots, logical failures, confidence interval, decoder mean/p99/p99.9 latency, throughput, and fallback/convergence behavior. A memory threshold/result is valid only for the stated circuit and noise model.
 
