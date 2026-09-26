@@ -1,29 +1,33 @@
-# Fire Opal adjunct: implementation reference
+# Fire Opal implementation
 
-Fire Opal is a present-day real-hardware error-suppression execution layer. Keep QEC and FTQC logical-resource requirements in their dedicated fault-tolerant models.
+API checked against Q-CTRL documentation, September 2026.
 
-API checked against Q-CTRL Fire Opal documentation in September 2026.
+## Setup
 
-## Install
-
-~~~text
+~~~bash
 pip install fire-opal qiskit
 ~~~
-
-Pin a tested version in a production environment and record it with results.
-
-## Authenticate through environment-managed credentials
 
 ~~~python
 import os
 import fireopal as fo
 
 fo.authenticate_qctrl_account(
-    api_key=os.environ["QCTRL_API_KEY"],
+    api_key=os.environ["QCTRL_API_KEY"]
 )
 ~~~
 
-For IBM Cloud:
+For multiple Q-CTRL organizations:
+
+~~~python
+fo.config.configure_organization(
+    organization_slug=os.environ["QCTRL_ORG_SLUG"]
+)
+~~~
+
+Q-CTRL authentication is separate from QPU credentials.
+
+### IBM Quantum
 
 ~~~python
 credentials = fo.credentials.make_credentials_for_ibm_cloud(
@@ -32,101 +36,224 @@ credentials = fo.credentials.make_credentials_for_ibm_cloud(
 )
 ~~~
 
-For Amazon Braket/IonQ, use make_credentials_for_braket with an authorized IAM role ARN from the environment/configuration.
-
-## Discover supported devices
+### IonQ through Amazon Braket
 
 ~~~python
-devices = fo.show_supported_devices(
-    credentials=credentials,
-)["supported_devices"]
-
-if not devices:
-    raise RuntimeError("No accessible Fire Opal-supported devices")
+credentials = fo.credentials.make_credentials_for_braket(
+    arn=os.environ["AWS_BRAKET_ROLE_ARN"]
+)
 ~~~
 
-Select backend_name from the returned supported-device set at execution time.
+## Backend discovery
 
-Current documented provider coverage includes cloud-accessible IBM Quantum Platform devices and IonQ systems through Amazon Braket.
+~~~python
+devices = fo.show_supported_devices(credentials)
+backend_name = devices["supported_devices"][0]
+~~~
 
-## Convert a circuit
+Resolve this at runtime. Current public documentation covers cloud-accessible IBM Quantum devices and IonQ through Amazon Braket.
+
+## Circuit contract
+
+Execution functions accept OpenQASM 2 or 3 strings.
+
+For Qiskit:
 
 ~~~python
 from qiskit import qasm3
-
-circuit_qasm = qasm3.dumps(qc)
+qasm = qasm3.dumps(qc)
 ~~~
 
-Fire Opal execute accepts QASM 2 or 3 strings.
+Requirements:
+- at least one quantum register and measurement;
+- `execute` supports multiple classical registers;
+- other execution functions currently require one classical register;
+- use virtual qubits; physical-qubit addressing is rejected;
+- stay within the documented Fire Opal gate set and backend width.
 
-## Validate before hardware execution
+Parameterized circuits use unbound QASM 3 plus `parameters`. Prefer this over regenerating circuits because it reduces preprocessing.
+
+## Validate before QPU use
 
 ~~~python
 validation = fo.validate(
-    circuits=[circuit_qasm],
+    circuits=[qasm],
     credentials=credentials,
     backend_name=backend_name,
 )
 
-errors = validation.get("results", [])
-warnings = validation.get("warnings", [])
-
-if errors:
-    raise RuntimeError(
-        f"Fire Opal validation failed: {errors}"
-    )
+if validation.get("results"):
+    raise RuntimeError(validation["results"])
 ~~~
 
-Use validation as the non-metered compatibility gate and submit hardware jobs after validation succeeds.
+Treat warnings as execution evidence. Fire Opal warns when estimated duration approaches coherence limits and rejects circuits beyond supported hardware limits.
 
-## Execute
+## Raw measurement workloads
 
 ~~~python
 job = fo.execute(
-    circuits=[circuit_qasm],
-    shot_count=shot_count,
+    circuits=[qasm],
+    shot_count=2048,
     credentials=credentials,
     backend_name=backend_name,
 )
-~~~
 
-execute returns a FireOpalJob immediately.
-
-Retrieve:
-
-~~~python
+action_id = job.action_id
+status = job.status()
 result = job.result()
 ~~~
 
-Result payload formats can evolve; consume documented keys for the installed version and preserve the raw result alongside parsed metrics.
+`result()` blocks. Poll with `status()` when nonblocking control is required.
 
-## Repeated submissions
+Use `execution_results` for circuits with multiple classical registers. Preserve:
+- action ID;
+- provider job IDs;
+- execution metadata;
+- warnings;
+- Fire Opal/package versions.
 
-For repeated workloads where documented/current support applies, Fire Opal exposes iterate rather than repeatedly invoking independent execute jobs.
+Retrieve interrupted jobs with:
 
-If iterate is used, ensure stop_iterate is called when the session is complete.
-
-## FTQC boundary
-
-Record Fire Opal improvements as present-day hardware metrics, while the following FTQC quantities continue to come from the fault-tolerant models:
-- fewer logical qubits;
-- lower required code distance;
-- removal of magic-state factories;
-- proof of logical fault tolerance;
-- claim that an over-wide circuit now fits hardware.
-
-Keep Fire Opal metrics in a separate present-day-hardware result record:
-
-~~~text
-backend
-shots
-raw/mitigated result metrics
-validation warnings
-Fire Opal version
-provider job IDs / metadata
+~~~python
+fo.activity_monitor(limit=20)
+result = fo.get_result(action_id)
+metadata = fo.get_action_metadata(limit=20)
 ~~~
 
-Sources:
-- https://docs.q-ctrl.com/references/fire-opal/fireopal
-- https://docs.q-ctrl.com/references/fire-opal/fireopal/fireopal.validate.html
-- https://docs.q-ctrl.com/references/fire-opal/fireopal/fireopal.execute
+Use Fire Opal results rather than provider-native results because Fire Opal post-processing is applied there.
+
+## Batches and iterative algorithms
+
+A single job supports at most 300 circuits or parameter dictionaries. Fire Opal allows up to 40 concurrent jobs.
+
+Use `iterate` for sequential jobs, variational loops, or workloads exceeding one batch:
+
+~~~python
+jobs = []
+for parameter_batch in batches:
+    jobs.append(
+        fo.iterate(
+            circuits=[parameterized_qasm],
+            parameters=parameter_batch,
+            shot_count=2048,
+            credentials=credentials,
+            backend_name=backend_name,
+        )
+    )
+
+results = [job.result() for job in jobs]
+fo.stop_iterate(credentials, backend_name)
+~~~
+
+`iterate` manages provider-specific queue/session reuse. Always release the session.
+
+## Expectation values
+
+Use direct expectation APIs when the objective is a Hamiltonian/observable, rather than reconstructing it from raw bitstrings.
+
+~~~python
+from fireopal.types import PauliOperator
+
+H = PauliOperator.from_list([
+    ("ZZI", 0.5),
+    ("IZZ", 0.5),
+])
+
+job = fo.estimate_expectation(
+    circuits=[qasm],
+    observables=H,
+    shot_count=2048,
+    credentials=credentials,
+    backend_name=backend_name,
+)
+
+result = job.result()
+values = result["expectation_values"]
+std = result["standard_deviations"]
+~~~
+
+Use `iterate_expectation` for VQE/QML/custom optimization loops, then call `stop_iterate`.
+
+## IBM execution controls
+
+~~~python
+from fireopal.run_options import IbmRunOptions
+
+options = IbmRunOptions(
+    session_id=None,
+    job_tags=["experiment"],
+    reduce_approximation=True,
+)
+~~~
+
+`reduce_approximation=True` lowers Fire Opal's approximation tolerance when small/near-identity rotations must be preserved. Existing IBM Runtime sessions may be supplied through `session_id`.
+
+## Mid-circuit measurements
+
+Fire Opal supports mid-circuit and final measurements. Multiple classical registers are supported with `execute`.
+
+Read named registers from:
+
+~~~python
+registers = job.result()["execution_results"][0]
+mid = registers["mcm"]
+final = registers["final"]
+~~~
+
+Reusing the same classical bits overwrites earlier values. Give mid-circuit and terminal data separate bits/registers when both are needed.
+
+## Managed QAOA
+
+Use `solve_qaoa` when Fire Opal should own circuit construction, hardware execution, and classical parameter optimization.
+
+Accepted problem forms include:
+- NetworkX graph with `maxcut` or `max-k-cut`;
+- nonlinear SymPy binary polynomial;
+- diagonal I/Z `PauliOperator`;
+- optional exactly-one Hamming-weight constraints.
+
+~~~python
+job = fo.solve_qaoa(
+    problem=graph,
+    problem_type="maxcut",
+    credentials=credentials,
+    backend_name=backend_name,
+)
+solution = job.result()
+~~~
+
+The result includes the best bitstring, cost, final distribution, iteration count, parameter values, and warnings.
+
+## Managed many-body dynamics
+
+`simulate_dynamics` accepts a model, initial state, simulation definition, observables, shots, backend, and credentials. Fire Opal performs synthesis/Trotterization, hardware-aware mapping, suppression, execution, and observable estimation.
+
+Use it when the task is a supported many-body model rather than manually constructing every Trotter circuit.
+
+## Monte Carlo integration
+
+`integrate_monte_carlo` accepts either a prepared QASM problem or a problem built with Fire Opal objective/distribution helpers.
+
+~~~python
+job = fo.integrate_monte_carlo(
+    problem=problem,
+    credentials=credentials,
+    backend_name=backend_name,
+    integrator_options={
+        "max_iteration_count": 20,
+        "target_variance": 1e-3,
+    },
+)
+~~~
+
+Use this path for supported integration/finance workloads instead of manually orchestrating amplitude-estimation circuits.
+
+## Execution policy
+
+Fire Opal is for real hardware; its execution pipeline does not support simulators.
+
+Its pipeline includes hardware-aware compilation/layout, deterministic error suppression such as dynamical-decoupling/control corrections, and measurement-error mitigation. Additional provider jobs tagged for mitigation can appear; Q-CTRL states this calibration overhead is typically about ten seconds or less.
+
+Prefer shallower circuits and outputs distinguishable from a uniform distribution. Validation warnings around T1/coherence limits are a signal to reduce depth before spending hardware time.
+
+Keep Fire Opal distinct from FTQC QEC. Error suppression does not prove logical fault tolerance, reduce algorithmic logical width, or replace a code/factory/resource model.
