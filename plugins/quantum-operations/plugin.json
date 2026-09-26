@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "quantum-operations",
-  "version": "0.10.0",
-  "description": "Hardware-agnostic FTQC engineering with exact optimization, QEC architectures, proven qudits, and Q-CTRL Fire Opal real-hardware execution.",
+  "version": "0.10.1",
+  "description": "Hardware-agnostic FTQC engineering with exact optimization, QEC architectures, proven qudits, and Q-CTRL Fire Opal QPU execution optimization.",
   "author": {
     "name": "Cristian Del Toro",
     "url": "https://github.com/Harqer"
@@ -32,7 +32,7 @@
       "interface": {
         "displayName": "Quantum Operations",
         "shortDescription": "FTQC engineering workflows",
-        "longDescription": "Skills for exact quantum optimization, QEC and FTQC architecture, proven qutrit/qudit implementations, verification and resource estimation, plus Q-CTRL Fire Opal execution for supported real hardware, error suppression, iterative workloads, expectations, QAOA, dynamics, and Monte Carlo.",
+        "longDescription": "Skills for exact quantum optimization, QEC/FTQC architecture, proven qutrit/qudit implementations, verification and resource estimation, plus Q-CTRL Fire Opal for QPU layout/routing selection, hardware-aware compilation, error suppression, and optimized real-hardware execution.",
         "developerName": "Cristian Del Toro",
         "category": "Developer Tools",
         "capabilities": [
@@ -45,7 +45,7 @@
           "Quantum LDPC architecture",
           "Toric-code architecture",
           "Qutrit and qudit architecture",
-          "Q-CTRL Fire Opal execution"
+          "Q-CTRL Fire Opal QPU optimization"
         ],
         "websiteURL": "https://github.com/Harqer/quantum-ai-skills",
         "defaultPrompt": [
