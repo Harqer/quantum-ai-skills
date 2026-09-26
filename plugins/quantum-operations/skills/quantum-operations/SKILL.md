@@ -20,7 +20,9 @@ Select the smallest workflow set that covers the request, then load each selecte
 | T/Toffoli/CCZ cost, non-Clifford synthesis, factory demand | `clifford-t-optimization` |
 | ZX-calculus and phase-polynomial rewriting | `pyzx-optimization` |
 | Compiler passes, rebasing, placement, routing, mapping | `pytket-optimization` |
-| QEC code selection and logical-operation strategy | `qec-code-strategy` |\n| qLDPC construction, syndrome circuits, decoding, nonlocal routing, and logical gates | `qldpc-architecture` |
+| QEC code selection and logical-operation strategy | `qec-code-strategy` |
+| qLDPC construction, syndrome circuits, decoding, nonlocal routing, and logical gates | `qldpc-architecture` |
+| Toric-code topology, homological logicals, periodic layouts, biased noise, 2D/3D/4D variants, and toric decoders | `toric-code-architecture` |
 | Offline detector simulation and decoder benchmarking | `qec-simulation-decoding` |
 | Streaming decoder deadlines, backlog, tail latency | `real-time-qec-decoding` |
 | Pauli/Clifford frames, decoded measurements, feed-forward | `fault-tolerant-runtime-control` |
@@ -32,7 +34,7 @@ Select the smallest workflow set that covers the request, then load each selecte
 | OpenQASM/QIR/framework interchange | `ir-interoperability` |
 | Present-day Fire Opal execution/error-suppression adjunct | `fire-opal-adjunct` |
 
-For multi-stage production work, use the default flow: freeze the exact workload and baseline; perform semantic and reversible reduction; optimize surviving non-Clifford structure and ancilla lifetimes; select the QEC/logical ISA, routing qLDPC candidates through `qldpc-architecture`; compile logical operations; size magic-state production; define frame and measurement-control semantics; provision real-time decoding; build the dependency-aware runtime schedule; estimate resources; then verify the candidate independently. Preserve the Pareto frontier when candidates trade width, runtime, factory demand, decoder resources, or error budget differently.
+For multi-stage production work, use the default flow: freeze the exact workload and baseline; perform semantic and reversible reduction; optimize surviving non-Clifford structure and ancilla lifetimes; select the QEC/logical ISA, routing qLDPC candidates through `qldpc-architecture` and toric/topological candidates through `toric-code-architecture`; compile logical operations; size magic-state production; define frame and measurement-control semantics; provision real-time decoding; build the dependency-aware runtime schedule; estimate resources; then verify the candidate independently. Preserve the Pareto frontier when candidates trade width, runtime, factory demand, decoder resources, or error budget differently.
 
 Architecture-specific examples inherit the assumptions that make them valid. Carry fixed topology assumptions only into workloads that preserve that topology. Carry decoder throughput conclusions only into comparable syndrome-cycle timing and workload scale. Carry measurement-assisted cleanup only into gadgets with matching measurement and byproduct semantics. Carry lattice-surgery rules only into the selected topological architecture.
 
