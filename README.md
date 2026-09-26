@@ -17,7 +17,7 @@ It helps an agent reason about:
 - semantic and reversible circuit reduction before primitive decomposition;
 - width, ancilla lifetime, arithmetic structure, and nonlinear Boolean cost;
 - Clifford+T and other non-Clifford resource optimization;
-- QEC-code and logical-operation strategy;
+- QEC-code and logical-operation strategy;\n- executable qLDPC architecture design across BB/HGP/lifted/Tanner constructions, decoders, routing, and logical gates;
 - syndrome simulation, decoding, and logical error analysis;
 - real-time decoding, tail-latency, buffering, and backlog engineering;
 - Pauli/Clifford frame tracking and measurement/feed-forward control;
@@ -56,7 +56,7 @@ Circuit-rewriting systems such as PyZX and compiler-pass systems such as pytket 
 
 **Question:** *Under what QEC assumptions can the logical circuit actually run?*
 
-Use [QEC Code Strategy](plugins/quantum-operations/skills/quantum-operations/references/workflows/qec-code-strategy/workflow.md) to reason about code families, logical operations, code distance, error budgets, and the assumptions that must be fixed before physical-resource estimates mean anything.
+Use [QEC Code Strategy](plugins/quantum-operations/skills/quantum-operations/references/workflows/qec-code-strategy/workflow.md) to reason about code families, logical operations, code distance, error budgets, and the assumptions that must be fixed before physical-resource estimates mean anything. When a qLDPC candidate is in scope, continue into [Quantum LDPC Architecture](plugins/quantum-operations/skills/quantum-operations/references/workflows/qldpc-architecture/workflow.md) for exact finite construction, syndrome extraction, decoder selection, Tanner-edge hardware routing, logical-gate coverage, and fair surface-code comparison.
 
 For threshold studies, syndrome generation, decoder evaluation, and logical-error experiments, continue into the QEC simulation/decoding branch selected by the router.
 
