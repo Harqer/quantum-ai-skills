@@ -178,8 +178,8 @@ bp_lsd = BpLsdDecoder(
     bp_method="product_sum",
     max_iter=max_iter,
     schedule="serial",
-    osd_method="lsd_cs",
-    osd_order=2,
+    lsd_method="lsd_cs",
+    lsd_order=0,
 )
 ~~~
 
