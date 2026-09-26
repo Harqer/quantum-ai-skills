@@ -1,4 +1,4 @@
-# Fire Opal API map
+# Fire Opal optimization API map
 
 Official docs: https://docs.q-ctrl.com/fire-opal
 
@@ -24,6 +24,13 @@ Official docs: https://docs.q-ctrl.com/fire-opal
 | Metadata | `get_action_metadata(...)` |
 | Recover result | `get_result(action_id)` |
 | Versions | `print_package_versions()` |
+
+## Hardware-layout behavior
+
+- Submit virtual qubits; Fire Opal chooses the physical layout.
+- Mapping uses backend topology plus current error/calibration information and can prioritize lower-error qubits/pairs and lower-crosstalk routes.
+- Fire Opal performs hardware-aware routing, gate resynthesis, scheduling, dynamical decoupling/control corrections, and measurement mitigation as one execution-optimization pipeline.
+- Treat the chosen layout as an implementation result, not an input to hard-code unless the API explicitly adds such a control.
 
 ## Limits and behavior
 
