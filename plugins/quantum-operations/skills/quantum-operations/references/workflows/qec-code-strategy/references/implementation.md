@@ -61,7 +61,7 @@ routing/communication model
 
 ## Selection algorithm
 
-1. Enumerate code/logical-operation candidates compatible with target connectivity and measurement/reset behavior. For qLDPC candidates, load `../../qldpc-architecture/workflow.md` and its implementation reference before assigning physical overhead.
+1. Enumerate code/logical-operation candidates compatible with target connectivity and measurement/reset behavior. For qLDPC candidates, load `../../qldpc-architecture/workflow.md` and its implementation reference before assigning physical overhead. For toric-code candidates, load `../../toric-code-architecture/workflow.md` and its implementation reference before assigning overhead or transferring 3D/4D properties to 2D.
 2. Generate or obtain the actual syndrome-extraction circuit.
 3. Simulate/measure logical failure under the physical noise model using qec-simulation-decoding.
 4. For each code parameter/distance candidate, compute workload logical-failure contribution.
@@ -150,7 +150,7 @@ If no mechanism is documented for the candidate code, the candidate does not yet
 Use concrete candidate records such as:
 
 ~~~text
-surface code vs qLDPC
+surface code vs qLDPC vs toric/topological memory
 ~~~
 
 as abstract labels.
@@ -174,7 +174,7 @@ Candidate B:
   concrete inter-block protocol
 ~~~
 
-Only after both records are complete may physical qubits/runtime be compared.
+For a toric candidate, add the exact periodic lattice, homology basis, syndrome circuit, decoder/noise layer, periodic-seam hardware mechanism, and logical-operation interface. Only after all candidate records are complete may physical qubits/runtime be compared.
 
 ## Acceptance checks
 
