@@ -61,7 +61,7 @@ routing/communication model
 
 ## Selection algorithm
 
-1. Enumerate code/logical-operation candidates compatible with target connectivity and measurement/reset behavior.
+1. Enumerate code/logical-operation candidates compatible with target connectivity and measurement/reset behavior. For qLDPC candidates, load `../../qldpc-architecture/workflow.md` and its implementation reference before assigning physical overhead.
 2. Generate or obtain the actual syndrome-extraction circuit.
 3. Simulate/measure logical failure under the physical noise model using qec-simulation-decoding.
 4. For each code parameter/distance candidate, compute workload logical-failure contribution.
