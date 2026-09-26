@@ -50,7 +50,7 @@ If one of these elements is missing for the requested technique, the agent resea
 | ftqc-resource-estimation | `references/workflows/ftqc-resource-estimation/workflow.md` + `references/implementation.md` + tools index |
 | fault-tolerant-verification | `references/workflows/fault-tolerant-verification/workflow.md` + `references/implementation.md` + tools index |
 | ir-interoperability | `references/workflows/ir-interoperability/workflow.md` + `references/implementation.md` |
-| fire-opal-adjunct | `references/workflows/fire-opal-adjunct/workflow.md` + `references/implementation.md` |
+| fire-opal-adjunct | concise workflow + implementation + API map + execute/iterate/expectation/MCM/recovery examples |
 
 ## Review test
 
