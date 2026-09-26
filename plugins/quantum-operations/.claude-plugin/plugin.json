@@ -1,7 +1,7 @@
 {
   "name": "quantum-operations",
-  "version": "0.9.0",
-  "description": "Hardware-agnostic, implementation-grade FTQC skills with exact optimization, qLDPC, toric-code, and proven qutrit/qudit architectures, decoding, scheduling, verification, and resource estimation.",
+  "version": "0.10.0",
+  "description": "Hardware-agnostic FTQC engineering with exact optimization, QEC architectures, proven qudits, and Q-CTRL Fire Opal real-hardware execution.",
   "author": {
     "name": "Cristian Del Toro"
   }
