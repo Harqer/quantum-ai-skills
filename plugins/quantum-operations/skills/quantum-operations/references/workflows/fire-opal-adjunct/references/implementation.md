@@ -1,4 +1,4 @@
-# Fire Opal implementation
+# Fire Opal execution optimization
 
 API checked against Q-CTRL documentation, September 2026.
 
@@ -43,6 +43,19 @@ credentials = fo.credentials.make_credentials_for_braket(
     arn=os.environ["AWS_BRAKET_ROLE_ARN"]
 )
 ~~~
+
+## Optimization pipeline
+
+Fire Opal's primary role is to optimize a logical circuit for the selected QPU. Its documented pipeline includes:
+
+1. logical transpilation into the backend native gate set;
+2. error-aware mapping of virtual qubits onto physical qubits using calibration/error data, connectivity, and crosstalk;
+3. routing and scheduling for the selected layout;
+4. two-qubit and single-qubit gate resynthesis/replacement;
+5. dynamical decoupling/control corrections in idle regions;
+6. measurement-error mitigation after execution.
+
+Use virtual qubits. Fire Opal selects the physical layout; physical-qubit input is rejected. Compare the resulting hardware execution against the same logical circuit's baseline compilation rather than treating suppression alone as the optimization.
 
 ## Backend discovery
 
@@ -250,9 +263,7 @@ Use this path for supported integration/finance workloads instead of manually or
 
 ## Execution policy
 
-Fire Opal is for real hardware; its execution pipeline does not support simulators.
-
-Its pipeline includes hardware-aware compilation/layout, deterministic error suppression such as dynamical-decoupling/control corrections, and measurement-error mitigation. Additional provider jobs tagged for mitigation can appear; Q-CTRL states this calibration overhead is typically about ten seconds or less.
+Fire Opal's value is the complete hardware-aware optimization pipeline: layout selection, routing, native-gate compilation, resynthesis, scheduling, deterministic suppression, and measurement mitigation. Its circuit execution path targets real QPUs rather than ordinary simulation. Additional provider jobs tagged for mitigation can appear; Q-CTRL states this calibration overhead is typically about ten seconds or less.
 
 Prefer shallower circuits and outputs distinguishable from a uniform distribution. Validation warnings around T1/coherence limits are a signal to reduce depth before spending hardware time.
 
