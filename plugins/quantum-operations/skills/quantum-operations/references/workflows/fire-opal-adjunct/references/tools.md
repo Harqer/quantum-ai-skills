@@ -58,3 +58,16 @@ Current gate list includes common one-qubit rotations/Cliffords, CX/CY/CZ, SWAP,
 ## Version note
 
 A current Q-CTRL mid-circuit-measurement notebook reports `fire-opal 9.0.2`, but production code should pin the version actually installed and use `print_package_versions()`; documentation follows semantic versioning and can advance independently.
+
+
+## Alternate integration surfaces
+
+Use these only when the surrounding platform is already part of the workload:
+
+- IBM Premium: Qiskit Functions **Performance Management** exposes the same suppression class as Fire Opal `execute/iterate`; **Optimization Solver** mirrors the managed QAOA workflow.
+- qBraid: beta Fire Opal integration; Q-CTRL API-key authentication is still required.
+- Wolfram Quantum Framework: enable Fire Opal during hardware execution with the framework's Fire Opal option.
+- QCentroid: configure Fire Opal as an authenticated provider/backend.
+- Aqarios Luna: `QAOA_FO`/Q-CTRL provider paths wrap Fire Opal.
+
+For direct Python integrations, prefer the `fireopal` package because its action IDs, validation, sessions, result recovery, run options, and specialized solvers are explicit.
