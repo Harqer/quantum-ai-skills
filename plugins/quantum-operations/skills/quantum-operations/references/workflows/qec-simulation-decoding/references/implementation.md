@@ -131,7 +131,7 @@ Before decoding:
 
 For a qLDPC candidate, obtain `Hx`, `Hz`, the exact syndrome circuit, and the physical noise model from `qldpc-architecture`.
 
-For a code-capacity CSS experiment, decode the relevant binary parity-check problem directly. Current `ldpc` 2.1.0 documents BP+OSD:
+For a code-capacity CSS experiment, decode the relevant binary parity-check problem directly. Current `ldpc` 2.4.1 documents BP+OSD:
 
 ~~~python
 from ldpc import BpOsdDecoder
@@ -159,8 +159,8 @@ decoder = BpLsdDecoder(
     bp_method="product_sum",
     max_iter=max_iter,
     schedule="serial",
-    osd_method="lsd_cs",
-    osd_order=2,
+    lsd_method="lsd_cs",
+    lsd_order=0,
 )
 ~~~
 
