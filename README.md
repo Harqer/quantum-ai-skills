@@ -29,7 +29,8 @@ It helps an agent reason about:
 - end-to-end FT runtime scheduling across quantum and classical resources;
 - logical-to-physical-and-classical resource estimation;
 - equivalence, correctness, and fault-tolerance verification;
-- interoperability between circuit and fault-tolerant intermediate representations.
+- interoperability between circuit and fault-tolerant intermediate representations;
+- Q-CTRL Fire Opal real-hardware execution with automated error suppression, batching, expectation estimation, managed QAOA/dynamics/Monte Carlo, and recoverable job control.
 
 The emphasis is **method selection and engineering judgment**. Tool-specific guidance is kept inside the skills that need it, so the top-level context stays small.
 
@@ -140,7 +141,7 @@ Quantum Operations does not try to replace established quantum software. It teac
 
 The plugin includes curated guidance for circuit rewriting and synthesis, QEC simulation and decoding, topological compilation, fault-tolerant resource estimation, and equivalence checking. Tool-specific details live next to the skill that uses them and can evolve without changing the repository's conceptual architecture.
 
-Present-day error-suppression systems such as Fire Opal are kept explicitly outside the FTQC core and treated only as adjuncts when a task concerns current noisy hardware.
+For supported present-day QPUs, [Fire Opal](plugins/quantum-operations/skills/quantum-operations/references/workflows/fire-opal-adjunct/workflow.md) provides the execution path for validation, hardware-aware compilation, automated error suppression/measurement mitigation, iterative workloads, expectation estimation, managed QAOA, dynamics, and Monte Carlo. Its hardware results remain separate from FTQC/QEC claims.
 
 ## Implementation quality
 
@@ -204,7 +205,7 @@ ChatGPT installs local-marketplace plugins into its plugin cache rather than loa
 3. Reopen the Plugins Directory and confirm Quantum Operations is installed/enabled.
 4. Start a new chat.
 
-Quantum Operations v0.9.0 exposes one cataloged router skill and loads specialist FTQC workflows from that skill's references on demand. This keeps the skill metadata footprint small while preserving all specialist implementation guidance.
+Quantum Operations v0.10.0 exposes one cataloged router skill and loads specialist FTQC workflows from that skill's references on demand. This keeps the skill metadata footprint small while preserving all specialist implementation guidance.
 
 ### Public ChatGPT web directory
 
