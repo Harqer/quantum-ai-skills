@@ -1,7 +1,7 @@
 {
   "name": "quantum-operations",
-  "version": "0.7.0",
-  "description": "Hardware-agnostic, implementation-grade FTQC skills with exact optimization, qLDPC architecture design, decoding, scheduling, verification, and resource estimation.",
+  "version": "0.8.0",
+  "description": "Hardware-agnostic, implementation-grade FTQC skills with exact optimization, qLDPC and toric-code architectures, decoding, scheduling, verification, and resource estimation.",
   "author": {
     "name": "Cristian Del Toro"
   },
@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "Quantum Operations",
     "shortDescription": "FTQC engineering workflows",
-    "longDescription": "Skills for designing, optimizing, verifying, scheduling, and estimating fault-tolerant quantum computations, including reversible arithmetic, Clifford+T optimization, executable qLDPC architectures, syndrome decoding, logical gates, lattice surgery, runtime control, and hardware-aware resource estimation.",
+    "longDescription": "Skills for designing, optimizing, verifying, scheduling, and estimating fault-tolerant quantum computations, including reversible arithmetic, Clifford+T optimization, executable qLDPC and toric-code architectures, syndrome decoding, logical gates, lattice surgery, runtime control, and hardware-aware resource estimation.",
     "developerName": "Cristian Del Toro",
     "category": "Developer Tools",
     "capabilities": [
@@ -19,7 +19,8 @@
       "Runtime scheduling",
       "Resource estimation",
       "Verification",
-      "Quantum LDPC architecture"
+      "Quantum LDPC architecture",
+      "Toric-code architecture"
     ],
     "websiteURL": "https://github.com/Harqer/quantum-ai-skills",
     "defaultPrompt": [
