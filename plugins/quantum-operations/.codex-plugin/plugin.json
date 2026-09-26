@@ -1,7 +1,7 @@
 {
   "name": "quantum-operations",
-  "version": "0.6.0",
-  "description": "Hardware-agnostic, implementation-grade FTQC skills with affirmative guidance, exact algorithms, worked examples, current tool/API references, verification, scheduling, and resource estimation.",
+  "version": "0.7.0",
+  "description": "Hardware-agnostic, implementation-grade FTQC skills with exact optimization, qLDPC architecture design, decoding, scheduling, verification, and resource estimation.",
   "author": {
     "name": "Cristian Del Toro"
   },
@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "Quantum Operations",
     "shortDescription": "FTQC engineering workflows",
-    "longDescription": "Skills for designing, optimizing, verifying, scheduling, and estimating fault-tolerant quantum computations, including reversible arithmetic, Boolean fusion, Clifford+T optimization, QEC, lattice surgery, real-time decoding, runtime control, resource estimation, and hardware-aware validation.",
+    "longDescription": "Skills for designing, optimizing, verifying, scheduling, and estimating fault-tolerant quantum computations, including reversible arithmetic, Clifford+T optimization, executable qLDPC architectures, syndrome decoding, logical gates, lattice surgery, runtime control, and hardware-aware resource estimation.",
     "developerName": "Cristian Del Toro",
     "category": "Developer Tools",
     "capabilities": [
@@ -18,7 +18,8 @@
       "QEC analysis",
       "Runtime scheduling",
       "Resource estimation",
-      "Verification"
+      "Verification",
+      "Quantum LDPC architecture"
     ],
     "websiteURL": "https://github.com/Harqer/quantum-ai-skills",
     "defaultPrompt": [
@@ -27,4 +28,4 @@
       "Use Quantum Operations to compare circuit optimizations and report logical width, non-Clifford cost, depth, scheduling constraints, and physical-resource assumptions."
     ]
   }
-}
+}\n
