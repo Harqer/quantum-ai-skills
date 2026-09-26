@@ -127,7 +127,50 @@ Before decoding:
 - use Stim error explanation tooling for suspicious detector mechanisms;
 - verify expected determined-measurement count where applicable.
 
-## 8. Handoff to real-time decoding
+## 8. qLDPC decoding branch
+
+For a qLDPC candidate, obtain `Hx`, `Hz`, the exact syndrome circuit, and the physical noise model from `qldpc-architecture`.
+
+For a code-capacity CSS experiment, decode the relevant binary parity-check problem directly. Current `ldpc` 2.1.0 documents BP+OSD:
+
+~~~python
+from ldpc import BpOsdDecoder
+
+decoder = BpOsdDecoder(
+    H,
+    error_rate=physical_error_rate,
+    bp_method="product_sum",
+    max_iter=max_iter,
+    schedule="serial",
+    osd_method="osd_cs",
+    osd_order=2,
+)
+estimate = decoder.decode(syndrome)
+~~~
+
+and BP+LSD:
+
+~~~python
+from ldpc.bplsd_decoder import BpLsdDecoder
+
+decoder = BpLsdDecoder(
+    H,
+    error_rate=physical_error_rate,
+    bp_method="product_sum",
+    max_iter=max_iter,
+    schedule="serial",
+    osd_method="lsd_cs",
+    osd_order=2,
+)
+~~~
+
+For repeated noisy syndrome extraction or circuit-level claims, construct the space-time detector/error-mechanism matrix from the complete syndrome circuit. Treat independent X/Z decoding, correlated decoding, and any hyperedge decomposition as distinct named experiments. A single-round `Hx` or `Hz` code-capacity decoder does not represent circuit-level memory behavior.
+
+Benchmark at least one generic baseline plus the architecture-matched decoder when available. Candidate families include BP+OSD, BP+LSD/localized statistics decoding, ambiguity clustering, graph-augmentation/min-sum methods for correlated errors, Tanner-specific decoders, small-set-flip under expander assumptions, union-find-like decoders, and machine-learned decoders with a reproducible training/evaluation split.
+
+Record decoder configuration, convergence/fallback behavior, mean/p99/p99.9 latency, throughput, memory/bandwidth, and logical error with confidence intervals. Send live timing distributions to `real-time-qec-decoding`.
+
+## 9. Handoff to real-time decoding
 
 This experiment establishes offline decoder correctness and statistical performance; pass its measured latency distribution and detector rate to the real-time decoding skill for live-throughput validation.
 
