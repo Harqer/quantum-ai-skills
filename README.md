@@ -30,7 +30,7 @@ It helps an agent reason about:
 - logical-to-physical-and-classical resource estimation;
 - equivalence, correctness, and fault-tolerance verification;
 - interoperability between circuit and fault-tolerant intermediate representations;
-- Q-CTRL Fire Opal real-hardware execution with automated error suppression, batching, expectation estimation, managed QAOA/dynamics/Monte Carlo, and recoverable job control.
+- Q-CTRL Fire Opal QPU execution optimization: physical-qubit layout/routing, hardware-aware compilation/resynthesis/scheduling, error suppression, measurement mitigation, batching, expectations, and managed algorithms.
 
 The emphasis is **method selection and engineering judgment**. Tool-specific guidance is kept inside the skills that need it, so the top-level context stays small.
 
@@ -141,7 +141,7 @@ Quantum Operations does not try to replace established quantum software. It teac
 
 The plugin includes curated guidance for circuit rewriting and synthesis, QEC simulation and decoding, topological compilation, fault-tolerant resource estimation, and equivalence checking. Tool-specific details live next to the skill that uses them and can evolve without changing the repository's conceptual architecture.
 
-For supported present-day QPUs, [Fire Opal](plugins/quantum-operations/skills/quantum-operations/references/workflows/fire-opal-adjunct/workflow.md) provides the execution path for validation, hardware-aware compilation, automated error suppression/measurement mitigation, iterative workloads, expectation estimation, managed QAOA, dynamics, and Monte Carlo. Its hardware results remain separate from FTQC/QEC claims.
+For supported present-day QPUs, [Fire Opal](plugins/quantum-operations/skills/quantum-operations/references/workflows/fire-opal-adjunct/workflow.md) optimizes execution by selecting physical-qubit layout and routing from device topology/calibration data, compiling and resynthesizing the circuit for that hardware, then applying suppression/measurement mitigation and executing iterative or managed workloads. Its hardware results remain separate from FTQC/QEC claims.
 
 ## Implementation quality
 
