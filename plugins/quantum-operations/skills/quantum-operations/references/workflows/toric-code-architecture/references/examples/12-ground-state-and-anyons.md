@@ -1,21 +1,40 @@
 # Example 12: toric ground state, error strings, and anyon endpoints
 
-The QEC interpretation and the anyon interpretation are the same stabilizer mechanics viewed at different layers.
-
-Using the direct CSS matrices from Example 1:
+The QEC interpretation and the anyon interpretation are the same stabilizer mechanics viewed at different layers. This example constructs only the Z-check matrix needed to show the endpoints of one X-error string.
 
 ~~~python
 import numpy as np
 
+def toric_hz(L):
+    n = 2 * L * L
+
+    def h(x, y):
+        return (x % L) * L + (y % L)
+
+    def v(x, y):
+        return L * L + (x % L) * L + (y % L)
+
+    def face(x, y):
+        return (x % L) * L + (y % L)
+
+    Hz = np.zeros((L * L, n), dtype=np.uint8)
+    for x in range(L):
+        for y in range(L):
+            Hz[face(x, y), [
+                h(x, y), h(x, y + 1),
+                v(x, y), v(x + 1, y),
+            ]] = 1
+    return Hz
+
 L = 5
-Hx, Hz = toric_css(L)
+Hz = toric_hz(L)
 n = 2 * L * L
 
-# Apply a single X error to one physical edge.
+# Apply X on one physical edge.
 x_error = np.zeros(n, dtype=np.uint8)
 x_error[0] = 1
 
-# X errors anticommute with neighboring Z-type checks.
+# An X string anticommutes with Z checks at its boundary.
 z_syndrome = (Hz @ x_error) % 2
 assert z_syndrome.sum() == 2
 
@@ -32,11 +51,11 @@ The toric Hamiltonian is commonly written
 H = - sum_v A_v - sum_p B_p
 ~~~
 
-and the code space is the simultaneous +1 eigenspace of all commuting star and plaquette terms. In the topological-physics language, violated checks are e/m-type excitations; string operators create, move, and annihilate them. Their braiding statistics explain why the encoded information depends on global topology rather than a particular local edge.
+and the code space is the simultaneous +1 eigenspace of all commuting star and plaquette terms. In the topological-physics language, violated checks are e/m-type excitations; string operators create, move, and annihilate them. Their mutual braiding statistics encode the global topological structure.
 
 For hardware demonstrations of these fundamentals, use:
 - Satzinger et al., Science 2021, toric ground state/topological entropy/anyon interferometry;
-- Niu et al., PRL 2024, path-independent braiding on modular superconducting hardware;
+- Niu et al., Physical Review Letters 2024, path-independent braiding on modular superconducting hardware;
 - the 2025 qutrit toric-code experiment for the Z3 generalization.
 
 This example establishes the conceptual bridge. Error-correction performance is established separately through repeated syndrome extraction and decoding.
