@@ -33,7 +33,7 @@ Select the smallest workflow set that covers the request, then load each selecte
 | Logical, classical, and physical resource estimation | `ftqc-resource-estimation` |
 | Equivalence, detector/logical validation, regression tests | `fault-tolerant-verification` |
 | OpenQASM/QIR/framework interchange | `ir-interoperability` |
-| Q-CTRL Fire Opal hardware execution, suppression, batches, expectations, QAOA, dynamics, Monte Carlo | `fire-opal-adjunct` |
+| Q-CTRL Fire Opal QPU layout/routing optimization, hardware-aware compilation, suppression, execution, and managed algorithms | `fire-opal-adjunct` |
 
 For multi-stage production work, use the default flow: freeze the exact workload and baseline; perform semantic and reversible reduction; optimize surviving non-Clifford structure and ancilla lifetimes; select the QEC/logical ISA, routing qLDPC candidates through `qldpc-architecture`, toric/topological candidates through `toric-code-architecture`, and experimentally supported qutrit/qudit candidates through `qudit-architecture`; compile logical operations; size magic-state production; define frame and measurement-control semantics; provision real-time decoding; build the dependency-aware runtime schedule; estimate resources; then verify the candidate independently. Preserve the Pareto frontier when candidates trade width, runtime, factory demand, decoder resources, or error budget differently.
 
