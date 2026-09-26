@@ -33,7 +33,8 @@ Each result remains attached to its dimensionality, lattice, noise model, decode
     https://doi.org/10.1103/PhysRevA.104.012432
 12. Zhang et al., **Multipartite entanglement of the topologically ordered state in a perturbed toric code**, arXiv:2109.03315 (2021; journal 2022). Wilson-loop/QFI diagnosis under fields and disorder.
     https://arxiv.org/abs/2109.03315
-13. **Improved decoding of quantum low-density parity-check codes**, work leading into higher-dimensional HGP/toric single-shot decoding; use the 2023 PRX Quantum result below as the implementation-grade source rather than transferring intermediate assumptions.
+13. Roffe, White, Burton, Campbell, **Decoding Across the Quantum LDPC Code Landscape**, Physical Review Research 2, 043423 (2020). BP+OSD benchmarks include the toric code, with a reported code-capacity threshold of 9.9 ± 0.2% under the studied setup.
+    https://doi.org/10.1103/PhysRevResearch.2.043423
 
 ## 2022
 
@@ -93,8 +94,8 @@ Each result remains attached to its dimensionality, lattice, noise model, decode
     https://doi.org/10.1103/PRXQuantum.5.010347
 38. Petiziol et al., **Nonperturbative Floquet engineering of the toric-code Hamiltonian and its ground state**, Physical Review B 109, 075126 (2024).
     https://doi.org/10.1103/PhysRevB.109.075126
-39. **Demonstrating Path-Independent Anyonic Braiding on a Modular Superconducting Quantum Processor**, Physical Review Letters (2024). Toric-code-state anyon braiding on modular hardware.
-    https://arxiv.org/abs/2402.10265
+39. Niu et al., **Demonstrating Path-Independent Anyonic Braiding on a Modular Superconducting Quantum Processor**, Physical Review Letters 132, 020601 (2024). Generates a 10-qubit toric-code ground state and verifies six distinct braiding paths on modular superconducting hardware.
+    https://doi.org/10.1103/PhysRevLett.132.020601
 40. **An Accurate Union Find Decoder for Quantum Error Correction on the Toric Code**, IEEE IPDPSW (2024). QUEKUF FPGA/dataflow decoder architecture.
     https://doi.org/10.1109/IPDPSW63119.2024.00032
 41. Li and Mong, **Replica topological order in quantum mixed states and quantum error correction**, arXiv:2402.09516 (2024; journal 2025). Decohered toric code and recovery structure.
@@ -159,10 +160,10 @@ Each result remains attached to its dimensionality, lattice, noise model, decode
     https://doi.org/10.1103/6jk8-w5r8
 68. Linsel, Pollet, Grusdt, **Independent e- and m-Anyon Confinement in the Parallel Field Toric Code on Non-Square Lattices**, PRX Quantum 7, 010332 (2026).
     https://doi.org/10.1103/gtth-cclr
-69. **Ising on the donut: Regimes of topological quantum error correction from statistical mechanics**, accepted PRX Quantum (2026). Toric-code bit-flip/postselection regimes on the torus.
-    https://arxiv.org/abs/2501.16466
-70. **A partition function framework for estimating logical error curves in stabilizer codes**, Quantum (2026). Uses toric/RBIM structure for logical-error-curve estimation.
-    https://arxiv.org/abs/2508.00045
+69. English, Roberts, Bartlett, Doherty, Williamson, **Ising on the donut: Regimes of topological quantum error correction from statistical mechanics**, arXiv:2512.10399 (2025). Gives an exact torus/Ising mapping for syndrome-free toric-code bit-flip noise and analytic logical-failure expressions across multiple regimes.
+    https://arxiv.org/abs/2512.10399
+70. Wichette, Hohenfeld, Mounzer, Grans-Samuelsson, **A partition function framework for estimating logical error curves in stabilizer codes**, Quantum 10, 2175 (2026); arXiv:2505.15758. Develops partition-function estimators and studies the toric code under bit-flip noise via the random-bond Ising model.
+    https://doi.org/10.22331/q-2026-07-28-2175
 
 ## Foundational background outside the requested count
 
