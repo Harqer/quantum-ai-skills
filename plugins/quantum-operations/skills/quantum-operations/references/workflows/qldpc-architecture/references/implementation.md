@@ -156,7 +156,7 @@ Validate the circuit by propagating the stabilizer transformation and by circuit
 
 ### Code-capacity baseline
 
-For a binary parity-check problem `H e = s (mod 2)`, current `ldpc` 2.1.0 documents BP+OSD as:
+For a binary parity-check problem `H e = s (mod 2)`, current `ldpc` 2.4.1 documents BP+OSD as:
 
 ~~~python
 from ldpc import BpOsdDecoder
@@ -176,7 +176,7 @@ estimate = decoder.decode(syndrome)
 
 BP+OSD is a robust finite-length baseline for many qLDPC families. Record BP method, schedule, iteration cap, OSD method/order, priors, convergence status, and latency.
 
-For a more local/parallel post-processing path, current `ldpc` 2.1.0 documents BP+LSD:
+For a more local/parallel post-processing path, current `ldpc` 2.4.1 documents BP+LSD:
 
 ~~~python
 from ldpc.bplsd_decoder import BpLsdDecoder
@@ -187,8 +187,8 @@ decoder = BpLsdDecoder(
     bp_method="product_sum",
     max_iter=max_iter,
     schedule="serial",
-    osd_method="lsd_cs",
-    osd_order=2,
+    lsd_method="lsd_cs",
+    lsd_order=0,
 )
 ~~~
 
@@ -298,6 +298,6 @@ A qLDPC candidate enters the Pareto frontier when all of the following are concr
 ## Current implementation references
 
 - qLDPC Python package and BB examples: https://qldpc.readthedocs.io/
-- ldpc 2.1.0 decoder package: https://software.roffe.eu/ldpc/
+- ldpc 2.4.1 decoder package: https://software.roffe.eu/ldpc/
 - Bravyi et al. BB reference implementation: https://github.com/sbravyi/BivariateBicycleCodes
 - Stim/Sinter for stabilizer/detector simulation when the circuit representation matches: https://github.com/quantumlib/Stim
