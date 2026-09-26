@@ -37,7 +37,9 @@ If one of these elements is missing for the requested technique, the agent resea
 | clifford-t-optimization | `references/workflows/clifford-t-optimization/workflow.md` + `references/implementation.md` |
 | pyzx-optimization | `references/workflows/pyzx-optimization/workflow.md` + `references/implementation.md` + tools index |
 | pytket-optimization | `references/workflows/pytket-optimization/workflow.md` + `references/implementation.md` + tools index |
-| qec-code-strategy | `references/workflows/qec-code-strategy/workflow.md` + `references/implementation.md` |\n| qldpc-architecture | `references/workflows/qldpc-architecture/workflow.md` + implementation + 42-source research map + exact Gross-code example |
+| qec-code-strategy | `references/workflows/qec-code-strategy/workflow.md` + `references/implementation.md` |
+| qldpc-architecture | `references/workflows/qldpc-architecture/workflow.md` + implementation + 42-source research map + exact Gross-code example |
+| toric-code-architecture | `references/workflows/toric-code-architecture/workflow.md` + implementation + tools + 70-source 2020-2026 research map + 12 worked examples |
 | qec-simulation-decoding | `references/workflows/qec-simulation-decoding/workflow.md` + `references/implementation.md` + tools index |
 | real-time-qec-decoding | `references/workflows/real-time-qec-decoding/workflow.md` + research + exact DEM/Tanner, Walking Cat, BeamSearch examples |
 | lattice-surgery | `references/workflows/lattice-surgery/workflow.md` + `references/implementation.md` + tools index |
