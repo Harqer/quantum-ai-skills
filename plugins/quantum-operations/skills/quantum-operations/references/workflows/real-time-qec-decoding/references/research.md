@@ -26,6 +26,25 @@ These references are examples and design evidence, not universal architecture pr
   - Shows the opposite timing regime: superconducting-style microsecond/MHz requirements can motivate FPGA/ASIC implementations.
   - Evaluate decoder hardware against the syndrome-cycle timing and workload scale of each modality.
 
+## qLDPC decoder evidence
+
+- Roffe et al., **Decoding Across the Quantum LDPC Code Landscape**, arXiv:2005.07016.
+  - BP+OSD is a strong generic baseline across several hypergraph-product regimes.
+
+- Hillmann et al., **Localized statistics decoding for quantum low-density parity-check codes**, Nature Communications 2025; arXiv:2406.18655.
+  - BP+LSD localizes matrix inversion/post-processing and is designed for greater parallelism than global OSD.
+
+- Wolanski and Barber, **Ambiguity Clustering**, arXiv:2406.14527.
+  - Provides another finite-qLDPC accuracy/latency point, including bivariate-bicycle benchmarks.
+
+- **Decoding correlated errors in quantum LDPC codes**, Nature Communications 2026.
+  - Demonstrates graph augmentation plus iterative/min-sum decoding for correlated qLDPC errors and reports sub-microsecond-oriented FPGA evidence under the studied configuration.
+
+- **An almost-linear time decoding algorithm for quantum LDPC codes under circuit-level noise**, npj Quantum Information 2026.
+  - Supplies a circuit-level algorithmic scaling point for modern qLDPC decoding.
+
+Use these as candidate decoder families. Production selection is made from the selected code, circuit-level detector model, target logical error, sustained syndrome rate, and latency tail.
+
 ## Tool semantics
 
 ### Stim detector error models
