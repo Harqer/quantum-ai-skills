@@ -182,3 +182,35 @@ If retries/postselection are stochastic, run many sampled schedules or compute a
 - all retries/postselection paths are represented;
 - final wall-clock runtime is reproducible from event log;
 - compare against a no-latency/no-starvation baseline to isolate extension sources.
+
+## Fresh-block pool and reset pipeline
+
+For transversal-teleportation architectures, model encoded blocks as resources with state:
+
+~~~text
+fresh -> active -> measuring -> reset/re-cooling/reinitializing -> fresh
+~~~
+
+A teleportation event consumes one fresh destination block. The source block enters the reset pipeline only after its measurement/decoder/byproduct dependencies are complete.
+
+Track:
+
+~~~text
+fresh_pool_capacity
+fresh_available(t)
+prepare_latency
+measurement_latency
+decoder_latency
+feedforward_latency
+reset_recool_reinit_latency
+movement_latency
+~~~
+
+If no fresh block is available, the dependent teleportation stalls until one returns to the pool.
+
+Compare at least:
+
+1. rolling one-fresh-block schedule: minimum peak width, more serialization;
+2. multi-fresh-block schedule: more physical width, potentially lower wall-clock time, movement, and idle exposure.
+
+Keep both when neither dominates under the selected logical-failure/runtime objective.
