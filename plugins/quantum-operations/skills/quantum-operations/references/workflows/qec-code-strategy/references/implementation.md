@@ -61,7 +61,7 @@ routing/communication model
 
 ## Selection algorithm
 
-1. Enumerate code/logical-operation candidates compatible with target connectivity and measurement/reset behavior. For qLDPC candidates, load `../../qldpc-architecture/workflow.md` and its implementation reference before assigning physical overhead. For toric-code candidates, load `../../toric-code-architecture/workflow.md` and its implementation reference before assigning overhead or transferring 3D/4D properties to 2D.
+1. Enumerate code/logical-operation candidates compatible with target connectivity and measurement/reset behavior. If a candidate uses transversal gates or logical teleportation, load `../../transversal-teleportation/workflow.md` and its implementation reference before assigning gate, QEC-round, reset/reuse, or movement savings. For qLDPC candidates, load `../../qldpc-architecture/workflow.md` and its implementation reference before assigning physical overhead. For toric-code candidates, load `../../toric-code-architecture/workflow.md` and its implementation reference before assigning overhead or transferring 3D/4D properties to 2D.
 2. Generate or obtain the actual syndrome-extraction circuit.
 3. Simulate/measure logical failure under the physical noise model using qec-simulation-decoding.
 4. For each code parameter/distance candidate, compute workload logical-failure contribution.
