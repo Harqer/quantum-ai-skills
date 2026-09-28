@@ -163,3 +163,24 @@ For frame code:
 4. compare resulting Pauli operators up to global phase;
 5. test measurement reinterpretation for X, Z, and random Pauli strings;
 6. test non-Clifford boundaries explicitly rather than allowing silent Pauli-frame continuation.
+
+## Teleportation state-location tracking
+
+For every logical teleportation maintain:
+
+~~~text
+logical_state_id
+source_block
+destination_block
+measurement_records
+decoded_logical_outcome
+byproduct_frame
+source_release_event
+reset_complete_event
+~~~
+
+Update the logical-to-block map only after the decoded measurement and byproduct rule determine the destination logical state. Mark the source block resettable only after it has no remaining coherent consumer. Reuse begins only after reset/re-cooling/reinitialization completes.
+
+When a teleportation byproduct is Pauli or Clifford and the architecture supports software tracking, propagate it in the frame rather than inserting a physical correction. At any unsupported non-Clifford boundary, resolve the frame explicitly.
+
+Tests: compare frame-tracked execution against explicit correction on random small stabilizer circuits; assert no source block is reused before its release and reset-complete events.
