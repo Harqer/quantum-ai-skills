@@ -9,7 +9,7 @@ Optimize at the highest representation that still exposes algorithm structure. T
 
 Keep semantic permutation cost separate from hardware routing cost. Before physical layout, a permutation may often be absorbed into virtual-qubit mapping. After physical placement, connectivity-induced state movement is a real hardware cost and may be removed only together with a sound layout/mapping update. At interchange boundaries, either preserve permutation metadata, materialize it explicitly, or fail the conversion; never silently drop it.
 
-Propagate proven constants before reversible synthesis, normalize XOR/parity expressions, and keep named semantic regions intact long enough to expose cancellation, fusion, common subexpressions, and shared nonlinear work. Evaluate sharing and recomputation through the downstream FTQC objective rather than gate count alone.
+Propagate proven constants before reversible synthesis, normalize XOR/parity expressions, and keep named semantic regions intact long enough to expose cancellation, fusion, common subexpressions, and shared nonlinear work. A named region is not automatically an execution boundary: do not insert measurement, classical checkpoint/reload, forced canonicalization, or circuit restart unless the algorithm or selected fault-tolerant protocol explicitly requires it. Evaluate sharing and recomputation through the downstream FTQC objective rather than gate count alone.
 
 After each rewrite, verify the exact logical map, register ordering/significance, required phase relation, live outputs, ancilla final states, and any final output permutation before carrying the candidate into downstream FTQC costing.
 
