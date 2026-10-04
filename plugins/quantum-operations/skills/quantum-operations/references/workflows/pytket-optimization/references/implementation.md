@@ -26,43 +26,40 @@ logical_pass = SequencePass(
 logical_pass.apply(circuit)
 ~~~
 
-`strict=True` makes pytket check pass pre/postcondition compatibility.
+strict=True makes pytket check pass pre/postcondition compatibility.
 
 ## Preserve checkpoints
 
-Before and after each pass, record gate count, depth, and the implicit qubit permutation.
+Before each pipeline:
 
 ~~~python
 before = circuit.copy()
-before_perm = before.implicit_qubit_permutation()
+before_gate_count = before.n_gates
+before_depth = before.depth()
+~~~
 
-logical_pass.apply(circuit)
+After the pass:
 
+~~~python
+after_gate_count = circuit.n_gates
+after_depth = circuit.depth()
 after_perm = circuit.implicit_qubit_permutation()
 ~~~
 
-Two circuits can have the same visible command sequence but different semantics because pytket may encode SWAPs as implicit wire permutations. Treat that permutation as part of the checkpoint.
+Treat apply() returning True as a pass-execution result, then measure the selected resource objective explicitly. Record implicit permutations as part of the circuit semantics, not merely as compiler metadata.
 
 ## Implicit-permutation boundary
 
-pytket can replace explicit SWAP gates with implicit wire swaps:
+pytket may replace explicit SWAPs with implicit wire permutations. Keep that freedom while subsequent pytket optimization/routing can consume it, but inspect `circuit.implicit_qubit_permutation()` before export.
 
-~~~python
-perm = circuit.implicit_qubit_permutation()
-~~~
-
-Keep them implicit while later pytket passes can consume the mapping. Before crossing a framework/IR boundary, verify that the target preserves the permutation.
-
-pytket's OpenQASM converters do **not** account for implicit qubit permutations. If exporting through such a boundary, either preserve the mapping separately or materialize it:
+pytket's OpenQASM converters do **not** account for implicit qubit permutations. Before such an export, either preserve the mapping separately or materialize it:
 
 ~~~python
 exportable = circuit.copy()
 exportable.replace_implicit_wire_swaps()
 ~~~
 
-For pytket -> Qiskit conversion, current `tk_to_qiskit` also leaves implicit swaps unresolved by default; use its documented `replace_implicit_swaps=True` option when the permutation cannot be carried separately.
-
-Do not materialize implicit swaps merely for internal bookkeeping if the next optimizer/router can use the permutation freedom.
+For pytket -> Qiskit conversion, current `tk_to_qiskit` exposes `replace_implicit_swaps=True` when the permutation cannot be carried separately.
 
 ## Rebase explicitly
 
@@ -81,9 +78,13 @@ rebase.apply(circuit)
 
 When AutoRebase lacks a known decomposition, provide the reviewed exact decomposition through RebaseCustom.
 
+Current API note: use AutoRebase and verify the installed pytket version against the current pass documentation.
+
 ## Architecture routing
 
 Only route once an architecture is selected.
+
+A representative architecture-aware path is:
 
 ~~~python
 from pytket.architecture import Architecture
@@ -99,28 +100,40 @@ routing = AASRouting(arch)
 routing.apply(circuit)
 ~~~
 
-Record logical-to-physical mapping and implicit/output permutations before and after routing. After physical placement, do not treat routing state movement as a free semantic permutation unless the physical mapping is updated consistently.
+The AASRouting pass relabels/routs against the architecture and may change the circuit gate representation.
+
+Record logical-to-physical mapping and implicit/output permutations, then re-run cleanup/rebase afterward as needed. After physical placement, do not remove routing state movement as if it were a free semantic permutation unless the physical mapping is updated consistently.
 
 ## Pauli simplification caution
 
 For PauliSimp / GreedyPauliSimp, explicitly decide whether global phase preservation is required.
 
+When the equivalence relation requires exact global phase, select a pass/configuration whose documented semantics preserve that phase relation.
+
 ## Recommended comparison workflow
 
 ~~~text
 candidate_0 = original
-candidate_1 = logical simplification + permutation tracking
-candidate_2 = phase/Pauli optimization if legal
-candidate_3 = architecture placement/routing
-candidate_4 = post-routing cleanup + final rebase
+
+candidate_1 =
+  logical peephole / Clifford / redundancy optimization
+
+candidate_2 =
+  phase/Pauli-specific optimization if preconditions hold
+
+candidate_3 =
+  architecture placement/routing
+
+candidate_4 =
+  post-routing cleanup + final rebase
 ~~~
 
-Compare all candidates under:
+Keep every checkpoint. Compare all candidates under:
 - exact semantic verification;
 - native 2Q count;
 - native depth;
 - non-Clifford demand;
-- implicit/output permutations;
+- implicit wire swaps/permutations;
 - logical/physical width.
 
 ## Verification
@@ -128,10 +141,10 @@ Compare all candidates under:
 pytket optimization is not its own proof.
 
 For important rewrites:
-- verify before/after with MQT QCEC or another independent checker when supported;
-- inspect or materialize implicit permutations before exporting to a representation that cannot carry them;
-- assert measurements/classical outputs remain attached to the intended logical values;
-- for phase-sensitive transformations, compare the correct equivalence relation.
+- export before/after to a mutually supported format;
+- verify with MQT QCEC or another independent checker;
+- for phase-sensitive transformations, compare the correct equivalence relation;
+- assert measurements/classical controls remain attached to the intended qubits/bits.
 
 Sources:
 - https://docs.quantinuum.com/tket/api-docs/passes.html
