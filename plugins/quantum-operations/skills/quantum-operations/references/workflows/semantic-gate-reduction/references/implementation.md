@@ -1,6 +1,6 @@
 # Semantic gate reduction: implementation reference
 
-This reference defines exact transformations for optimization **before** primitive gate decomposition.
+This reference defines concrete transformations for optimization **before** primitive gate decomposition.
 
 ## Semantic IR
 
@@ -14,124 +14,71 @@ outputs[]
 width
 parameters
 known_constants   # bit mask/value where proven
-wire_map          # logical position -> current wire
+wire_map          # logical index -> underlying wire when virtual
 side_effects      # measurement/reset/classical output/etc.
-phase_sensitive   # whether relative/global phase is observable
+phase_sensitive   # whether relative/global phase is semantically observable
 ~~~
 
 Use SSA-style value versions so an expression is reusable only when its operands are the same versions.
 
 ## 1. Permutation-aware lowering
 
-For an n-bit register `x`, represent an exact permutation `P` as a view:
+Represent an exact register permutation `P` as a logical view:
 
 ~~~text
 view[i] = x[P(i)]
 ~~~
 
-A rotate-right by `r` is:
+For rotate-right by `r`:
 
 ~~~text
 view[i] = x[(i + r) mod n]
 ~~~
 
-Lowering may remove the high-level permutation operation while preserving its semantics as a wire map or bit-level dependency graph. No SWAP gate is required merely because the logical order changed.
+Lowering may replace the high-level permutation with a `wire_map` or bit-level dependencies. Do **not** emit SWAPs solely because logical order changed.
 
-Example for an 8-bit rotate-right by 2:
+### Required invariant
 
-~~~text
-logical position: 0 1 2 3 4 5 6 7
-current wire:     2 3 4 5 6 7 0 1
-~~~
-
-### Why this is preferred
-
-Prematurely synthesizing a semantic permutation into SWAPs can:
-- add two-qubit work not required by the algorithm;
-- hide algebraic structure from later optimization;
-- constrain placement before hardware topology is known;
-- force a router to optimize an artificial state-movement network.
-
-Prefer:
+Track:
 
 ~~~text
-semantic permutation
--> tracked logical-wire map / dependency graph
--> semantic optimization
--> physical placement and routing
+logical position -> current wire -> physical qubit (after layout)
 ~~~
 
-not:
+Logical identity and numeric significance belong to the **logical position**, not the wire or physical-qubit number. For arithmetic, carry/borrow and significance order follow the declared register ordering/endianness after resolving each logical position through `wire_map`.
 
-~~~text
-semantic permutation
--> SWAP network
--> try to remove the SWAPs later
-~~~
-
-### Arithmetic-significance invariant
-
-A register's numeric meaning is defined by its **logical positions and declared endianness**, not by current wire IDs or physical-qubit indices.
-
-For little-endian binary arithmetic:
-
-~~~text
-value(x) = sum_i 2^i * bit_at_logical_position(i)
-~~~
-
-For big-endian arithmetic, use the declared big-endian weight function instead.
-
-If a permuted view is consumed by an adder, comparator, multiplier, or modular primitive, resolve each logical position through the current `wire_map`. Carry/borrow adjacency follows logical significance positions, not physical adjacency.
-
-A permutation can therefore remain virtual across arithmetic **only when the arithmetic implementation consumes the mapped logical positions correctly**. Otherwise materialize the permutation before that primitive.
+A virtual permutation is therefore legal across Boolean or arithmetic consumers only when those consumers use the mapped logical positions correctly.
 
 ### Semantic permutation versus routing
 
-Keep these separate:
+- **Semantic permutation:** changes logical ordering; it can often be absorbed into mapping with zero intrinsic state movement.
+- **Physical routing:** moves state because the selected hardware topology cannot realize a required interaction directly; optimize it after layout.
 
-1. **Semantic permutation:** changes logical identity/order. Track it in `wire_map`; it may require zero gates.
-2. **Physical routing:** moves quantum state because selected physical qubits cannot perform a required interaction directly. Optimize this after layout using the target topology, native gate set, timing, and calibration/error model.
-
-Before layout, permutation-elision is generally a virtual-mapping transformation. After layout, do not delete a routing SWAP unless the physical mapping is updated consistently and connectivity constraints remain satisfied.
+Before layout, keep useful permutation freedom when possible. After layout, do not delete a routing SWAP unless the physical mapping is updated consistently and connectivity remains valid.
 
 ### Materialization boundary
 
-Materialize a permutation only when the next boundary cannot preserve or consume the mapping, for example:
-- an arithmetic or logical primitive that assumes canonical contiguous ordering;
-- a measurement/output interface with fixed bit positions;
-- an IR/framework conversion that cannot carry the permutation;
-- a physical-layout boundary that requires a concrete mapping.
-
-When possible, absorb the permutation into placement or output interpretation instead of emitting a standalone SWAP network.
-
-### Interchange rule
-
-At every conversion boundary, one of these must happen:
+Preserve the mapping until a downstream boundary cannot represent or consume it. Then either:
 
 ~~~text
 preserve permutation metadata
-OR materialize equivalent gates
+OR materialize an equivalent permutation
 OR fail explicitly
 ~~~
 
-Never silently drop an implicit permutation.
+Typical boundaries are a primitive that assumes canonical ordering, fixed measurement/output positions, IR/framework export, or physical placement.
 
-Current examples:
-- Qiskit `ElidePermutations` tracks a pre-layout output permutation in `virtual_permutation_layout`.
-- pytket can keep implicit wire swaps, but its OpenQASM converters do not account for them; materialize them or preserve the mapping separately before export.
+Current compiler behavior supports this distinction: Qiskit `ElidePermutations` removes pre-layout permutations while tracking `virtual_permutation_layout`; pytket supports implicit wire swaps, while its OpenQASM converters do not account for them.
 
 ### Verification
 
-For each permutation rewrite:
-1. compare the mathematical permutation with `wire_map`;
-2. verify every consumer resolves logical positions through that map;
-3. verify arithmetic register significance and carry/borrow ordering;
-4. verify measurement and output-bit interpretation;
-5. check permutation metadata survives every compiler boundary;
-6. after placement, compare native two-qubit count/depth and final logical-to-physical mapping;
-7. use exact circuit equivalence for phase-sensitive quantum rewrites.
+1. Compare the mathematical permutation with `wire_map`.
+2. Verify all consumers resolve logical positions through the map.
+3. Verify arithmetic significance/carry order and output-bit interpretation.
+4. Verify every compiler boundary preserves or materializes the mapping.
+5. After placement, compare native routing/two-qubit cost separately.
 
-Use `references/examples/permutation-aware-lowering.md` for a small exhaustive arithmetic example and framework-boundary checks.
+Worked example: [examples/permutation-aware-lowering.md](examples/permutation-aware-lowering.md).
 
 ## 2. Constant propagation for reversible Boolean gates
 
@@ -168,7 +115,13 @@ a XOR 1 = NOT a
 
 Canonicalize operands by value ID and cancel duplicates pairwise.
 
-For word XOR, apply bitwise through the current logical-wire maps rather than materializing register permutations first.
+Example:
+
+~~~text
+(a XOR b) XOR (b XOR c) -> a XOR c
+~~~
+
+For word XOR, apply bitwise.
 
 ## 4. Common-subexpression elimination
 
@@ -190,7 +143,7 @@ recompute_cost =
     sum(compute_at_each_use)
 ~~~
 
-Share only when the selected FTQC objective improves.
+Share only when the selected FTQC objective improves. A lower gate count alone is insufficient if peak logical width or factory burst demand worsens.
 
 ## 5. Commutation/reordering
 
@@ -204,41 +157,35 @@ XOR/CNOT networks may be rescheduled using linear GF(2) equivalence
 diagonal Z/phase operations commute with each other
 ~~~
 
+For overlapping gates, apply only an explicit algebraic commutation rule whose preconditions are satisfied.
+
 ## 6. Cross-boundary fusion
 
-Keep named semantic blocks until a lowering boundary is necessary.
+Keep named semantic blocks until a lowering boundary is necessary, but do not turn a semantic block boundary into measurement, checkpoint/reload, forced wire canonicalization, or a separate execution unless the algorithm or selected FT protocol requires it.
 
-Example:
+For a generic word expression:
 
 ~~~text
 t = ROTR(x,a) XOR ROTR(x,b) XOR ROTR(x,c)
 ~~~
 
-may lower directly into XOR dependencies over three indexed views. Lowering each permutation into a SWAP network first destroys that representation and can increase downstream routing cost.
-
-## 7. Semantic regions versus execution boundaries
-
-Keep semantic structure for reasoning, debugging, and optimization, but do not turn a region boundary into a physical/program boundary by default. Unless required by the algorithm or an explicitly selected adaptive/FT protocol, preserve the live computation across adjacent regions and carry forward current register views, ancilla state contracts, and logical mappings.
-
-Do not introduce measurement, classical checkpoint/reload, forced wire canonicalization, or separate hardware jobs merely because one named block ended. Mid-circuit measurement, reset, teleportation, or feed-forward remain valid when they are part of the declared computation or fault-tolerant implementation; this rule forbids only **artificial** boundaries that change semantics or destroy optimization freedom.
+lower directly into dependencies over mapped views when legal. Lowering each permutation to SWAPs first can hide simplifications and create avoidable routing work.
 
 ## Verification
 
 For each rewrite:
-1. test semantic IR before/after exhaustively at small widths when classical/reversible;
-2. use an exact circuit-equivalence checker for phase-sensitive regions;
-3. assert the same logical outputs and required ancilla final states;
-4. assert the same declared register values under the current endianness;
-5. compare downstream FTQC and hardware-routing metrics, not only primitive gate count.
+1. test the semantic IR before/after on exhaustive small bit widths when classical/reversible;
+2. for quantum phase-sensitive regions use an exact circuit equivalence checker;
+3. assert the same live outputs and required ancilla final states;
+4. compare downstream FTQC metrics, not only primitive gate count.
 
 ## Failure cases
 
-- Virtual permutations are invalid if aliases are treated as independent qubits.
-- Arithmetic is invalid if numeric significance is inferred from current wire/physical indices instead of logical register positions.
-- A compiler boundary is invalid if required permutation metadata is dropped.
-- Post-layout routing operations cannot be removed without a sound physical-mapping update.
-- Artificial region boundaries are invalid when they insert measurement/reset/reload not present in the declared computation or selected protocol.
-- Phase-sensitive rewrites require the intended quantum equivalence relation, not only basis-state truth-table equality.
+Apply each rewrite within these validity boundaries:
+- classical constant propagation applies to values with a proven computational-basis constant;
+- virtual permutations crossing arithmetic, interchange, measurement/output, or hardware-placement boundaries preserve or materialize the corresponding mapping;
+- CSE uses the same versioned operands within a region whose state has not been changed by measurement or reset;
+- phase-sensitive regions use an equivalence relation that preserves the required relative phase.
 
 ## Sources
 
