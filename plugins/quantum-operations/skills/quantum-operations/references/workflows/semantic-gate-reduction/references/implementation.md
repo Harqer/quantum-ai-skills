@@ -216,6 +216,12 @@ t = ROTR(x,a) XOR ROTR(x,b) XOR ROTR(x,c)
 
 may lower directly into XOR dependencies over three indexed views. Lowering each permutation into a SWAP network first destroys that representation and can increase downstream routing cost.
 
+## 7. Semantic regions versus execution boundaries
+
+Keep semantic structure for reasoning, debugging, and optimization, but do not turn a region boundary into a physical/program boundary by default. Unless required by the algorithm or an explicitly selected adaptive/FT protocol, preserve the live computation across adjacent regions and carry forward current register views, ancilla state contracts, and logical mappings.
+
+Do not introduce measurement, classical checkpoint/reload, forced wire canonicalization, or separate hardware jobs merely because one named block ended. Mid-circuit measurement, reset, teleportation, or feed-forward remain valid when they are part of the declared computation or fault-tolerant implementation; this rule forbids only **artificial** boundaries that change semantics or destroy optimization freedom.
+
 ## Verification
 
 For each rewrite:
@@ -231,6 +237,7 @@ For each rewrite:
 - Arithmetic is invalid if numeric significance is inferred from current wire/physical indices instead of logical register positions.
 - A compiler boundary is invalid if required permutation metadata is dropped.
 - Post-layout routing operations cannot be removed without a sound physical-mapping update.
+- Artificial region boundaries are invalid when they insert measurement/reset/reload not present in the declared computation or selected protocol.
 - Phase-sensitive rewrites require the intended quantum equivalence relation, not only basis-state truth-table equality.
 
 ## Sources
