@@ -21,33 +21,64 @@ phase_sensitive   # whether relative/global phase is semantically observable
 
 Use SSA-style value versions so an expression is reusable only when its operands are the same versions.
 
-## 1. Virtual word permutations / rotations
+## 1. Permutation-aware lowering
 
-For an n-bit register x, represent a logical rotate-right by r as a view:
-
-~~~text
-view_x_r[i] = x[(i + r) mod n]
-~~~
-
-No SWAP gates are emitted.
-
-Example for 8 bits, ROTR2:
+Represent an exact register permutation `P` as a logical view:
 
 ~~~text
-logical index: 0 1 2 3 4 5 6 7
-physical wire: 2 3 4 5 6 7 0 1
+view[i] = x[P(i)]
 ~~~
 
-Materialize the permutation when the next operation requires a concrete physical ordering instead of a virtual wire view.
+For rotate-right by `r`:
 
-### Legality
+~~~text
+view[i] = x[(i + r) mod n]
+~~~
 
-Virtual relabeling is valid only when:
-- the operation is exactly a permutation of wire identities;
-- no measurement/classical output depends on the old naming convention before the view is resolved;
-- two aliases are not accidentally treated as independent qubits.
+Lowering may replace the high-level permutation with a `wire_map` or bit-level dependencies. Do **not** emit SWAPs solely because logical order changed.
 
-Verification: compare the logical bit permutation against the mathematical word operation for every index.
+### Required invariant
+
+Track:
+
+~~~text
+logical position -> current wire -> physical qubit (after layout)
+~~~
+
+Logical identity and numeric significance belong to the **logical position**, not the wire or physical-qubit number. For arithmetic, carry/borrow and significance order follow the declared register ordering/endianness after resolving each logical position through `wire_map`.
+
+A virtual permutation is therefore legal across Boolean or arithmetic consumers only when those consumers use the mapped logical positions correctly.
+
+### Semantic permutation versus routing
+
+- **Semantic permutation:** changes logical ordering; it can often be absorbed into mapping with zero intrinsic state movement.
+- **Physical routing:** moves state because the selected hardware topology cannot realize a required interaction directly; optimize it after layout.
+
+Before layout, keep useful permutation freedom when possible. After layout, do not delete a routing SWAP unless the physical mapping is updated consistently and connectivity remains valid.
+
+### Materialization boundary
+
+Preserve the mapping until a downstream boundary cannot represent or consume it. Then either:
+
+~~~text
+preserve permutation metadata
+OR materialize an equivalent permutation
+OR fail explicitly
+~~~
+
+Typical boundaries are a primitive that assumes canonical ordering, fixed measurement/output positions, IR/framework export, or physical placement.
+
+Current compiler behavior supports this distinction: Qiskit `ElidePermutations` removes pre-layout permutations while tracking `virtual_permutation_layout`; pytket supports implicit wire swaps, while its OpenQASM converters do not account for them.
+
+### Verification
+
+1. Compare the mathematical permutation with `wire_map`.
+2. Verify all consumers resolve logical positions through the map.
+3. Verify arithmetic significance/carry order and output-bit interpretation.
+4. Verify every compiler boundary preserves or materializes the mapping.
+5. After placement, compare native routing/two-qubit cost separately.
+
+Worked example: [examples/permutation-aware-lowering.md](examples/permutation-aware-lowering.md).
 
 ## 2. Constant propagation for reversible Boolean gates
 
@@ -130,15 +161,15 @@ For overlapping gates, apply only an explicit algebraic commutation rule whose p
 
 ## 6. Cross-boundary fusion
 
-Keep named semantic blocks until a lowering boundary is necessary.
+Keep named semantic blocks until a lowering boundary is necessary, but do not turn a semantic block boundary into measurement, checkpoint/reload, forced wire canonicalization, or a separate execution unless the algorithm or selected FT protocol requires it.
 
-Example: SHA-style word expression
+For a generic word expression:
 
 ~~~text
-t = ROTR(x,2) XOR ROTR(x,13) XOR ROTR(x,22)
+t = ROTR(x,a) XOR ROTR(x,b) XOR ROTR(x,c)
 ~~~
 
-should remain a word-level XOR of virtual views. Lowering each rotate to SWAPs before combining destroys the zero-gate rotate representation.
+lower directly into dependencies over mapped views when legal. Lowering each permutation to SWAPs first can hide simplifications and create avoidable routing work.
 
 ## Verification
 
@@ -152,6 +183,14 @@ For each rewrite:
 
 Apply each rewrite within these validity boundaries:
 - classical constant propagation applies to values with a proven computational-basis constant;
-- virtual permutations crossing a fixed hardware-placement boundary carry the corresponding remapping metadata;
+- virtual permutations crossing arithmetic, interchange, measurement/output, or hardware-placement boundaries preserve or materialize the corresponding mapping;
 - CSE uses the same versioned operands within a region whose state has not been changed by measurement or reset;
 - phase-sensitive regions use an equivalence relation that preserves the required relative phase.
+
+## Sources
+
+- Qiskit `ElidePermutations`: https://qiskit.qotlabs.org/docs/api/qiskit/qiskit.transpiler.passes.ElidePermutations
+- Qiskit `TranspileLayout`: https://qiskit.qotlabs.org/docs/api/qiskit/qiskit.transpiler.TranspileLayout
+- pytket implicit qubit permutations: https://docs.quantinuum.com/tket/user-guide/manual/manual_circuit.html
+- pytket OpenQASM conversion warning: https://docs.quantinuum.com/tket/api-docs/qasm.html
+- permutation-aware synthesis/mapping: https://arxiv.org/abs/2305.02939

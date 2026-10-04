@@ -8,6 +8,8 @@ Before conversion, inventory:
 
 ~~~text
 qubit order / endian convention
+logical-position -> wire mapping
+implicit/final output permutation
 initialization assumptions
 unitary gates and parameters
 measurement basis and destination bits
@@ -28,6 +30,12 @@ After conversion, every required item must either:
 3. cause the conversion to fail.
 
 Report every unsupported semantic explicitly and preserve it through a documented extension or sidecar when the workflow requires it.
+
+## Permutation boundary
+
+An implicit/output permutation is part of circuit semantics even when absent from the visible gate list. Before conversion, determine whether the target can carry the mapping. If it cannot, materialize an equivalent permutation or fail explicitly; never silently drop it.
+
+Measurements, classical outputs, and arithmetic endianness must still refer to the intended **logical positions** after the final permutation. pytket documents that its OpenQASM converters do not account for implicit qubit permutations, so that boundary requires explicit handling.
 
 ## OpenQASM 3.1 dynamic example
 
@@ -135,8 +143,8 @@ If converting a Stim QEC circuit through OpenQASM/QIR:
 
 For every conversion path A -> B -> A or A -> B -> executable target:
 
-1. compare qubit/register ordering;
-2. compare measurement destination mapping;
+1. compare qubit/register ordering, endianness, and logical-to-wire mapping;
+2. compare implicit/final permutations and measurement destination mapping;
 3. compare reset locations;
 4. compare branch predicates and branch bodies;
 5. compare parameters/angle units;
@@ -151,6 +159,7 @@ For every conversion path A -> B -> A or A -> B -> executable target:
 When the target IR lacks a required feature, raise or report an explicit unsupported-feature result and identify the semantic that needs another representation.
 
 Examples:
+- implicit output permutation lost through an export that does not preserve it;
 - detector annotations lost through ordinary QASM;
 - dynamic control sent to a Base-profile-only target;
 - pulse/timing semantics lowered into an IR without timing support;
@@ -160,3 +169,5 @@ Sources:
 - OpenQASM 3.1: https://openqasm.com/versions/3.1/
 - QIR specification: https://github.com/qir-alliance/qir-spec
 - current QDK Qiskit/QIR interop: https://github.com/microsoft/qdk/wiki/Qiskit-Interop
+- pytket QASM permutation warning: https://docs.quantinuum.com/tket/api-docs/qasm.html
+- Qiskit layout/permutation model: https://qiskit.qotlabs.org/docs/api/qiskit/qiskit.transpiler.TranspileLayout

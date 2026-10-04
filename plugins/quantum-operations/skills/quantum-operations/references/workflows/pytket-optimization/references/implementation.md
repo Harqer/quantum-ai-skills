@@ -43,9 +43,23 @@ After the pass:
 ~~~python
 after_gate_count = circuit.n_gates
 after_depth = circuit.depth()
+after_perm = circuit.implicit_qubit_permutation()
 ~~~
 
-Treat apply() returning True as a pass-execution result, then measure the selected resource objective explicitly.
+Treat apply() returning True as a pass-execution result, then measure the selected resource objective explicitly. Record implicit permutations as part of the circuit semantics, not merely as compiler metadata.
+
+## Implicit-permutation boundary
+
+pytket may replace explicit SWAPs with implicit wire permutations. Keep that freedom while subsequent pytket optimization/routing can consume it, but inspect `circuit.implicit_qubit_permutation()` before export.
+
+pytket's OpenQASM converters do **not** account for implicit qubit permutations. Before such an export, either preserve the mapping separately or materialize it:
+
+~~~python
+exportable = circuit.copy()
+exportable.replace_implicit_wire_swaps()
+~~~
+
+For pytket -> Qiskit conversion, current `tk_to_qiskit` exposes `replace_implicit_swaps=True` when the permutation cannot be carried separately.
 
 ## Rebase explicitly
 
@@ -88,7 +102,7 @@ routing.apply(circuit)
 
 The AASRouting pass relabels/routs against the architecture and may change the circuit gate representation.
 
-Record logical-to-physical mapping and re-run cleanup/rebase afterward as needed.
+Record logical-to-physical mapping and implicit/output permutations, then re-run cleanup/rebase afterward as needed. After physical placement, do not remove routing state movement as if it were a free semantic permutation unless the physical mapping is updated consistently.
 
 ## Pauli simplification caution
 
@@ -132,5 +146,8 @@ For important rewrites:
 - for phase-sensitive transformations, compare the correct equivalence relation;
 - assert measurements/classical controls remain attached to the intended qubits/bits.
 
-Source:
-https://docs.quantinuum.com/tket/api-docs/passes.html
+Sources:
+- https://docs.quantinuum.com/tket/api-docs/passes.html
+- https://docs.quantinuum.com/tket/user-guide/manual/manual_circuit.html
+- https://docs.quantinuum.com/tket/api-docs/qasm.html
+- https://docs.quantinuum.com/tket/extensions/pytket-qiskit/api.html
