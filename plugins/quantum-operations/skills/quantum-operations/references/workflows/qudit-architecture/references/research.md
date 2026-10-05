@@ -17,34 +17,37 @@ This map prioritizes experimental demonstrations and current access documentatio
 5. Towards a Multiqudit Quantum Processor Based on a 171Yb+ Ion String: Realizing Basic Quantum Algorithms, Quantum Reports 7, 19 (2025). Eight individually controlled four-level qudits, 435 nm E2 encoding, algorithm demonstrations.
    https://doi.org/10.3390/quantum7020019
 
-6. Morvan et al., Qutrit Randomized Benchmarking, Physical Review Letters 126, 210504 (2021). Five superconducting qutrit processor and two-qutrit CSUM benchmarking.
+6. Champion et al., Efficient Control of a Transmon Qudit Using Effective Spin-7/2 Rotations, Physical Review X 15, 021096 (2025). Superconducting transmon operated as a qudit through d=8; eight-state single-shot multitone dispersive readout; simultaneous multifrequency adjacent-transition drives implementing effective spin displacements; virtual SNAP phase layers; arbitrary single-qudit control with O(d)-style displacement-layer synthesis; reported spin-displacement fidelities from 0.997 to 0.989 through d=8 and d=8 QFT average gate fidelity 0.91(6). This is evidence for native single-transmon d=8 control, not evidence of an arbitrary two-d=8-transmon entangler or provider-wide d=8 access.
+   https://doi.org/10.1103/vbh4-lysv
+
+7. Morvan et al., Qutrit Randomized Benchmarking, Physical Review Letters 126, 210504 (2021). Five superconducting qutrit processor and two-qutrit CSUM benchmarking.
    https://doi.org/10.1103/PhysRevLett.126.210504
 
-7. Kononenko et al., Characterization of control in a superconducting qutrit using randomized benchmarking, Physical Review Research 3, L042007 (2021). Lowest three levels of a superconducting circuit; 98.89 +/- 0.05% average qutrit Clifford fidelity.
+8. Kononenko et al., Characterization of control in a superconducting qutrit using randomized benchmarking, Physical Review Research 3, L042007 (2021). Lowest three levels of a superconducting circuit; 98.89 +/- 0.05% average qutrit Clifford fidelity.
    https://doi.org/10.1103/PhysRevResearch.3.L042007
 
-8. Yurtalan et al., Implementation of a Walsh-Hadamard Gate in a Superconducting Qutrit, Physical Review Letters 125, 180504 (2020). Experimental single-qutrit gate synthesis.
+9. Yurtalan et al., Implementation of a Walsh-Hadamard Gate in a Superconducting Qutrit, Physical Review Letters 125, 180504 (2020). Experimental single-qutrit gate synthesis.
    https://doi.org/10.1103/PhysRevLett.125.180504
 
-9. Galda et al., Implementing a Ternary Decomposition of the Toffoli Gate on Fixed-Frequency Transmon Qutrits, arXiv:2109.00558 (2021). Cloud fixed-frequency transmons; four two-transmon operations versus eight binary CNOTs on linear topology.
+10. Galda et al., Implementing a Ternary Decomposition of the Toffoli Gate on Fixed-Frequency Transmon Qutrits, arXiv:2109.00558 (2021). Cloud fixed-frequency transmons; four two-transmon operations versus eight binary CNOTs on linear topology.
    https://arxiv.org/abs/2109.00558
 
-10. Fedorov et al., Implementation of a Toffoli gate with superconducting circuits, Nature 481, 170-172 (2012). Direct experimental proof that a third transmon level can reduce Toffoli decomposition cost.
+11. Fedorov et al., Implementation of a Toffoli gate with superconducting circuits, Nature 481, 170-172 (2012). Direct experimental proof that a third transmon level can reduce Toffoli decomposition cost.
     https://doi.org/10.1038/nature10713
 
-11. Brock et al., Quantum error correction of qudits beyond break-even, Nature 641, 612-618 (2025). GKP qutrit and ququart in a microwave cavity with transmon ancilla; gains 1.82 and 1.87.
+12. Brock et al., Quantum error correction of qudits beyond break-even, Nature 641, 612-618 (2025). GKP qutrit and ququart in a microwave cavity with transmon ancilla; gains 1.82 and 1.87.
     https://doi.org/10.1038/s41586-025-08899-y
 
-12. Lindon et al., Complete Unitary Qutrit Control in Ultracold Atoms, Physical Review Applied 19, 034089 (2023). Arbitrary SU(3) control with two resonant microwave tones.
+13. Lindon et al., Complete Unitary Qutrit Control in Ultracold Atoms, Physical Review Applied 19, 034089 (2023). Arbitrary SU(3) control with two resonant microwave tones.
     https://doi.org/10.1103/PhysRevApplied.19.034089
 
-13. Meng et al., Experimental realization of high-dimensional quantum gates with ultrahigh fidelity and efficiency, Physical Review A 109, 022612 (2024). Single-photon polarization-spatial ququart gates and controlled X4; reported 99.73% average gate fidelity and 99.47% efficiency.
+14. Meng et al., Experimental realization of high-dimensional quantum gates with ultrahigh fidelity and efficiency, Physical Review A 109, 022612 (2024). Single-photon polarization-spatial ququart gates and controlled X4; reported 99.73% average gate fidelity and 99.47% efficiency.
     https://doi.org/10.1103/PhysRevA.109.022612
 
-14. Iqbal et al., Qutrit toric code and parafermions in trapped ions, Nature Communications 16, 6301 (2025). Z3 toric state up to 24 qutrits on Quantinuum H2, with each qutrit encoded into two physical qubits. Treat as encoded-qudit evidence rather than native-qutrit hardware.
+15. Iqbal et al., Qutrit toric code and parafermions in trapped ions, Nature Communications 16, 6301 (2025). Z3 toric state up to 24 qutrits on Quantinuum H2, with each qutrit encoded into two physical qubits. Treat as encoded-qudit evidence rather than native-qutrit hardware.
     https://doi.org/10.1038/s41467-025-61391-z
 
-15. Generalized Ramsey interferometry explored with a single nuclear spin qudit, npj Quantum Information 4, 53 (2018). Four-level Tb3+ nuclear-spin qudit with independently addressable transitions; implementation background for multitone nuclear-spin control.
+16. Generalized Ramsey interferometry explored with a single nuclear spin qudit, npj Quantum Information 4, 53 (2018). Four-level Tb3+ nuclear-spin qudit with independently addressable transitions; implementation background for multitone nuclear-spin control.
     https://doi.org/10.1038/s41534-018-0101-3
 
 ## Current access evidence
