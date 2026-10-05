@@ -7,7 +7,7 @@ Store:
 ~~~text
 encoding_class:
   native_qudit
-  packed_virtual_qubits
+  binary_labelled_native_qudit
   transient_aux_level
   bosonic_logical_qudit
   encoded_qudit_on_qubits
@@ -15,6 +15,8 @@ encoding_class:
 dimension
 physical_carrier
 basis_states
+basis_label_map
+transition_graph
 state_preparation
 single_qudit_gate_set
 two_qudit_gate_set
@@ -23,6 +25,10 @@ reset
 leakage_detection
 coherence_by_level
 control_topology
+pulse_primitives
+virtual_phase_primitives
+intra_carrier_cost
+inter_carrier_cost
 pulse_count_model
 parallelism
 programming_interface
@@ -36,7 +42,7 @@ A candidate without a concrete programming interface is hardware-demonstrated bu
 
 ## Width accounting
 
-Do not automatically replace N qubits by ceil(N/log2(d)) qudits. That expression is only an information-capacity lower bound.
+Do not automatically replace N qubits by ceil(N/log2(d)) qudits. That expression is only an information-capacity lower bound. In particular, d=8 means one eight-level carrier can label eight basis states; it does not mean the device exposes three independent physical qubits or their native binary gate set.
 
 For packed virtual qubits:
 
@@ -111,6 +117,75 @@ Control:
 - tune simultaneous-tone amplitudes with randomized-benchmarking sequences and numerical optimization.
 
 The demonstrated d=5 Grover implementation achieved 96.8(3)% target-state success for one iteration; the d=8 implementation achieved 69(6)% average success with 97.1(3)% squared statistical overlap. The demonstrated single-qudit algorithm used no entangling gate.
+
+## Native d=8 transmon spin-control path
+
+Use the first eight transmon energy eigenstates as one physical qudit:
+
+~~~text
+H_8 = span{|0>,|1>,...,|7>}
+~~~
+
+If the source algorithm is binary, an encoding such as
+
+~~~text
+|b2 b1 b0> -> |j>,  j = 4*b2 + 2*b1 + b0
+~~~
+
+is a basis labelling only. It does not create three independently addressable physical qubits inside the carrier.
+
+### Demonstrated local control model
+
+For the 2025 spin-7/2 transmon experiment:
+
+- all seven adjacent transitions are addressed with simultaneous multifrequency drives;
+- calibrated relative tone amplitudes implement an effective spin displacement `D(theta)`;
+- arbitrary state-dependent phase layers are implemented virtually as SNAP-style phase updates `S(phi)`;
+- arbitrary single-qudit unitaries are synthesized as alternating virtual phase and physical displacement layers:
+
+~~~text
+U = S(phi_N) D(theta_N) ... S(phi_1) D(theta_1) S(phi_0)
+~~~
+
+The experiment found O(d) displacement layers numerically sufficient for arbitrary SU(d) synthesis and focused calibration on high-fidelity pi/2 displacements. Treat virtual SNAP layers as phase-frame updates rather than physical pulses when the control stack supports that interpretation.
+
+Measured evidence to preserve in the cost model:
+- eight-state single-shot multitone dispersive readout;
+- spin-displacement fidelity spanning about 0.997 to 0.989 through d=8;
+- d=8 quantum Fourier transform average gate fidelity 0.91(6).
+
+### Compiler rule
+
+For a binary reversible operation whose entire support is inside one d=8 carrier:
+
+1. Form its exact 8x8 permutation/unitary on the encoded basis.
+2. Preserve basis-state phases, not only the classical truth table.
+3. Synthesize that unitary directly in the d-level gate set.
+4. Prefer spin-displacement + virtual-SNAP synthesis over re-expanding it into binary X/CNOT/Toffoli gates.
+5. Verify the resulting 8x8 matrix against the intended encoded operation.
+
+This permits several binary gates acting within the same encoded triple to fuse into one qudit unitary.
+
+For any operation spanning two or more physical transmons:
+- classify it as inter-carrier;
+- do not infer a two-qudit gate from single-qudit SU(8) controllability;
+- require a demonstrated interaction Hamiltonian and an accessible backend control primitive;
+- include routing, spectral crowding, leakage, pulse duration, and measured inter-carrier fidelity in the cost.
+
+Until that boundary is satisfied, `ceil(N/3)` transmons for d=8 is a capacity/width target, not a proof of an executable N-bit circuit.
+
+### Acceptance tests for d=8 packing
+
+~~~text
+encoded_basis_map is bijective on 8 states
+local U_dagger U = I
+local encoded truth table and relative phases match source IR
+readout confusion matrix is dimension-specific
+leakage beyond |0>...|7> is within budget
+all required cross-carrier gates have explicit implementations
+post-lowering carrier count equals allocator report
+estimated fidelity uses local and inter-carrier error separately
+~~~
 
 ## Transmon qutrit gate-reduction path
 
