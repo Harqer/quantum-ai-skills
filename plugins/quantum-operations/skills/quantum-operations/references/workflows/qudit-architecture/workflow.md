@@ -10,7 +10,7 @@ Use qudits only when the selected physical platform exposes the required levels 
 Classify every candidate before costing it.
 
 1. Native qudit carrier: one physical ion, atom, photon, or circuit stores one d-level computational unit and the experiment exposes native single-qudit control. Trapped ions currently provide the strongest experimentally demonstrated general-purpose path.
-2. Packed virtual qubits in one qudit: map 2^n computational basis states into at least 2^n levels of one carrier. This can reduce carrier and entangling-gate count but increases single-carrier pulse complexity and commonly serializes work that separate qubits could perform in parallel.
+2. Binary-labelled native qudit: map a binary logical basis onto physical qudit eigenstates, for example `|b2 b1 b0> <-> |j>` with `j in {0,...,7}` for d=8. The labels preserve binary algorithm semantics, but the carrier is one eight-level quantum system, not three independently addressable physical qubits. Compile local logic as qudit unitaries/permutations in the native d-level control model before considering a binary gate decomposition.
 3. Transient auxiliary level: the computation remains binary, but an extra physical level such as transmon |2> is used temporarily to synthesize a cheaper multiqubit gate. Count this as gate and ancilla optimization rather than as a new logical qutrit register.
 4. Bosonic logical qudit: d logical states are encoded in a harmonic oscillator and actively error corrected. Treat oscillator energy, control ancilla, conditional-displacement gates, and stabilization cycles as physical resources.
 5. Encoded qudit on qubits: multiple qubits emulate a qutrit or qudit. This can demonstrate qudit algorithms and QEC semantics but does not reduce physical carrier count.
@@ -32,11 +32,38 @@ G(theta)|jk> = exp(i theta)|jk>, j != k
 
 and has been experimentally demonstrated for d=2 through d=5.
 
+### High-dimensional transmon qudits
+
+Treat an experimentally controlled d=8 transmon as one genuine eight-level carrier using the eigenstates `|0>...|7>`. Do not model it as three independent qubits merely because `log2(8)=3`.
+
+The 2025 spin-7/2 transmon experiment demonstrated:
+- single-shot discrimination of eight states with multitone dispersive readout;
+- simultaneous multifrequency driving of adjacent transitions to realize an effective spin-displacement operation;
+- virtual SNAP-style phase control;
+- arbitrary single-qudit unitary synthesis by interleaving physical spin displacements with virtual phase layers;
+- spin-displacement fidelities from about 0.997 down to 0.989 as dimension increased through d=8;
+- an eight-dimensional QFT with average gate fidelity 0.91(6).
+
+For a binary algorithm packed into d=8, use the basis map only as a semantic encoding:
+
+~~~text
+|000> <-> |0>
+|001> <-> |1>
+...
+|111> <-> |7>
+~~~
+
+Then synthesize any operation whose inputs and outputs remain inside one carrier directly as an SU(8) unitary or reversible basis permutation. Prefer the demonstrated spin-displacement + virtual-SNAP construction over decomposing the operation into fictitious physical X/CNOT/Toffoli gates on three subqubits.
+
+Treat `ceil(N/log2(8))` only as an information-capacity lower bound until the final lowering proves that all cross-carrier interactions, routing, leakage, readout, reset, and pulse scheduling fit the target hardware.
+
+The demonstrated d=8 experiment establishes universal single-qudit control, not a production-ready arbitrary two-d=8-qudit entangler. Cost every cross-carrier dependency separately and require an experimentally demonstrated, backend-accessible interaction before calling the packed design executable.
+
 ### Transmon qutrit workspace
 
 Use the third transmon level only where the backend exposes calibrated pulse-level access to the 1-2 transition and the required two-transmon interactions. A demonstrated ternary Toffoli decomposition used four two-transmon operations on fixed-frequency transmons instead of eight order-preserving binary CNOTs on a linear topology. Preserve the logical input/output subspace and verify that final population returns to {|0>,|1>}.
 
-Cloud QASM access to a transmon device does not imply access to its qutrit levels.
+Cloud QASM access to a transmon device does not imply access to its qutrit or higher levels.
 
 ### Bosonic GKP qutrit and ququart
 
