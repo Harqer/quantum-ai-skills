@@ -4,69 +4,69 @@ Quantum Operations exposes one concise cataloged router and keeps implementation
 
 ## Instruction style
 
-Write skill guidance as affirmative, action-oriented prose. State the representation to build, the transformation to apply, the proof or validation to run, the condition that enables a technique, and the result that establishes completion. Prefer smooth paragraphs for the routing and decision layer, while equations, code, tables, and compact procedural structures remain available in implementation references when they make the mechanics clearer.
-
-When a technique has a limited validity domain, describe the valid domain and the alternative path for other cases. This keeps constraints precise while giving the agent a concrete next action.
+Write skill guidance as affirmative, action-oriented prose. Put routing/decision rules in `workflow.md`; put equations, exact algorithms, APIs, code, verification, and failure boundaries in `references/implementation.md` and worked examples. Keep provider observations separate from portable transformations.
 
 ## Acceptance rule
 
-A routed workflow is considered implementation-ready for a technique only when the material loaded for that technique satisfies:
+A routed workflow is implementation-ready only when it supplies:
 
 - explicit inputs and outputs;
 - semantic and hardware/QEC preconditions;
 - exact algorithm, equations, circuit, or executable API path;
-- a concrete worked example when the technique is nontrivial;
+- a concrete worked example for nontrivial mechanics;
 - verification/invariants;
 - unsupported/failure cases;
 - explicit tool-version checking for version-sensitive APIs.
 
 The authoritative checklist is:
-[skills/quantum-operations/references/implementation-contract.md](skills/quantum-operations/references/implementation-contract.md).
-
-If one of these elements is missing for the requested technique, the agent researches the primary source/current API and extends the workflow reference before treating the implementation as production-ready.
+`skills/quantum-operations/references/implementation-contract.md`.
 
 ## Coverage
 
-| Skill | Implementation layer |
+| Workflow | Implementation layer |
 | --- | --- |
-| quantum-operations | router + `references/implementation-contract.md` |
-| semantic-gate-reduction | `references/workflows/semantic-gate-reduction/workflow.md` + `references/implementation.md` |
-| boolean-fusion | `references/workflows/boolean-fusion/workflow.md` + `references/implementation.md` |
-| ancilla-lifetime | `references/workflows/ancilla-lifetime/workflow.md` + `references/implementation.md` |
-| reversible-arithmetic | `references/workflows/reversible-arithmetic/workflow.md` + `references/implementation.md` + exact Cuccaro/temp-AND examples |
-| clifford-t-optimization | `references/workflows/clifford-t-optimization/workflow.md` + `references/implementation.md` |
-| pyzx-optimization | `references/workflows/pyzx-optimization/workflow.md` + `references/implementation.md` + tools index |
-| pytket-optimization | `references/workflows/pytket-optimization/workflow.md` + `references/implementation.md` + tools index |
-| qec-code-strategy | `references/workflows/qec-code-strategy/workflow.md` + `references/implementation.md` |
-| qldpc-architecture | `references/workflows/qldpc-architecture/workflow.md` + implementation + 42-source research map + exact Gross-code example |
-| toric-code-architecture | `references/workflows/toric-code-architecture/workflow.md` + implementation + tools + 70-source 2020-2026 research map + 12 worked examples |
-| qudit-architecture | `references/workflows/qudit-architecture/workflow.md` + implementation + hardware/access tools + experimentally demonstrated research map + 10 worked examples |
-| qec-simulation-decoding | `references/workflows/qec-simulation-decoding/workflow.md` + `references/implementation.md` + tools index |
-| real-time-qec-decoding | `references/workflows/real-time-qec-decoding/workflow.md` + research + exact DEM/Tanner, Walking Cat, BeamSearch examples |
-| lattice-surgery | `references/workflows/lattice-surgery/workflow.md` + `references/implementation.md` + tools index |
-| magic-state-factories | `references/workflows/magic-state-factories/workflow.md` + `references/implementation.md` |
-| fault-tolerant-runtime-control | `references/workflows/fault-tolerant-runtime-control/workflow.md` + `references/implementation.md` + research |
-| ftqc-runtime-scheduling | `references/workflows/ftqc-runtime-scheduling/workflow.md` + `references/implementation.md` + research |
-| ftqc-resource-estimation | `references/workflows/ftqc-resource-estimation/workflow.md` + `references/implementation.md` + tools index |
-| fault-tolerant-verification | `references/workflows/fault-tolerant-verification/workflow.md` + `references/implementation.md` + tools index |
-| ir-interoperability | `references/workflows/ir-interoperability/workflow.md` + `references/implementation.md` |
-| fire-opal-adjunct | concise workflow + implementation + API map + execute/iterate/expectation/MCM/recovery examples |
+| semantic-gate-reduction | semantic IR + legality + exact rewrite verification |
+| algorithmic-gate-compression | problem-contract replacement rules + Floquet worked example |
+| boolean-fusion | ANF/XOR-AND reduction + multiplicative-complexity verification |
+| ancilla-lifetime | liveness + pebbling + cleanup contracts |
+| qubit-reuse-compilation | causal-cone ordering + MCMR rewrite + Quantinuum HyperTKET example |
+| reversible-arithmetic | exact arithmetic + Cuccaro/temp-AND examples |
+| clifford-t-optimization | phase-safe non-Clifford optimization |
+| tensor-t-optimization | signature tensors + factorization/resynthesis + Circuit-to-Tensor example |
+| native-entangler-synthesis | canonical 2Q lowering + parameterized entanglers + Quantinuum examples |
+| pyzx-optimization | ZX transformations + verification |
+| pytket-optimization | explicit pass pipelines + checkpoints |
+| qec-code-strategy | code selection + logical ISA |
+| transversal-teleportation | transversal/teleport/reset/reuse + correlated decoding |
+| qldpc-architecture | exact finite qLDPC construction and mapping |
+| toric-code-architecture | toric/topological implementation and decoding examples |
+| qudit-architecture | experimentally grounded multilevel carrier implementations |
+| qec-simulation-decoding | detector/noise/decoder benchmarking |
+| real-time-qec-decoding | streaming decoding and deadline engineering |
+| lattice-surgery | patch/logical-operation implementation + tools |
+| magic-state-factories | distillation/cultivation/catalysis resource model |
+| fault-tolerant-runtime-control | frames, measurements, feed-forward, reuse legality |
+| ftqc-runtime-scheduling | dependency-aware whole-machine schedule |
+| ftqc-resource-estimation | layered logical/classical/physical estimates |
+| fault-tolerant-verification | equivalence, detector, logical, ancilla, resource regression |
+| ir-interoperability | semantic OpenQASM/QIR/framework translation |
+| fire-opal-adjunct | current Fire Opal validation/execution boundary |
 
 ## Review test
 
-A fresh reviewer should be able to answer these questions before coding:
+Before coding, a fresh reviewer must be able to answer:
 
-1. What exact representation enters this technique?
-2. What exact semantic object must leave it?
+1. What exact representation enters?
+2. What exact semantic object leaves?
 3. What conditions make the transformation legal?
 4. What algorithm/circuit/API sequence implements it?
 5. Which example demonstrates the non-obvious steps?
 6. What independent test proves the result?
-7. Which cases are unsupported or require another skill?
-8. Which external API facts must be revalidated because they can change?
+7. Which cases are unsupported or route elsewhere?
+8. Which external API facts must be revalidated?
 
-The documentation passes this standard when every answer comes directly from the loaded skill, implementation reference, worked example, primary specification, or current tool documentation.
+A provider runtime optimization is documented as measured backend behavior unless the user can explicitly invoke/configure it. An alternative algorithm is never presented as an exact circuit rewrite unless equivalence is actually proved.
 
 ## Scope
 
-This standard keeps the single router `SKILL.md` concise. Deep equations, circuits, APIs, and examples live under `references/workflows/` so context is loaded progressively.
+Keep the single router concise. Deep equations, circuits, APIs, research, and examples live under `references/workflows/` so context is loaded progressively.
