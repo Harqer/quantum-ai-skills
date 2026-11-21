@@ -4,11 +4,13 @@ on:
     paths:
       - 'plugins/quantum-operations/**'
       - 'scripts/check_quantum_evidence.py'
+      - 'scripts/run_quantum_examples.py'
       - '.github/workflows/quantum-evidence.yml'
   pull_request:
     paths:
       - 'plugins/quantum-operations/**'
       - 'scripts/check_quantum_evidence.py'
+      - 'scripts/run_quantum_examples.py'
       - '.github/workflows/quantum-evidence.yml'
 jobs:
   evidence:
@@ -20,3 +22,28 @@ jobs:
           python-version: '3.12'
       - name: Verify source, examples, and stdlib executions
         run: python scripts/check_quantum_evidence.py
+  executable-sdks:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runtime: qiskit
+            packages: 'qiskit>=2,<3'
+          - runtime: pyzx
+            packages: 'pyzx'
+          - runtime: pytket
+            packages: 'pytket numpy'
+          - runtime: stim
+            packages: 'stim pymatching numpy'
+          - runtime: numpy
+            packages: 'numpy'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install published SDK
+        run: python -m pip install ${{ matrix.packages }}
+      - name: Run full self-contained examples
+        run: python scripts/run_quantum_examples.py ${{ matrix.runtime }}
