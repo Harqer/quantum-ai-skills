@@ -20,7 +20,8 @@ Select the smallest workflow set that covers the request, then load each selecte
 | T/Toffoli/CCZ cost, non-Clifford synthesis, factory demand | `clifford-t-optimization` |
 | ZX-calculus and phase-polynomial rewriting | `pyzx-optimization` |
 | Compiler passes, rebasing, placement, routing, mapping | `pytket-optimization` |
-| QEC code selection and logical-operation strategy | `qec-code-strategy` |\n| Transversal gates, logical teleportation, fresh-block reset/reuse, permutation logical gates, correlated decoding | `transversal-teleportation` |
+| QEC code selection and logical-operation strategy | `qec-code-strategy` |
+| Transversal gates, logical teleportation, fresh-block reset/reuse, permutation logical gates, correlated decoding | `transversal-teleportation` |
 | qLDPC construction, syndrome circuits, decoding, nonlocal routing, and logical gates | `qldpc-architecture` |
 | Toric-code topology, homological logicals, periodic layouts, biased noise, 2D/3D/4D variants, and toric decoders | `toric-code-architecture` |
 | Proven qutrit/qudit carrier packing, native multilevel gates, transient higher levels, and bosonic logical qudits | `qudit-architecture` |
@@ -41,7 +42,7 @@ Architecture-specific examples inherit the assumptions that make them valid. Car
 
 ## Implementation gate
 
-For every request that produces or modifies production quantum code, load `references/implementation-contract.md` first. Then load:
+For every request that produces or modifies production quantum code, load `references/implementation-contract.md` first. Resolve the selected strategy to its concrete implementation example and primary source through `../../EVIDENCE_INDEX.md`; load only the chosen workflow's evidence. Each distinct transformation used must have its own equivalence/invariant test and cost check. Then load:
 
 1. `references/workflows/<workflow>/workflow.md` for each routed workflow.
 2. `references/workflows/<workflow>/references/implementation.md` when present.

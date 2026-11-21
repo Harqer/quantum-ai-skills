@@ -1,0 +1,156 @@
+[
+  {
+    "workflow": "semantic-gate-reduction",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/semantic-gate-reduction/references/examples/permutation-aware-lowering.md",
+    "primary_source": "https://qiskit.qotlabs.org/docs/api/qiskit/qiskit.transpiler.passes.ElidePermutations",
+    "verification": "exhaustive arithmetic and permutation identities",
+    "runtime": "python"
+  },
+  {
+    "workflow": "reversible-arithmetic",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/reversible-arithmetic/references/examples/cuccaro-adder.md",
+    "primary_source": "https://github.com/openqasm/openqasm/blob/main/examples/adder.qasm",
+    "verification": "carry and restored-register basis checks",
+    "runtime": "qiskit"
+  },
+  {
+    "workflow": "boolean-fusion",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/boolean-fusion/references/examples/evidence-backed.md",
+    "primary_source": "https://quantum.cloud.ibm.com/docs/en/api/qiskit/qiskit.circuit.QuantumCircuit",
+    "verification": "16 exhaustive cases and scratch cleanup",
+    "runtime": "qiskit"
+  },
+  {
+    "workflow": "ancilla-lifetime",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/ancilla-lifetime/references/examples/evidence-backed.md",
+    "primary_source": "https://quantum.cloud.ibm.com/docs/en/api/qiskit/qiskit.circuit.QuantumCircuit",
+    "verification": "8 clean-ancilla input cases",
+    "runtime": "qiskit"
+  },
+  {
+    "workflow": "clifford-t-optimization",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/clifford-t-optimization/references/examples/evidence-backed.md",
+    "primary_source": "https://quantum.cloud.ibm.com/docs/en/api/qiskit/qiskit.circuit.library.CCXGate",
+    "verification": "exact unitary equivalence and T-count",
+    "runtime": "qiskit"
+  },
+  {
+    "workflow": "pyzx-optimization",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/pyzx-optimization/references/examples/evidence-backed.md",
+    "primary_source": "https://pyzx.readthedocs.io/en/stable/notebooks/simplify.html",
+    "verification": "ZX extraction, equality and gate counts",
+    "runtime": "pyzx"
+  },
+  {
+    "workflow": "pytket-optimization",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/pytket-optimization/references/examples/evidence-backed.md",
+    "primary_source": "https://docs.quantinuum.com/tket/user-guide/examples/circuit_compilation/compilation_example.html",
+    "verification": "unitary equality and gate reduction",
+    "runtime": "pytket"
+  },
+  {
+    "workflow": "qec-code-strategy",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/qec-code-strategy/references/examples/evidence-backed.md",
+    "primary_source": "https://pymatching.readthedocs.io/en/stable/api.html",
+    "verification": "sampled logical failures and Wilson upper bounds",
+    "runtime": "stim"
+  },
+  {
+    "workflow": "transversal-teleportation",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/transversal-teleportation/references/examples/evidence-backed.md",
+    "primary_source": "https://qiskit.qotlabs.org/learning/courses/foundations-of-quantum-error-correction/fault-tolerant-quantum-computing/controlling-error-propagation",
+    "verification": "Steane CSS stabilizer and logical-CNOT conjugation",
+    "runtime": "stdlib"
+  },
+  {
+    "workflow": "qldpc-architecture",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/qldpc-architecture/references/examples/bivariate-bicycle-gross-code.md",
+    "primary_source": "https://qldpc.readthedocs.io/examples/bivariate_bicycle_codes.html",
+    "verification": "CSS commutation, rank and parameters",
+    "runtime": "qldpc"
+  },
+  {
+    "workflow": "toric-code-architecture",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/toric-code-architecture/references/examples/02-panquec-mwpm-decode.md",
+    "primary_source": "https://pymatching.readthedocs.io/en/latest/toric-code-example.html",
+    "verification": "syndrome, residual and logical-failure checks",
+    "runtime": "panqec"
+  },
+  {
+    "workflow": "qudit-architecture",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/qudit-architecture/references/examples/evidence-backed.md",
+    "primary_source": "https://www.nature.com/articles/s41467-023-37375-2",
+    "verification": "four-level unitary and exact virtual-qubit basis mapping",
+    "runtime": "numpy"
+  },
+  {
+    "workflow": "qec-simulation-decoding",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/qec-simulation-decoding/references/implementation.md",
+    "primary_source": "https://pymatching.readthedocs.io/en/stable/api.html",
+    "verification": "Stim detector model and decode-batch comparison",
+    "runtime": "stim"
+  },
+  {
+    "workflow": "real-time-qec-decoding",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/real-time-qec-decoding/references/examples/evidence-backed.md",
+    "primary_source": "https://github.com/quantumlib/Stim",
+    "verification": "batch equality, per-shot tail latency and queue delay",
+    "runtime": "stim"
+  },
+  {
+    "workflow": "fault-tolerant-runtime-control",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/fault-tolerant-runtime-control/references/examples/evidence-backed.md",
+    "primary_source": "https://qiskit.qotlabs.org/learning/courses/foundations-of-quantum-error-correction/stabilizer-formalism/stabilizer-codes",
+    "verification": "all 16 two-qubit Pauli-frame mappings",
+    "runtime": "numpy"
+  },
+  {
+    "workflow": "lattice-surgery",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/lattice-surgery/references/implementation.md",
+    "primary_source": "https://tqec.github.io/tqec/user_guide/quick_start.html",
+    "verification": "compiled logical observables and Stim fault simulations",
+    "runtime": "tqec"
+  },
+  {
+    "workflow": "magic-state-factories",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/magic-state-factories/references/implementation.md",
+    "primary_source": "https://nvidia.github.io/cuda-quantum/latest/preview/logical/use-cases/examples/distillation.html",
+    "verification": "T-state protocol operation-count invariants",
+    "runtime": "cudaq"
+  },
+  {
+    "workflow": "ftqc-runtime-scheduling",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/ftqc-runtime-scheduling/references/examples/evidence-backed.md",
+    "primary_source": "https://developers.google.com/optimization/scheduling",
+    "verification": "precedence, capacity and makespan assertions",
+    "runtime": "stdlib"
+  },
+  {
+    "workflow": "ftqc-resource-estimation",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/ftqc-resource-estimation/references/implementation.md",
+    "primary_source": "https://learn.microsoft.com/en-us/azure/quantum/quickstart-microsoft-resources-estimator",
+    "verification": "QRE result and logical/physical resource reconciliation",
+    "runtime": "qdk"
+  },
+  {
+    "workflow": "fault-tolerant-verification",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/fault-tolerant-verification/references/implementation.md",
+    "primary_source": "https://mqt.readthedocs.io/projects/qcec/en/stable/",
+    "verification": "MQT exact equivalence and detector consistency",
+    "runtime": "mqt"
+  },
+  {
+    "workflow": "ir-interoperability",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/ir-interoperability/references/implementation.md",
+    "primary_source": "https://openqasm.com/versions/3.1/",
+    "verification": "round-trip endianness, mapping and dynamic-control semantics",
+    "runtime": "qasm"
+  },
+  {
+    "workflow": "fire-opal-adjunct",
+    "reference": "plugins/quantum-operations/skills/quantum-operations/references/workflows/fire-opal-adjunct/references/examples/01-execute.md",
+    "primary_source": "https://docs.q-ctrl.com/fire-opal",
+    "verification": "credentialed validation then vendor-supported execution",
+    "runtime": "hardware"
+  }
+]
