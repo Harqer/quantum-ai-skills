@@ -8,6 +8,10 @@ Write skill guidance as affirmative, action-oriented prose. State the representa
 
 When a technique has a limited validity domain, describe the valid domain and the alternative path for other cases. This keeps constraints precise while giving the agent a concrete next action.
 
+## Evidence-backed routing
+
+The [evidence index](EVIDENCE_INDEX.md) and [manifest](EVIDENCE_MANIFEST.json) map every cataloged workflow to a source, code example, and verification target. The dependency-free checker at `../../scripts/check_quantum_evidence.py` validates coverage and Python syntax and executes the self-contained pure-Python examples. Versioned quantum SDK examples and hardware integrations require their own environment-specific execution and recorded results. For each *sub-strategy*, the implementation contract still requires a concrete proof/test rather than treating one representative workflow example as blanket acceptance.
+
 ## Acceptance rule
 
 A routed workflow is considered implementation-ready for a technique only when the material loaded for that technique satisfies:
@@ -23,7 +27,7 @@ A routed workflow is considered implementation-ready for a technique only when t
 The authoritative checklist is:
 [skills/quantum-operations/references/implementation-contract.md](skills/quantum-operations/references/implementation-contract.md).
 
-If one of these elements is missing for the requested technique, the agent researches the primary source/current API and extends the workflow reference before treating the implementation as production-ready.
+Keep only techniques with an implementation reference and a concrete verification path in production instructions. Complete new techniques from primary sources and tested examples before adding them to the production selection set.
 
 ## Coverage
 

@@ -35,3 +35,7 @@ See [IMPLEMENTATION_QUALITY.md](IMPLEMENTATION_QUALITY.md) for the coverage matr
 ## Security design
 
 Static knowledge only. No MCP server, hooks, executable scripts, credentials, provider bindings, or write-capable runtime integration are bundled in this release.
+
+## Verified implementation references
+
+The [evidence index](EVIDENCE_INDEX.md) connects each specialist workflow to a code example, a primary source, and its verification invariant. Run `python scripts/check_quantum_evidence.py` from the repository root to validate documentation coverage, parse Python examples, and execute the dependency-free reference checks. Execute external SDK and hardware-dependent examples in their documented environments before reporting a successful implementation or performance improvement.

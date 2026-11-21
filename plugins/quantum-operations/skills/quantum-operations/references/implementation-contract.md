@@ -57,3 +57,17 @@ Instead:
 4. add the missing implementation reference before producing production code.
 
 The router may remain concise. Detailed implementation material belongs in references/ and references/examples/.
+
+## Evidence-linked strategy acceptance
+
+Each named optimization **strategy**, including a sub-technique within a larger workflow, must point to:
+
+1. A precise and source-backed algorithm or documented library implementation with a direct publication, API or maintained code link.
+2. A concrete code example with declared dependencies, inputs, register/bit semantics, outputs, and a reproducible execution path.
+3. An explicit correctness check (state map, ancilla cleanup, unitary/equivalence, CSS commutation, decoded logical result, or resource/schedule invariant).
+4. A measured before/after cost or target-dependent metric whenever an optimization improvement is claimed.
+5. A documented validity scope including code family, noise model, target operation, qudit gate access, or hardware timing as applicable.
+
+Read the compact [evidence manifest](../../../EVIDENCE_INDEX.md) to locate the relevant example and verified upstream source. The source and code are separate evidence: published hardware results establish demonstrated device behavior; simulator results establish the tested mathematical/software path; a successful syntax check establishes only parsability. Record the actual executed test and environment before elevating a strategy to validated status.
+
+Keep speculative research and historical alternatives out of the normal agent routing context. Store useful research citations in their dedicated research references; route production transformations only through the evidence-linked implementations. Maintain correctness boundary conditions without repetitive negative-status prose.

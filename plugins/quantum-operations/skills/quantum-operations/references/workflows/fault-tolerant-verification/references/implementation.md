@@ -13,7 +13,7 @@ print(result.equivalence)
 
 Expected result for an exact verified rewrite is equivalent.
 
-Treat not_equivalent as failure. Treat any inconclusive/unsupported result as **not proven**.
+Accept only an affirmative equivalence result. Failed, inconclusive, and unsupported checks trigger an independent equivalence test or a corrected implementation before acceptance.
 
 ## 2. Approximate equivalence
 

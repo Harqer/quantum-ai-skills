@@ -1,0 +1,22 @@
+name: Quantum evidence integrity
+on:
+  push:
+    paths:
+      - 'plugins/quantum-operations/**'
+      - 'scripts/check_quantum_evidence.py'
+      - '.github/workflows/quantum-evidence.yml'
+  pull_request:
+    paths:
+      - 'plugins/quantum-operations/**'
+      - 'scripts/check_quantum_evidence.py'
+      - '.github/workflows/quantum-evidence.yml'
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify source, examples, and stdlib executions
+        run: python scripts/check_quantum_evidence.py
