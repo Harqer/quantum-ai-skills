@@ -29,7 +29,7 @@ jobs:
       matrix:
         include:
           - runtime: qiskit
-            packages: 'qiskit>=2,<3'
+            packages: 'qiskit'
           - runtime: pyzx
             packages: 'pyzx'
           - runtime: pytket
